@@ -1,0 +1,78 @@
+:root {
+  --color-background: #d1e0d8;
+  --color-general: #649179;
+  --color-darker: #374f42;
+  --color-black: #070721;
+  --color-white: #f7fffb;
+  --color-input: #595d62;
+  --color-input-light: #9f9f9f;
+  --color-black-60: rgba(0, 0, 0, 0.6);
+  --color-border: #ad6a6c;
+  --shadow-focus: 0px 0px 0px 4px rgba(78, 70, 180, 0.2);
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: url("../src/fonts/Manrope-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Reset styles */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* General styles */
+
+body {
+  font-family: "Manrope", sans-serif;
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+a {
+  font-weight: 500;
+  color: var(--color-darker);
+  text-decoration: inherit;
+}
+a:hover {
+  color: var(--color-darker);
+}
+
+h1 {
+  font-size: 92px;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: 0.02em;
+}
