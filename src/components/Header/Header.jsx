@@ -1,3 +1,4 @@
+import Container from "../Container/Container.jsx";
 import Navigation from "../Navigation/Navigation.jsx";
 
 const Header = () => {
@@ -5,8 +6,10 @@ const Header = () => {
 
   return (
     <header>
-      <Navigation />
-      {/* {isLoggedIn ? <UserMenu /> : <AuthNav />} */}
+      <Container>
+        <Navigation />
+        {/* {isLoggedIn ? <UserMenu /> : <AuthNav />} */}
+      </Container>
     </header>
   );
 };
