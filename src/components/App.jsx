@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
 import Layout from "./Layout/Layout.jsx";
 import UploadPhoto from "../pages/UploadPhotoPage/UploadPhotoPage.jsx";
 import { lazy, Suspense } from "react";
