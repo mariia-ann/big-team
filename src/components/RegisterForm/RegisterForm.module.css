@@ -1,0 +1,54 @@
+.registerContainer{
+padding: 48px 32px ;
+background-color: #d1e0d8;
+border-radius: 32px;
+/* display: flex;
+flex-direction: column;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center; */
+/* text-align: center; */
+width: 360px;
+}
+.title{
+font-size: 32px;
+margin-bottom: 20px;
+text-align: center;
+}
+.description{
+font-size: 16px;
+font-weight: 400;
+text-align: center;
+margin-bottom: 20px;
+}
+.fieldWrapper{
+margin-bottom: 16px;
+}
+.registerForm{
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+
+
+}
+.labelForm{
+font-size: 12px;
+margin-bottom: 4px;
+display: flex;
+    flex-direction: column;
+}
+.fieldForm{
+ /* display: flex; */
+ /* flex-wrap: wrap; */
+ /* flex-direction: column; */
+width: 296px;
+height: 41px;
+border-radius: 8px;
+border: none;
+
+}
+.error{
+color: red;
+font-size: 8px;
+}
