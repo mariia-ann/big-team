@@ -1,6 +1,13 @@
+import { NavLink } from "react-router-dom"
+import IconLogo from "../../assets/images/icons/logo.svg?react";
+
 const Navigation = () => {
   return (
-    <div>Navigation</div>
+    <nav>
+      <NavLink to="/">
+        <IconLogo />
+      </NavLink>
+      Navigation</nav>
   )
 }
 
