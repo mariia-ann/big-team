@@ -1,0 +1,27 @@
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+}
+
+.link {
+    text-decoration: none;
+    padding: 15px 0 20px;
+    font-weight: 700;
+    font-size: 12px;
+  }
+  
+  .active {
+    text-decoration: 1px underline;
+    text-underline-offset: 4px;
+  }
+
+@media only screen and (min-width: 768px) {
+}
+
+@media only screen and (min-width: 1440px) {
+    .navList {
+        flex-direction: row;
+    }
+}
