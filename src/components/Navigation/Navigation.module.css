@@ -1,0 +1,39 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.logo {
+  padding: 5px 8px;
+}
+
+.buttonMenuToggle {
+  background-color: var(--color-background);
+}
+.desktopLinks {
+    display: none;
+}
+
+.mobileMenu {
+    padding: 24px 0;
+}
+
+@media only screen and (min-width: 768px) {
+}
+
+@media only screen and (min-width: 1440px) {
+.desktopLinks {
+    display: flex;
+}
+.buttonMenuToggle {
+    display: none;
+}
+}
+
