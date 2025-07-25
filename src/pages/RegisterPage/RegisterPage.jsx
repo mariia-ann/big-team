@@ -1,7 +1,8 @@
 import RegisterForm from "../../components/RegisterForm/RegisterForm.jsx"
 
 const RegisterPage = () => {
-  return (<>
+  return (
+    <>
     <RegisterForm />
     </>
   )

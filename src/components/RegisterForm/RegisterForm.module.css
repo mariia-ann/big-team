@@ -2,34 +2,37 @@
 padding: 48px 32px ;
 background-color: #d1e0d8;
 border-radius: 32px;
-/* display: flex;
-flex-direction: column;
-flex-wrap: wrap;
-justify-content: center;
-align-items: center; */
-/* text-align: center; */
 width: 360px;
+box-sizing: border-box;
+margin: 85px auto;
 }
 .title{
 font-size: 32px;
 margin-bottom: 20px;
 text-align: center;
+width: 296px;
 }
 .description{
 font-size: 16px;
 font-weight: 400;
 text-align: center;
 margin-bottom: 20px;
+width: 278px;
+height: 50px;
 }
 .fieldWrapper{
 margin-bottom: 16px;
+width: 296px;
+}
+.fieldWrapper:last-of-type{
+    margin-bottom: 27px;
 }
 .registerForm{
 display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
-
+width: 296px;
 
 }
 .labelForm{
@@ -39,16 +42,77 @@ display: flex;
     flex-direction: column;
 }
 .fieldForm{
- /* display: flex; */
- /* flex-wrap: wrap; */
- /* flex-direction: column; */
-width: 296px;
 height: 41px;
 border-radius: 8px;
 border: none;
+padding:0 0 0 5px;
+width: 296px;
+box-sizing: border-box;
+}
+.passwordWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.eyeBtn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+.eyeBtn svg{
+   width: 24px; 
+   height: 24px;
+}
+.progressWrapper{
+    margin-top: 8px;
+}
+.progressBar {
+    height: 6px;
+    width: 180px;
+    background-color: #d74646;
+    border-radius: 3px;
+    overflow: hidden;
+}
 
+.progressFill {
+    height: 100%;
+    background-color: #4caf50;
+    transition: width 0.3s ease;
+}
+.descProgres{
+    font-size: 12px;
 }
 .error{
 color: red;
 font-size: 8px;
+}
+.createBtn{
+  background-color: #649179;  
+  border-radius: 50px;
+  width: 296px;
+  height: 38px;
+  color: #F7FFFB;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.descAcc{
+  font-size: 16px;  
+  font-weight: 400;
+
+}
+.loginLink{
+    display: inline-block;
+    font-weight: 700;
+    color: #070721;
+    /* text-decoration: underline; */
+    /* text-decoration-color:#070721; */
+    border-bottom: 1px solid #070721;
+    /* padding-bottom: 0; */
+    line-height: 0.8;
 }
