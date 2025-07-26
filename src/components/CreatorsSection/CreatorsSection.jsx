@@ -1,7 +1,5 @@
 const CreatorsSection = () => {
-  return (
-    <div>CreatorsSection</div>
-  )
-}
+  return <div>CreatorsSection</div>;
+};
 
-export default CreatorsSection
+export default CreatorsSection;

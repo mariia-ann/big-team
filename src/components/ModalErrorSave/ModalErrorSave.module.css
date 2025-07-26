@@ -1,0 +1,111 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal {
+  border-radius: 32px;
+  padding: 56px 32px 32px 32px;
+  width: 361px;
+  height: 326px;
+  background: var(--light-green);
+  box-sizing: border-box;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border-radius: 8px;
+  padding: 0px 0px 4px 0px;
+  width: 24px;
+  height: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 32px;
+  text-align: center;
+  color: var(--black);
+  margin-bottom: 20px;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--black);
+  margin-bottom: 20px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.loginBtn,
+.registerBtn {
+  border: 1px solid var(--black);
+  border-radius: 64px;
+  padding: 12px 16px;
+  width: 297px;
+  height: 46px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.loginBtn:hover,
+.loginBtn:active,
+.registerBtn:active,
+.registerBtn:hover {
+  background: var(--green);
+  color: white;
+}
+@media only screen and (min-width: 768px) {
+  .modal {
+    width: 499px;
+    height: 305px;
+  }
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 27px;
+  }
+  .loginBtn,
+  .registerBtn {
+    width: 204px;
+  }
+  .closeBtn {
+    top: 16px;
+    right: 32px;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  .modal {
+    width: 420px;
+    height: 268px;
+  }
+  .loginBtn,
+  .registerBtn {
+    width: 164px;
+  }
+}
