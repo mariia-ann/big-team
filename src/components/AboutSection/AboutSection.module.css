@@ -45,8 +45,8 @@
   display: none;
 }
 
-/* ===== Tablet (760px - 1439px) ===== */
-@media screen and (min-width: 760px) {
+/* ===== Tablet (768px - 1439px) ===== */
+@media screen and (min-width: 768px) {
   .aboutSection {
     gap: 32px;
   }
