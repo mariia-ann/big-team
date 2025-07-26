@@ -1,0 +1,179 @@
+.registerContainer{
+padding: 48px 32px ;
+background-color: #d1e0d8;
+border-radius: 32px;
+width: 360px;
+box-sizing: border-box;
+margin: 85px auto;
+}
+.title{
+font-size: 32px;
+margin-bottom: 20px;
+text-align: center;
+width: 296px;
+}
+.description{
+font-size: 16px;
+font-weight: 400;
+text-align: center;
+margin-bottom: 20px;
+width: 278px;
+height: 50px;
+}
+.fieldWrapper{
+margin-bottom: 16px;
+}
+.fieldWrapper:last-of-type{
+    margin-bottom: 27px;
+}
+.registerForm{
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+width: 296px;
+
+}
+.labelForm{
+font-size: 12px;
+margin-bottom: 4px;
+display: flex;
+    flex-direction: column;
+}
+.fieldForm{
+height: 41px;
+border-radius: 8px;
+border: 1px solid #9F9F9F;
+padding:0 0 0 5px;
+width: 296px;
+box-sizing: border-box;
+}
+.fieldForm:focus {
+    outline: none;
+    border-color: #000;
+}
+.passwordWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.eyeBtn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+.eyeBtn svg{
+   width: 24px; 
+   height: 24px;
+}
+.progressWrapper{
+    margin-top: 8px;
+}
+.progressBar {
+    height: 6px;
+    width: 180px;
+    background-color: #d74646;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background-color: #4caf50;
+    transition: width 0.3s ease;
+}
+.descProgres{
+    font-size: 12px;
+}
+.error{
+color: red;
+font-size: 8px;
+}
+.errorInput {
+    border: 1px solid red; 
+    
+}
+.createBtn{
+  background-color: #649179;  
+  border-radius: 50px;
+  width: 296px;
+  height: 38px;
+  color: #F7FFFB;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.descAcc{
+  font-size: 16px;  
+  font-weight: 400;
+
+}
+.loginLink{
+    display: inline-block;
+    font-weight: 700;
+    color: #070721;
+    border-bottom: 1px solid #070721;
+    line-height: 0.8;
+}
+
+@media only screen and (min-width: 768px) {
+.registerContainer {
+        width: 522px;
+        margin: 120px auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+        .title {
+            width: 456px;
+        }
+    
+        .registerForm {
+            width: 458px;
+    
+        }
+    
+        .fieldForm {
+            width: 458px;
+        }
+    
+    
+        .createBtn {
+            width: 458px;
+        }
+    
+}
+
+@media only screen and (min-width: 1440px) {
+    .registerContainer {
+            width: 392px;
+            margin: 50px auto;
+           
+    
+        }
+    
+        .title {
+            width: 328px;
+        }
+    
+        .registerForm {
+            width: 328px;
+    
+        }
+    
+        .fieldForm {
+            width: 328px;
+        }
+    
+    
+        .createBtn {
+            width: 328px;
+        }
+}
