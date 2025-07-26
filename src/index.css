@@ -20,7 +20,12 @@
   font-display: swap;
 }
 
-/* Reset styles */
+body {
+  font-family: "Manrope", sans-serif;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  margin: 0;
+}
 
 h1,
 h2,
@@ -38,11 +43,6 @@ ul {
   list-style: none;
 }
 
-a {
-  color: currentColor;
-  text-decoration: none;
-}
-
 button {
   cursor: pointer;
   border: none;
@@ -54,14 +54,6 @@ img {
   height: auto;
 }
 
-/* General styles */
-
-body {
-  font-family: "Manrope", sans-serif;
-  background-color: var(--color-white);
-  color: var(--color-black);
-}
-
 a {
   font-weight: 500;
   color: var(--color-darker);
@@ -69,11 +61,4 @@ a {
 }
 a:hover {
   color: var(--color-darker);
-}
-
-h1 {
-  font-size: 92px;
-  font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: 0.02em;
 }
