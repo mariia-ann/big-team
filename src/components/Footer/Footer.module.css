@@ -1,0 +1,38 @@
+.footerSection {
+  background-color: #d1e0d8;
+}
+
+.footerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.logo {
+  padding: 5px 8px;
+  margin-bottom: 32px;
+}
+
+@media only screen and (min-width: 768px) {
+  .footerContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo {
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .footerContainer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    margin-bottom: auto;
+  }
+}

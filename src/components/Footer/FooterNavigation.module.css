@@ -1,0 +1,20 @@
+.footerNav {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.footerNavLink {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+@media only screen and (min-width: 768px) {
+  .footerNav {
+    flex-direction: row;
+    gap: 32px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+}
