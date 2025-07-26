@@ -108,6 +108,9 @@ font-size: 8px;
   font-weight: 700;
   margin-bottom: 20px;
 }
+.createBtn:hover{
+    background-color: #374F42;
+}
 .descAcc{
   font-size: 16px;  
   font-weight: 400;

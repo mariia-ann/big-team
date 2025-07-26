@@ -5,7 +5,6 @@ import s from "./RegisterForm.module.css";
 import { useState } from "react";
 import IconEye from "../../assets/images/icons/eye.svg?react";
 import IconEyeClosed from "../../assets/images/icons/eye-clossed.svg?react";
-import Container from "../Container/Container";
 import { useNavigate } from "react-router-dom";
 
 const validationSchema = Yup.object({
@@ -53,16 +52,37 @@ const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (values,{setSubmitting,resetForm}) => {
-    
-    setSubmitting(false);
-    resetForm();
-    navigate("/photo");
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    try {
+      const response = await fetch("https://твій-бекенд/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert(errorData.message || "Registration error. Please try again.");
+        setSubmitting(false);
+        return
+      }
+      const data = await response.json();
+      resetForm();
+      navigate("/photo");
+    } catch (error) {
+       alert("Registration error. Please try again.");
+       setSubmitting(false);
+    }
   };
   
   
   return (
-    // <Container>
+    
     <div className={s.registerContainer}>
       
         <h2 className={s.title} >Register</h2>
@@ -167,7 +187,7 @@ const [showPassword, setShowPassword] = useState(false);
 )}
       </Formik>
       </div>
-      //  </Container>
+      
   )
 }
 
