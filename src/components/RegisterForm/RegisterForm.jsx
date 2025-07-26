@@ -6,6 +6,7 @@ import { useState } from "react";
 import IconEye from "../../assets/images/icons/eye.svg?react";
 import IconEyeClosed from "../../assets/images/icons/eye-clossed.svg?react";
 import Container from "../Container/Container";
+import { useNavigate } from "react-router-dom";
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -45,15 +46,18 @@ const [showPassword, setShowPassword] = useState(false);
     if (value.length > 5) strength += 1;
     if (value.length > 8) strength += 1;
     if (/[A-Z]/.test(value)) strength += 1;
-  if (/[0-9]/.test(value)) strength += 1;
-  if (/[^A-Za-z0-9]/.test(value)) strength += 1;
-return strength
-  }
+    if (/[0-9]/.test(value)) strength += 1;
+    if (/[^A-Za-z0-9]/.test(value)) strength += 1;
+    return strength
+  };
+
+  const navigate = useNavigate();
+
   const handleSubmit = async (values,{setSubmitting,resetForm}) => {
     
-
     setSubmitting(false);
     resetForm();
+    navigate("/photo");
   };
   
   
@@ -70,18 +74,18 @@ return strength
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting, values, setFieldValue }) => (
+        {({ isSubmitting, values, setFieldValue, errors, touched }) => (
           <Form className={s.registerForm}>
             <div className={s.fieldWrapper}>
             <label className={s.labelForm} htmlFor="name">Enter your name</label>
-              <Field className={s.fieldForm} id="name" name="name" type="text" placeholder="Max" />
+              <Field className={`${s.fieldForm}  ${errors.name && touched.name ? s.errorInput : ''}`} id="name" name="name" type="text" placeholder="Max" />
               
             <ErrorMessage name="name" component="div" className={s.error} />
             </div>
             
             <div className={s.fieldWrapper}>
             <label className={s.labelForm} htmlFor="email">Enter your email address</label>
-            <Field className={s.fieldForm} id="email" name="email" type="email" placeholder="email@gmail.com" />
+            <Field className={`${s.fieldForm} ${errors.email && touched.email ? s.errorInput : ''}`} id="email" name="email" type="email" placeholder="email@gmail.com" />
             <ErrorMessage name="email" component="div" className={s.error} />
 </div>
               <div className={s.fieldWrapper}>
@@ -89,7 +93,7 @@ return strength
               <div>
                 <div className={s.passwordWrapper}>
                   <Field
-                    className={s.fieldForm} id="password" name="password" type={showPassword ? "text" : "password"} placeholder="*********"
+                    className={`${s.fieldForm} ${errors.password && touched.password ? s.errorInput : ''}`} id="password" name="password" type={showPassword ? "text" : "password"} placeholder="*********"
                     onChange={ (e)=>{
                       const value = e.target.value;
                       setFieldValue("password", value);
@@ -128,7 +132,7 @@ return strength
               <label className={s.labelForm} htmlFor="confirmPassword">Repeat your password</label>
               <div className={s.passwordWrapper}>
               <Field
-                className={s.fieldForm}
+                className={`${s.fieldForm} ${errors.confirmPassword && touched.confirmPassword ? s.errorInput : ''}`}
                 id="confirmPassword"
                 name="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}

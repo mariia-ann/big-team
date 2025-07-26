@@ -22,7 +22,6 @@ height: 50px;
 }
 .fieldWrapper{
 margin-bottom: 16px;
-width: 296px;
 }
 .fieldWrapper:last-of-type{
     margin-bottom: 27px;
@@ -44,10 +43,14 @@ display: flex;
 .fieldForm{
 height: 41px;
 border-radius: 8px;
-border: none;
+border: 1px solid #9F9F9F;
 padding:0 0 0 5px;
 width: 296px;
 box-sizing: border-box;
+}
+.fieldForm:focus {
+    outline: none;
+    border-color: #000;
 }
 .passwordWrapper {
     position: relative;
@@ -91,6 +94,10 @@ box-sizing: border-box;
 color: red;
 font-size: 8px;
 }
+.errorInput {
+    border: 1px solid red; 
+    
+}
 .createBtn{
   background-color: #649179;  
   border-radius: 50px;
@@ -110,9 +117,63 @@ font-size: 8px;
     display: inline-block;
     font-weight: 700;
     color: #070721;
-    /* text-decoration: underline; */
-    /* text-decoration-color:#070721; */
     border-bottom: 1px solid #070721;
-    /* padding-bottom: 0; */
     line-height: 0.8;
+}
+
+@media only screen and (min-width: 768px) {
+.registerContainer {
+        width: 522px;
+        margin: 120px auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+        .title {
+            width: 456px;
+        }
+    
+        .registerForm {
+            width: 458px;
+    
+        }
+    
+        .fieldForm {
+            width: 458px;
+        }
+    
+    
+        .createBtn {
+            width: 458px;
+        }
+    
+}
+
+@media only screen and (min-width: 1440px) {
+    .registerContainer {
+            width: 392px;
+            margin: 50px auto;
+           
+    
+        }
+    
+        .title {
+            width: 328px;
+        }
+    
+        .registerForm {
+            width: 328px;
+    
+        }
+    
+        .fieldForm {
+            width: 328px;
+        }
+    
+    
+        .createBtn {
+            width: 328px;
+        }
 }
