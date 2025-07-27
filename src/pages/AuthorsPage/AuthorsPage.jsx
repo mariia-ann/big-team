@@ -1,6 +1,11 @@
+import AuthorsList from "../../components/AuthorsPage/AuthorsList/AuthorsList.jsx"
+
 const AuthorsPage = () => {
   return (
-    <div>AuthorsPage</div>
+    <>
+    <div>Authors</div>
+    <AuthorsList />
+    </>
   )
 }
 
