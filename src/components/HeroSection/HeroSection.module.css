@@ -1,0 +1,186 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 30px;
+  max-width: 100%;
+  height: 280px;
+  order: 2;
+}
+.title {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  color: var(--color-darker);
+  margin: 0;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.fixte {
+  font-family: "Merienda", cursive;
+}
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 361px;
+  height: 138px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 16px;
+  border-radius: 64px;
+  padding: 16px;
+  height: 57px;
+  cursor: pointer;
+  border: none;
+  background: var(--color-general);
+  color: var(--color-white);
+  text-decoration: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+.registerBtn {
+  background: transparent;
+  border: 1px solid var(--color-darker);
+  color: var(--color-darker);
+}
+.text {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--color-white);
+  margin: 0;
+}
+.textRegister {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--color-darker);
+  margin: 0;
+}
+.image {
+  width: 361px;
+  height: 321px;
+
+  background-image: -webkit-image-set(
+    url("../../assets/images/HeroSection/mobalx1.webp") 1x,
+    url("../../assets/images/HeroSection/mobalx2.webp") 2x
+  );
+  order: 1;
+}
+@media (min-width: 768px) {
+  .wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 704px;
+    position: relative;
+    gap: 0;
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    max-width: 434px;
+    height: 383px;
+    order: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .buttonGroup {
+    width: 249px;
+    height: 138px;
+    gap: 24px;
+  }
+  .image {
+    position: relative;
+    z-index: 1;
+    width: 430px;
+    height: 383px;
+    order: 2;
+    margin-left: -80px;
+    aspect-ratio: 430 / 383;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+@media (min-width: 1440px) {
+  .wrapper {
+    display: flex;
+    max-width: 1224px;
+    width: 100%;
+    position: relative;
+    gap: 45px;
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    width: 599px;
+    height: 389px;
+    order: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 56px;
+  }
+
+  .title {
+    font-weight: 800;
+    font-size: 92px;
+  }
+
+  .buttonGroup {
+    flex-direction: row;
+    gap: 24px;
+    width: 392px;
+    height: 57px;
+  }
+
+  .button,
+  .registerBtn {
+    width: 184px;
+    height: 57px;
+  }
+
+  .image {
+    position: relative;
+    z-index: 1;
+    width: 806px;
+    height: 562px;
+    order: 2;
+    flex-shrink: 0;
+    background-image: -webkit-image-set(
+      url("../../assets/images/HeroSection/desk1x.webp") 1x,
+      url("../../assets/images/HeroSection/desk2x.webp") 2x
+    );
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
