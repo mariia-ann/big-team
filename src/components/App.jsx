@@ -3,16 +3,19 @@ import Layout from "./Layout/Layout.jsx";
 import UploadPhoto from "../pages/UploadPhotoPage/UploadPhotoPage.jsx";
 import { lazy, Suspense } from "react";
 
-const HomePage = lazy(() => import("../pages/HomePage/HomePage.jsx"))
-const RegisterPage = lazy(() => import("../pages/RegisterPage/RegisterPage"))
-const LoginPage = lazy(() => import("../pages/LoginPage/LoginPage"))
-const ArticlesPage = lazy(() => import("../pages/ArticlesPage/ArticlesPage"))
-const ArticlePage = lazy(() => import("../pages/ArticlePage/ArticlePage"))
-const AuthorsPage = lazy(() => import("../pages/AuthorsPage/AuthorsPage"))
-const AuthorProfilePage = lazy(() => import("../pages/AuthorProfilePage/AuthorProfilePage"))
-const CreateArticlePage = lazy(() => import("../pages/CreateArticlePage/CreateArticlePage"))
-const NotFoundPage = lazy(() => import("../pages/NotFoundPage/NotFoundPage"))
-
+const HomePage = lazy(() => import("../pages/HomePage/HomePage.jsx"));
+const RegisterPage = lazy(() => import("../pages/RegisterPage/RegisterPage"));
+const LoginPage = lazy(() => import("../pages/LoginPage/LoginPage"));
+const ArticlesPage = lazy(() => import("../pages/ArticlesPage/ArticlesPage"));
+const ArticlePage = lazy(() => import("../pages/ArticlePage/ArticlePage"));
+const AuthorsPage = lazy(() => import("../pages/AuthorsPage/AuthorsPage"));
+const AuthorProfilePage = lazy(() =>
+  import("../pages/AuthorProfilePage/AuthorProfilePage")
+);
+const CreateArticlePage = lazy(() =>
+  import("../pages/CreateArticlePage/CreateArticlePage")
+);
+const NotFoundPage = lazy(() => import("../pages/NotFoundPage/NotFoundPage"));
 
 function App() {
   return (
