@@ -53,32 +53,22 @@ const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    try {
-      const response = await fetch("https://твій-бекенд/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: values.name,
-          email: values.email,
-          password: values.password,
-        }),
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        alert(errorData.message || "Registration error. Please try again.");
-        setSubmitting(false);
-        return
-      }
-      const data = await response.json();
-      resetForm();
-      navigate("/photo");
-    } catch (error) {
-       alert("Registration error. Please try again.");
-       setSubmitting(false);
-    }
-  };
+  try {
+    
+    sessionStorage.setItem("registerData", JSON.stringify({
+      name: values.name,
+      email: values.email,
+      password: values.password,
+    }));
+
+    resetForm();           
+    navigate("/photo");    
+  } catch (error) {
+    alert("Error saving data. Please try again.");
+  } finally {
+    setSubmitting(false);
+  }
+};
   
   
   return (
