@@ -71,6 +71,7 @@ box-sizing: border-box;
 .eyeBtn svg{
    width: 24px; 
    height: 24px;
+   fill: none;
 }
 .progressWrapper{
     margin-top: 8px;
@@ -108,9 +109,11 @@ font-size: 8px;
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 20px;
+transition: background-color 0.3s ease, transform 0.3s ease;
 }
 .createBtn:hover{
     background-color: #374F42;
+    transform: scale(1.05);
 }
 .descAcc{
   font-size: 16px;  
