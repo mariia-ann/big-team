@@ -3,24 +3,54 @@
 // import { logOut } from "../../redux/auth/operations";
 import { NavLink } from "react-router-dom";
 import style from "./UserMenu.module.css";
+import IconLogout from "../../assets/images/icons/log-out.svg?react";
+import clsx from "clsx";
 
-const UserMenu = () => {
+const UserMenu = ({ onClick }) => {
   // const dispatch = useDispatch();
   // const user = useSelector(selectUser);
+  const setActiveClassCreate = ({ isActive }) => {
+    return clsx(style.createLink, isActive && style.activeCreate);
+  };
+  const setActiveClassProfile = ({ isActive }) => {
+    return clsx(style.profileLink, isActive && style.active);
+  };
 
   return (
     <div className={style.userMenu}>
-      <NavLink to="/profile" className={style.profile}>My Profile</NavLink>
-      <button className={style.btn} type="button">
+      <NavLink
+        to="/profile"
+        onClick={onClick}
+        className={setActiveClassProfile}
+      >
+        My Profile
+      </NavLink>
+      <NavLink to="/create" onClick={onClick} className={setActiveClassCreate}>
         Create an article
-      </button>
-      <p className={style.profile}>Name</p>
-      <button className={style.btn} type="button">
-        Log Out
-      </button>
-      {/* <button type="button" onClick={() => dispatch(logOut())}>
+      </NavLink>
+      <div className={style.blockData}>
+        <div className={style.userData}>
+          <img
+            className={style.photo}
+            alt="photo"
+            // src={user.avatarUrl}
+            src="#"
+            width="40px"
+            height="40px"
+          />
+          <p className={style.name}>
+            {/* {user.name} */}
+            Naomi
+          </p>
+        </div>
+        <div className={style.line}></div>
+        <button className={style.btnLogout} onClick={onClick} type="button">
+          <IconLogout className={style.iconLogout} />
+        </button>
+        {/* <button type="button" onClick={() => dispatch(logOut())}>
         Log Out
       </button> */}
+      </div>
     </div>
   );
 };
