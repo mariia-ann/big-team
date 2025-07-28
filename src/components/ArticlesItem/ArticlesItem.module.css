@@ -1,8 +1,8 @@
 .articleItem {
   border-radius: 32px;
+  width: 361px;
   padding: 12px;
-  width: 392px;
-  height: 492px;
+  height: auto;
   background: #D1E0D8;
   display: flex;
   flex-direction: column;
@@ -11,41 +11,55 @@
 }
 
 .articleImage {
-  width: 100%;
+  width: 337px;
   height: 233px;
   background: #ccc;
   border-radius: 24px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   background-size: cover;
   background-position: center;
 }
 
+
+.articleImageMiddle {
+  margin-bottom: 28.5px;
+}
+
 .author {
-  font-weight: 600;
-  font-size: 14px;
-  margin-bottom: 8px;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--black);
 }
 
 .articleTitle {
+  font-family: var(--font-family);
   font-weight: 700;
-  font-size: 18px;
-  margin-bottom: 8px;
+  font-size: 24px;
+  color: var(--black);
+  line-height: 120%;
+  width: 264px;
+  height: auto;
 }
 
 .excerpt {
-  color: #555;
-  font-size: 14px;
-  margin-bottom: auto;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 155%;
+  color: var(--black);
+  margin-bottom: 12px;
 }
 
 .buttonWrap {
-  margin-top: 24px;
   display: flex;
   justify-content: center;
+  margin-top: auto; 
+
 }
 
 .articleButton {
-  width: 320px;
+  width: 289px;
   height: 40px;
   padding: 8px;
   border-radius: 64px;
@@ -57,25 +71,19 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   outline: none;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
   box-sizing: border-box;
   gap: 16px;
 }
 
-.articleButtonActive {
+.articleButtonActive,
+.articleButton:hover,
+.articleButton:focus {
   background: #649179;
-  color: #fff;
-}
-
-.buttonText {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 500;
-  font-size: 16px;
+  color: #F7FFFB;
+  border-color: #649179;
 }
 
 .bookmarkCircle {
@@ -84,17 +92,11 @@
   height: 40px;
   align-items: center;
   justify-content: center;
-  background: #D1E0D8;       
-  border: 1px solid #0F332E;  
+  background: #D1E0D8;
+  border: 1px solid #0F332E;
   border-radius: 50%;
-  transition: border-color 0.2s, color 0.2s;
-  color: #0F332E;            
-}
-
-.bookmarkIcon {
-  display: block;
-  stroke: #0F332E;
-  transition: stroke 0.2s;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  color: #0F332E;
 }
 
 .buttonWithBookmark {
@@ -102,45 +104,81 @@
   align-items: center;
   gap: 8px;
   height: 40px;
-  flex-wrap: nowrap; 
+  flex-wrap: nowrap;
 }
 
-.articleButton:hover,
-.articleButton:focus,
-.articleButtonActive {
-  background: #649179;
-  color: #F7FFFB;
-  border-color: #649179;
-}
-
-
-.buttonWithBookmark:focus-within .bookmarkCircle,
 .buttonWithBookmark:hover .bookmarkCircle,
-.buttonWithBookmark:focus-within .bookmarkIcon,
-.buttonWithBookmark:hover .bookmarkIcon {
+.buttonWithBookmark:focus-within .bookmarkCircle {
   background: #649179;
-  border-color: #649179;
   color: #F7FFFB;
-  stroke: #F7FFFB;
+  border-color: #649179;
 }
-
 
 .bookmarkCircle svg {
-  stroke: #0F332E;
+  stroke: currentColor;
   transition: stroke 0.2s;
 }
-.buttonWithBookmark:focus-within .bookmarkCircle svg,
-.buttonWithBookmark:hover .bookmarkCircle svg {
+
+.buttonWithBookmark:hover .bookmarkCircle svg,
+.buttonWithBookmark:focus-within .bookmarkCircle svg {
   stroke: #F7FFFB;
 }
-
-
-.bookmarkCircle .bookmarkIcon {
-  stroke: #0F332E;
-  transition: stroke 0.2s;
+.articleImage {
+  width: 100%;
+  height: 233px;
+  background: #ccc;
+  border-radius: 24px;
+  margin-bottom: 12px;
+  background-size: cover;
+  background-position: center;
 }
-.buttonWithBookmark:focus-within .bookmarkCircle .bookmarkIcon,
-.buttonWithBookmark:hover .bookmarkCircle .bookmarkIcon {
-  stroke: #F7FFFB;
+
+.articleImageMiddle {
+  margin-bottom: 28.5px;
 }
 
+
+
+.excerptMiddle {
+  margin-bottom: 16.5px;
+}
+@media (min-width: 768px) and (max-width: 1439px) {
+  
+  .articleButton {
+    width: 268px;
+  }
+.articleItem {
+    width: 340px;
+  }
+  .articleImage {
+    width: 316px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1439px) {
+  .articlesList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;      
+    gap: 24px;
+  }
+  .articlesList > li,
+  .articleItem {
+    width: 340px;
+    box-sizing: border-box;
+                        
+  }
+}
+
+@media (min-width: 1440px) {
+  .articleItem {
+   width: 392px;
+  }
+
+   .articleButton {
+    width: 320px;
+  }
+
+    .articleImage {
+    width: 368px;
+  }
+}

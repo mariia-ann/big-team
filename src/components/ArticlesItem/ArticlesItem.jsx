@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./ArticlesItem.module.css";
 
-const BookmarkCircleIcon = ({ active }) => (
+const BookmarkCircleIcon = () => (
   <svg width="24" height="24" viewBox="0 0 1024 1024" aria-hidden="true">
     <path
       fill="none"
@@ -38,24 +38,54 @@ function ArticleButtonWithBookmark() {
   );
 }
 
-const ArticlesItem = ({ article }) => {
-  const { author, title, excerpt, image1x, image2x, alt } = article;
+const ArticlesItem = ({ article, isMiddle }) => {
+  const {
+    author,
+    title,
+    excerpt,
+    image1x_mob,
+    image2x_mob,
+    image1x_tab,
+    image2x_tab,
+    image1x,
+    image2x,
+    alt
+  } = article;
 
   return (
     <li className={styles.articleItem}>
       <picture className={styles.articleImageWrap}>
-        <source srcSet={`${image2x} 2x, ${image1x} 1x`} type="image/webp" />
+        {image1x_tab && image2x_tab && (
+          <source
+            srcSet={`${image1x_tab} 1x, ${image2x_tab} 2x`}
+            media="(min-width: 768px)"
+            type="image/webp"
+          />
+        )}
+        {image1x_mob && image2x_mob && (
+          <source
+            srcSet={`${image1x_mob} 1x, ${image2x_mob} 2x`}
+            media="(max-width: 767px)"
+            type="image/webp"
+          />
+        )}
         <img
-          className={styles.articleImage}
-          src={image1x}
-          srcSet={`${image1x} 1x, ${image2x} 2x`}
+          className={`${styles.articleImage} ${isMiddle ? styles.articleImageMiddle : ""}`}
+          src={image1x_mob || image1x}
+          srcSet={
+            image1x_mob && image2x_mob
+              ? `${image1x_mob} 1x, ${image2x_mob} 2x`
+              : `${image1x} 1x, ${image2x} 2x`
+          }
           alt={alt || title}
           loading="lazy"
         />
       </picture>
       <div className={styles.author}>{author}</div>
       <div className={styles.articleTitle}>{title}</div>
-      <div className={styles.excerpt}>{excerpt}</div>
+      <div className={`${styles.excerpt} ${isMiddle ? styles.excerptMiddle : ""}`}>
+        {excerpt || "\u00A0"}
+      </div>
       <div className={styles.buttonWrap}>
         <ArticleButtonWithBookmark />
       </div>
@@ -64,4 +94,7 @@ const ArticlesItem = ({ article }) => {
 };
 
 export default ArticlesItem;
+
+
+
 
