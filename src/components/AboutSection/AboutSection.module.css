@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  padding: 36px 0;
 }
 .aboutCardWrapper1 {
   display: flex;
@@ -11,8 +12,7 @@
 
 /* Текстовый блок */
 .aboutCard {
-  background: #d1e0d8;
-  /* background: var(--light-green); */
+  background: var(--color-background);
   box-sizing: border-box;
   border-radius: 32px;
   padding: 32px;
@@ -23,7 +23,7 @@
 .aboutTitle {
   font-weight: 700;
   font-size: 32px;
-  padding-bottom: 32px;
+  margin-bottom: 32px;
 }
 
 .aboutText {
@@ -45,15 +45,15 @@
   display: none;
 }
 
-/* ===== Tablet (760px - 1439px) ===== */
-@media screen and (min-width: 760px) {
+/* ===== Tablet (768px - 1439px) ===== */
+@media screen and (min-width: 768px) {
   .aboutSection {
     gap: 32px;
   }
 
   .aboutCardWrapper1 {
     flex-direction: row;
-    /* align-items: flex-start; */
+    margin-bottom: 24px;
   }
 
   .aboutCard {
@@ -90,7 +90,6 @@
   }
 
   .aboutCard {
-    border: 1px solid #000;
     width: 496px;
     height: 326px;
   }

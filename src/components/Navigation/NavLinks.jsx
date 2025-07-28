@@ -19,7 +19,7 @@ const NavLinks = ({ onClick }) => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/creators" onClick={onClick} className={setActiveClass}>
+        <NavLink to="/authors" onClick={onClick} className={setActiveClass}>
           Creators
         </NavLink>
       </li>
