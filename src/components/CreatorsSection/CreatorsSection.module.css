@@ -70,10 +70,11 @@ border-radius: 256px;
 width: 148px;
 height: 148px;
 margin-top: 16px;
+margin-bottom: 16px;
 }
 .name {
 max-width: 148px;
- text-align: center;
+text-align: center;
 }
 
 
