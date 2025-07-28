@@ -1,5 +1,14 @@
+import { CreateArticleForm } from "../../components/AddArticleForm/AddArticleForm";
+import Container from "../../components/Container/Container";
+
 const ArticlePage = () => {
-  return <div>HomePage</div>;
+  return (
+    <>
+      <Container>
+        <CreateArticleForm />
+      </Container>
+    </>
+  );
 };
 
 export default ArticlePage;
