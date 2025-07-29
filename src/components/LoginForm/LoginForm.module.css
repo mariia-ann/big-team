@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   margin: auto 0;
+  padding: 30px;
 }
 
 .inputGroup {
@@ -88,18 +89,15 @@ label {
   text-decoration-skip-ink: none;
   color: black;
 }
-
-@media screen and (min-width: 393px) {
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 330px;
-    height: 408px;
-    background-color: #d1e0d8;
-    border-radius: 32px;
-  }
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 330px;
+  height: 408px;
+  background-color: #d1e0d8;
+  border-radius: 32px;
 }
 
 @media screen and (min-width: 768px) {
