@@ -1,0 +1,195 @@
+.articleItem {
+  border-radius: 32px;
+  width: 361px;
+  padding: 12px;
+  height: auto;
+  background: #D1E0D8;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.articleImage {
+  width: 337px;
+  height: 233px;
+  background: #ccc;
+  border-radius: 24px;
+  margin-bottom: 12px;
+  background-size: cover;
+  background-position: center;
+}
+
+
+.articleImageMiddle {
+  margin-bottom: 28.5px;
+}
+
+.author {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 16px;
+  color: #070721;
+}
+
+.articleTitle {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 24px;
+  color: #070721;
+  line-height: 120%;
+  width: 264px;
+  height: auto;
+}
+
+.excerpt {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 155%;
+  color: #070721;
+  margin-bottom: 12px;
+}
+
+.buttonWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: auto; 
+
+}
+
+.articleButton {
+  width: 289px;
+  height: 40px;
+  padding: 8px;
+  border-radius: 64px;
+  border: 1px solid #374F42;
+  background: #D1E0D8;
+  color: #374F42;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  box-sizing: border-box;
+  
+}
+.bookmarkCircle svg {
+  width: 24px;
+  height: 24px;
+}
+.articleButtonActive,
+.articleButton:hover,
+.articleButton:focus {
+  background: #649179;
+  color: #F7FFFB;
+  border-color: #649179;
+}
+
+.bookmarkCircle {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  background: #D1E0D8;
+  border: 1px solid #374F42;
+  border-radius: 50%;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  color: #374F42;
+}
+
+.buttonWithBookmark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  flex-wrap: nowrap;
+}
+
+
+.articleButton:hover,
+.articleButton:focus {
+  background: #649179;
+  color: #F7FFFB;
+  border-color: #649179;
+}
+
+
+.bookmarkCircle:hover,
+.bookmarkCircle:focus {
+  background: #649179;
+  color: #F7FFFB;
+  border-color: #649179;
+}
+.bookmarkCircle svg {
+  stroke: currentColor;
+  transition: stroke 0.2s;
+}
+.bookmarkCircle:hover svg,
+.bookmarkCircle:focus svg {
+  stroke: #F7FFFB;
+}
+
+.articleImage {
+  width: 100%;
+  height: 233px;
+  background: #ccc;
+  border-radius: 24px;
+  margin-bottom: 12px;
+  background-size: cover;
+  background-position: center;
+}
+
+.articleImageMiddle {
+  margin-bottom: 28.5px;
+}
+
+
+
+.excerptMiddle {
+  margin-bottom: 16.5px;
+}
+@media (min-width: 768px) and (max-width: 1439px) {
+  
+  .articleButton {
+    width: 268px;
+  }
+.articleItem {
+    width: 340px;
+  }
+  .articleImage {
+    width: 316px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1439px) {
+  .articlesList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;      
+    gap: 24px;
+  }
+  .articlesList > li,
+  .articleItem {
+    width: 340px;
+    box-sizing: border-box;
+                        
+  }
+}
+
+@media (min-width: 1440px) {
+  .articleItem {
+   width: 392px;
+  }
+
+   .articleButton {
+    width: 320px;
+  }
+
+    .articleImage {
+    width: 368px;
+  }
+}

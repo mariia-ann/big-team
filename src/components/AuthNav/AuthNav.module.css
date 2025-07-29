@@ -1,0 +1,56 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.linkLogin {
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 15px 0;
+}
+
+.linkRegister {
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px 16px;
+  border-radius: 64px;
+  background-color: var(--color-general);
+  color: var(--color-white);
+  white-space: nowrap;
+  height: 46px;
+}
+
+.linkRegister:hover {
+  background-color: var(--color-darker);
+  color: var(--color-white);
+}
+
+.active {
+  text-decoration: 1px underline;
+  text-underline-offset: 4px;
+}
+
+.activeReg {
+  box-shadow: 0px 0px 0px 2px #fff, 0px 0px 0px 6px rgba(78, 70, 180, 0.12);
+}
+
+@media only screen and (min-width: 768px) {
+  .linkRegister {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .nav {
+    flex-direction: row;
+    padding-left: 32px;
+    gap: 32px;
+  }
+  .linkRegister {
+    position: static;
+    display: block;
+  }
+}

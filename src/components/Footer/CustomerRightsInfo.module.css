@@ -1,0 +1,16 @@
+.rightsInfo {
+  font-size: 12px;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+@media only screen and (min-width: 768px) {
+  .rightsInfo {
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .rightsInfo {
+    margin: auto;
+  }
+}

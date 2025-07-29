@@ -61,3 +61,11 @@ a {
 a:hover {
   color: var(--color-darker);
 }
+
+svg {
+  all: unset;
+  display: inline-block;
+  vertical-align: middle;
+  fill: currentColor;
+  background: transparent;
+}

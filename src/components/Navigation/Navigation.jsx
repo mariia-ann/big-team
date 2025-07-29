@@ -6,13 +6,35 @@ import style from "./Navigation.module.css";
 import { useToggle } from "../../hooks/useToggle.js";
 import NavLinks from "./NavLinks.jsx";
 import { NavLink } from "react-router-dom";
+import UserMenu from "../UserMenu/UserMenu.jsx";
+import AuthNav from "../AuthNav/AuthNav.jsx";
+import { useEffect } from "react";
+import clsx from "clsx";
 
 const Navigation = () => {
   const { isOpen, open, close } = useToggle();
+  // const isLoggedIn = useSelector(selectIsLoggedIn);
 
+  const setActiveClassBtn = ({ isActive }) => {
+    return clsx(style.createLink, isActive && style.activeCreate);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1440 && isOpen) {
+        close();
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isOpen, close]);
 
   return (
-    <>
+    <div className={style.wrap}>
       <div className={style.wrapper}>
         <nav className={style.nav}>
           <NavLink to="/">
@@ -21,25 +43,45 @@ const Navigation = () => {
           <div className={style.desktopLinks}>
             <NavLinks />
           </div>
-          <button
-          className={style.buttonMenuToggle}
-          onClick={isOpen ? close : open}
-        >
-          {isOpen ? (
-            <IconClose className={style.menuToggleIcon} />
-          ) : (
-            <IconMenu className={style.menuToggleIcon} />
-          )}
-        </button>
-        </nav>        
+          <div className={style.tabletSet}>
+            {/* {isLoggedIn ? (
+              <NavLink to="/create" className={setActiveClassBtn}>
+                Create an article
+              </NavLink>
+            ) : (
+              <NavLink to="/register" className={setActiveClassBtn}>
+                Join now
+              </NavLink>
+            )} */}
+            <NavLink to="/register" className={setActiveClassBtn}>
+              Join now
+            </NavLink>
+            <button
+              className={style.buttonMenuToggle}
+              onClick={isOpen ? close : open}
+            >
+              {isOpen ? (
+                <IconClose className={style.menuToggleIcon} />
+              ) : (
+                <IconMenu className={style.menuToggleIcon} />
+              )}
+            </button>
+          </div>
+        </nav>
+        <div className={style.userMenu}>
+          <AuthNav onClick={close} />
+          {/* {isLoggedIn ? <UserMenu /> : <AuthNav />} */}
+        </div>
       </div>
 
       {isOpen && (
         <div className={style.mobileMenu}>
           <NavLinks onClick={close} />
+          <AuthNav onClick={close} />
+          {/* {isLoggedIn ? <UserMenu onClick={close} /> : <AuthNav onClick={close} />} */}
         </div>
       )}
-    </>
+    </div>
   );
 };
 
