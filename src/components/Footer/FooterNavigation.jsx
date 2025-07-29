@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import css from "./FooterNavigation.module.css";
 
 function FooterNavigation() {
@@ -5,14 +6,14 @@ function FooterNavigation() {
     <>
       <ul className={css.footerNav}>
         <li className={css.footerNavItem}>
-          <a className={css.footerNavLink} href="articles">
+          <Link className={css.footerNavLink} to="/articles">
             Articles
-          </a>
+          </Link>
         </li>
         <li className={css.footerNavItem}>
-          <a className={css.footerNavLink} href="account">
+          <Link className={css.footerNavLink} to="/account">
             Account
-          </a>
+          </Link>
         </li>
       </ul>
     </>

@@ -1,7 +1,12 @@
+import { CreateArticleForm } from "../../components/AddArticleForm/AddArticleForm.jsx";
+import Container from "../../components/Container/Container.jsx";
+
 const CreateArticlePage = () => {
   return (
-    <div>CreateArticlePage</div>
-  )
-}
+    <Container>
+      <CreateArticleForm />
+    </Container>
+  );
+};
 
-export default CreateArticlePage
+export default CreateArticlePage;
