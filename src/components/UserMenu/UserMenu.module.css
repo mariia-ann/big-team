@@ -1,0 +1,99 @@
+.userMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  color: var(--color-darker);
+}
+
+.profileLink {
+  font-weight: 700;
+  padding: 16px 0;
+  white-space: nowrap;
+}
+
+.active {
+  text-decoration: 1px underline;
+  text-underline-offset: 4px;
+}
+
+.createLink {
+  margin-top: 16px;
+  height: 46px;
+  font-weight: 700;
+  padding: 12px 16px;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 64px;
+  background-color: var(--color-general);
+  color: var(--color-white);
+  white-space: nowrap;
+}
+
+.activeCreate {
+  box-shadow: 0px 0px 0px 2px #fff, 0px 0px 0px 6px rgba(78, 70, 180, 0.12);
+}
+
+.createLink:hover {
+  background-color: var(--color-darker);
+  color: var(--color-white);
+}
+
+.blockData {
+  margin-top: 32px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.userData {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.photo {
+  background-color: var(--color-general);
+  border-radius: 256px;
+}
+
+.name {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.line {
+  height: 39px;
+  border-right: 1px solid var(--color-darker);
+}
+.btnLogout {
+  background-color: transparent;
+  padding: 0;
+}
+.iconLogout {
+  fill: transparent;
+  stroke: var(--color-darker);
+}
+
+@media only screen and (min-width: 768px) {
+  .createLink {
+    display: none;
+  }
+  .blockData {
+    margin-top: 16px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .userMenu {
+    flex-direction: row;
+    padding-left: 32px;
+    gap: 32px;
+  }
+  .createLink {
+    display: block;
+    margin: 0;
+  }
+  .blockData {
+    margin-top: 0;
+  }
+}
