@@ -1,7 +1,7 @@
 .nav {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 16px;
   align-items: center;
 }
 
@@ -20,6 +20,7 @@
   background-color: var(--color-general);
   color: var(--color-white);
   white-space: nowrap;
+  height: 46px;
 }
 
 .linkRegister:hover {
@@ -38,9 +39,7 @@
 
 @media only screen and (min-width: 768px) {
   .linkRegister {
-    position: absolute;
-    top: 14px;
-    right: 80px;
+    display: none;
   }
 }
 
@@ -48,8 +47,10 @@
   .nav {
     flex-direction: row;
     padding-left: 32px;
+    gap: 32px;
   }
   .linkRegister {
     position: static;
+    display: block;
   }
 }
