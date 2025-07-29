@@ -32,7 +32,7 @@
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 16px;
-  color: var(--green-darker);
+  color: var(--color-darker);
   text-decoration: none;
   display: flex;
   align-items: center;
