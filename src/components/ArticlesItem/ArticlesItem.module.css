@@ -29,14 +29,14 @@
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 16px;
-  color: var(--black);
+  color: #070721;
 }
 
 .articleTitle {
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 24px;
-  color: var(--black);
+  color: #070721;
   line-height: 120%;
   width: 264px;
   height: auto;
@@ -47,7 +47,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 155%;
-  color: var(--black);
+  color: #070721;
   margin-bottom: 12px;
 }
 
@@ -65,9 +65,9 @@
   border-radius: 64px;
   border: 1px solid #374F42;
   background: #D1E0D8;
-  color: #070721;
+  color: #374F42;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -75,9 +75,12 @@
   outline: none;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
   box-sizing: border-box;
-  gap: 16px;
+  
 }
-
+.bookmarkCircle svg {
+  width: 24px;
+  height: 24px;
+}
 .articleButtonActive,
 .articleButton:hover,
 .articleButton:focus {
@@ -93,10 +96,10 @@
   align-items: center;
   justify-content: center;
   background: #D1E0D8;
-  border: 1px solid #0F332E;
+  border: 1px solid #374F42;
   border-radius: 50%;
   transition: border-color 0.2s, color 0.2s, background 0.2s;
-  color: #0F332E;
+  color: #374F42;
 }
 
 .buttonWithBookmark {
@@ -107,7 +110,7 @@
   flex-wrap: nowrap;
 }
 
-/* ТІЛЬКИ кнопка */
+
 .articleButton:hover,
 .articleButton:focus {
   background: #649179;
@@ -115,7 +118,7 @@
   border-color: #649179;
 }
 
-/* ТІЛЬКИ bookmark */
+
 .bookmarkCircle:hover,
 .bookmarkCircle:focus {
   background: #649179;

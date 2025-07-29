@@ -27,7 +27,7 @@ const ArticlesItem = ({ article, isMiddle }) => {
     author,
     title,
     excerpt,
-    img,   // url картинки з бекенду!
+    img,   
     alt,
   } = article;
 
