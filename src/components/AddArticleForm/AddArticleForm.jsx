@@ -35,6 +35,7 @@ export const CreateArticleForm = () => {
                     className={css.imageInput}
                   />
                   <div className={css.imagePreview}>
+                    {/* <div></div> */}
                     {previewUrl ? (
                       <img
                         src={previewUrl}
