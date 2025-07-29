@@ -5,7 +5,6 @@ import s from "./RegisterForm.module.css";
 import { useState } from "react";
 import IconEye from "../../assets/images/icons/eye.svg?react";
 import IconEyeClosed from "../../assets/images/icons/eye-clossed.svg?react";
-import Container from "../Container/Container";
 import { useNavigate } from "react-router-dom";
 
 const validationSchema = Yup.object({
@@ -53,16 +52,27 @@ const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (values,{setSubmitting,resetForm}) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+  try {
     
+    sessionStorage.setItem("registerData", JSON.stringify({
+      name: values.name,
+      email: values.email,
+      password: values.password,
+    }));
+
+    resetForm();           
+    navigate("/photo");    
+  } catch (error) {
+    alert("Error saving data. Please try again.");
+  } finally {
     setSubmitting(false);
-    resetForm();
-    navigate("/photo");
-  };
+  }
+};
   
   
   return (
-    // <Container>
+    
     <div className={s.registerContainer}>
       
         <h2 className={s.title} >Register</h2>
@@ -167,7 +177,7 @@ const [showPassword, setShowPassword] = useState(false);
 )}
       </Formik>
       </div>
-      //  </Container>
+      
   )
 }
 
