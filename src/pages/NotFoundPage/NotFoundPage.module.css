@@ -1,0 +1,36 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 32px 16px;
+  text-align: center;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.text {
+  font-size: 16px;
+  color: var(--color-general);
+  max-width: 440px;
+  margin-bottom: 32px;
+}
+
+.button {
+  padding: 12px 24px;
+  font-weight: 600;
+  background-color: var(--color-general);
+  color: var(--color-white);
+  border-radius: 64px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  color: var(--color-black);
+}

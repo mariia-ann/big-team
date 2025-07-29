@@ -51,6 +51,11 @@
     gap: 32px;
   }
 
+  .aboutTitle {
+    font-weight: 700;
+    font-size: 40px;
+  }
+
   .aboutCardWrapper1 {
     flex-direction: row;
     margin-bottom: 24px;

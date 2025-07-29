@@ -1,5 +1,6 @@
 import s from "./ModalErrorSave.module.css";
 import IoClose from "../../assets/images/icons/close.svg?react";
+import { NavLink } from "react-router-dom";
 
 const AuthModal = ({ onClose }) => {
   return (
@@ -13,8 +14,12 @@ const AuthModal = ({ onClose }) => {
           To save this article, you need to <br /> authorize first
         </p>
         <div className={s.buttons}>
-          <button className={s.loginBtn}>Login</button>
-          <button className={s.registerBtn}>Register</button>
+          <NavLink to="/login" className={s.loginBtn}>
+            Login
+          </NavLink>
+          <NavLink to="/register" className={s.registerBtn}>
+            Register
+          </NavLink>
         </div>
       </div>
     </div>
