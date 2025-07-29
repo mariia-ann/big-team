@@ -14,17 +14,13 @@ const HeroSection = () => {
             <div className={style.buttonGroup}>
               <NavLink
                 to="/articles"
-                className={({ isActive }) => style.button}
+                className={style.button}
               >
                 <p className={style.text}>Go to Articles</p>
               </NavLink>
               <NavLink
                 to="/register"
-                className={({ isActive }) =>
-                  isActive
-                    ? `${style.button} ${style.registerBtn} ${style.activeReg}`
-                    : `${style.button} ${style.registerBtn}`
-                }
+                className={`${style.button} ${style.registerBtn}`}
               >
                 <p className={style.textRegister}>Register</p>
               </NavLink>

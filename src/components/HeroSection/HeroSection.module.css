@@ -74,7 +74,7 @@
 .button:focus {
   background-color: var(--color-general);
   color: var(--color-black);
-  box-shadow: 0px 0px 0px 2px #fff, 0px 0px 0px 6px rgba(78, 70, 180, 0.12);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 6px rgba(78, 70, 180, 0.12);
   outline: none;
 }
 
@@ -89,27 +89,24 @@
   align-items: center;
   justify-content: center;
 }
+
 .registerBtn:hover {
   background-color: var(--color-general);
   color: var(--color-white);
   outline: none;
-  box-shadow: none; /* вимикаємо тінь при hover */
+  box-shadow: none; /* без тіні при hover */
 }
 
 .registerBtn:focus {
   background-color: var(--color-general);
   color: var(--color-white);
-  box-shadow: 0px 0px 0px 2px #fff, 0px 0px 0px 6px rgba(78, 70, 180, 0.12);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 6px rgba(78, 70, 180, 0.12);
   outline: none;
 }
 
 .registerBtn:hover .textRegister,
 .registerBtn:focus .textRegister {
   color: var(--color-white);
-}
-
-.activeReg {
-  box-shadow: 0px 0px 0px 2px #fff, 0px 0px 0px 6px rgba(78, 70, 180, 0.12);
 }
 
 .text {
