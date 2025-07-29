@@ -107,22 +107,30 @@
   flex-wrap: nowrap;
 }
 
-.buttonWithBookmark:hover .bookmarkCircle,
-.buttonWithBookmark:focus-within .bookmarkCircle {
+/* ТІЛЬКИ кнопка */
+.articleButton:hover,
+.articleButton:focus {
   background: #649179;
   color: #F7FFFB;
   border-color: #649179;
 }
 
+/* ТІЛЬКИ bookmark */
+.bookmarkCircle:hover,
+.bookmarkCircle:focus {
+  background: #649179;
+  color: #F7FFFB;
+  border-color: #649179;
+}
 .bookmarkCircle svg {
   stroke: currentColor;
   transition: stroke 0.2s;
 }
-
-.buttonWithBookmark:hover .bookmarkCircle svg,
-.buttonWithBookmark:focus-within .bookmarkCircle svg {
+.bookmarkCircle:hover svg,
+.bookmarkCircle:focus svg {
   stroke: #F7FFFB;
 }
+
 .articleImage {
   width: 100%;
   height: 233px;

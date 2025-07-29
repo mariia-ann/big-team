@@ -3,37 +3,10 @@ import { Link } from "react-router-dom";
 import styles from "./PopularArticlesSection.module.css";
 import ArticlesItem from "../ArticlesItem/ArticlesItem";
 
-// ------- Импорт ДЕСКТОП картинок (они у тебя уже были!) -------
 import image1_1x from "../../assets/images/Image1-1x.webp";
-import image1_2x from "../../assets/images/Image1-2x.webp";
-import image2_1x from "../../assets/images/Image2-1x.webp";
-import image2_2x from "../../assets/images/Image2-2x.webp";
-import image3_1x from "../../assets/images/Image3-1x.webp";
-import image3_2x from "../../assets/images/Image3-2x.webp";
-
-// ------- Импорт добавленных МОБИЛЬНЫХ и ПЛАНШЕТНЫХ картинок -------
-import image1_1x_mob from "../../assets/images/Image1-1x-mob.webp";
-import image1_2x_mob from "../../assets/images/Image1-2x-mob.webp";
-import image1_1x_tab from "../../assets/images/Image1-1x-tab.webp";
-import image1_2x_tab from "../../assets/images/Image1-2x-tab.webp";
-
 import image2_1x_mob from "../../assets/images/Image2-1x-mob.webp";
-import image2_2x_mob from "../../assets/images/Image2-2x-mob.webp";
-import image2_1x_tab from "../../assets/images/Image2-1x-tab.webp";
-import image2_2x_tab from "../../assets/images/Image2-2x-tab.webp";
-
 import image3_1x_mob from "../../assets/images/Image3-1x-mob.webp";
-import image3_2x_mob from "../../assets/images/Image3-2x-mob.webp";
-import image3_1x_tab from "../../assets/images/Image3-1x-tab.webp";
-import image3_2x_tab from "../../assets/images/Image3-2x-tab.webp";
-
-// ------- Импорт для четвертой статьи (оставь свои старые файлы) -------
 import image4_1x_mob from "../../assets/images/Image4-1x-mob.webp";
-import image4_2x_mob from "../../assets/images/Image4-2x-mob.webp";
-import image4_1x_tab from "../../assets/images/Image4-1x-tab.webp";
-import image4_2x_tab from "../../assets/images/Image4-2x-tab.webp";
-
-// ------- SVG и компонент -------
 
 const ArrowIcon = () => (
   <svg width="16" height="17" viewBox="0 0 964 1024">
@@ -63,12 +36,7 @@ const PopularArticlesSection = () => {
           author: "Clark",
           title: "When Anxiety Feels Like a Room With No Doors",
           excerpt: "A deeply personal reflection on living with generalized anxiety and the small rituals that hel...",
-          image1x: image1_1x,
-          image2x: image1_2x,
-          image1x_mob: image1_1x_mob,
-          image2x_mob: image1_2x_mob,
-          image1x_tab: image1_1x_tab,
-          image2x_tab: image1_2x_tab,
+          img: image1_1x,
           alt: "Person leaning on a railing and looking at a lake",
         },
         {
@@ -76,12 +44,7 @@ const PopularArticlesSection = () => {
           author: "Debby",
           title: "The Quiet Power of Doing Nothing",
           excerpt: "In a culture obsessed with productivity, embracing rest can be an act of resistance – and...",
-          image1x: image2_1x,
-          image2x: image2_2x,
-          image1x_mob: image2_1x_mob,
-          image2x_mob: image2_2x_mob,
-          image1x_tab: image2_1x_tab,
-          image2x_tab: image2_2x_tab,
+          img: image2_1x_mob,
           alt: "Hands passing a black paper heart",
         },
         {
@@ -89,12 +52,7 @@ const PopularArticlesSection = () => {
           author: "Max",
           title: "Mindful Mornings: 5-Minute Rituals to Start Your Day with Calm",
           excerpt: "Simple, science-backed practices that can gently shift your mood and focus before the day begins.",
-          image1x: image3_1x,
-          image2x: image3_2x,
-          image1x_mob: image3_1x_mob,
-          image2x_mob: image3_2x_mob,
-          image1x_tab: image3_1x_tab,
-          image2x_tab: image3_2x_tab,
+          img: image3_1x_mob,
           alt: "Person walking on a road during sunrise",
         },
         {
@@ -102,11 +60,7 @@ const PopularArticlesSection = () => {
           author: "Clark",
           title: "When Anxiety Feels Like a Room With No Doors",
           excerpt: "10 advices how mediations can help you feeling better",
-          image1x_mob: image4_1x_mob,
-          image2x_mob: image4_2x_mob,
-          image1x_tab: image4_1x_tab,
-          image2x_tab: image4_2x_tab,
-          // десктопные файлы для 4 статьи не указываем, если их нет!
+          img: image4_1x_mob,
           alt: "Mental Health Matters on grey background",
         },
       ]);
@@ -142,6 +96,7 @@ const PopularArticlesSection = () => {
 };
 
 export default PopularArticlesSection;
+
 
 
 
