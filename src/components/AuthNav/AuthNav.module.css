@@ -1,7 +1,7 @@
 .nav {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 32px;
   align-items: center;
 }
 
@@ -20,12 +20,11 @@
   background-color: var(--color-general);
   color: var(--color-white);
   white-space: nowrap;
-  height: 46px;
 }
 
 .linkRegister:hover {
-    background-color: var(--color-darker);
-    color: var(--color-white);
+  background-color: var(--color-darker);
+  color: var(--color-white);
 }
 
 .active {
@@ -39,7 +38,9 @@
 
 @media only screen and (min-width: 768px) {
   .linkRegister {
-    display: none;
+    position: absolute;
+    top: 14px;
+    right: 80px;
   }
 }
 
@@ -47,10 +48,8 @@
   .nav {
     flex-direction: row;
     padding-left: 32px;
-    gap: 32px;
   }
   .linkRegister {
     position: static;
-    display: block;
   }
 }
