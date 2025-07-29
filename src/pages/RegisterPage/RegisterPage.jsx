@@ -1,11 +1,11 @@
-import RegisterForm from "../../components/RegisterForm/RegisterForm.jsx"
+import RegisterForm from "../../components/RegisterForm/RegisterForm.jsx";
 
 const RegisterPage = () => {
   return (
     <>
-    <RegisterForm />
+      <RegisterForm />
     </>
-  )
-}
+  );
+};
 
-export default RegisterPage
+export default RegisterPage;
