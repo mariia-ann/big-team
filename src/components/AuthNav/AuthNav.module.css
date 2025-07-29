@@ -24,8 +24,8 @@
 }
 
 .linkRegister:hover {
-    background-color: var(--color-darker);
-    color: var(--color-white);
+  background-color: var(--color-darker);
+  color: var(--color-white);
 }
 
 .active {
