@@ -1,6 +1,6 @@
 import Container from "../Container/Container";
 import style from "./HeroSection.module.css";
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const HeroSection = () => {
   return (
@@ -12,14 +12,25 @@ const HeroSection = () => {
               Find your <span className={style.fixte}>harmony</span> in community
             </h1>
             <div className={style.buttonGroup}>
-              <a href="#popular-articles" className={style.button}>
+              <NavLink
+                to="/articles"
+                className={({ isActive }) => style.button}
+              >
                 <p className={style.text}>Go to Articles</p>
-              </a>
-              <Link to="/register" className={`${style.button} ${style.registerBtn}`}>
+              </NavLink>
+              <NavLink
+                to="/register"
+                className={({ isActive }) =>
+                  isActive
+                    ? `${style.button} ${style.registerBtn} ${style.activeReg}`
+                    : `${style.button} ${style.registerBtn}`
+                }
+              >
                 <p className={style.textRegister}>Register</p>
-              </Link>
+              </NavLink>
             </div>
           </div>
+
           <div className={style.image}></div>
         </div>
       </Container>
