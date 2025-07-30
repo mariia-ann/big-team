@@ -1,0 +1,110 @@
+.container {
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f3f9f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  background-color: #d5e3da;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  text-align: center;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.uploadBox {
+  width: 120px;
+  height: 120px;
+  background-color: #a1bca7;
+  border-radius: 50%;
+  margin: 0 auto 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.uploadBox:hover {
+  background-color: #91ab97;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  fill: white;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.saveButton {
+  width: 100%;
+  background-color: #a1bca7;
+  border: none;
+  border-radius: 25px;
+  padding: 12px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.saveButton:hover {
+  background-color: #8db395;
+}
+
+/* Tablet */
+@media (min-width: 600px) {
+  .form {
+    max-width: 500px;
+    padding: 40px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .uploadBox {
+    width: 130px;
+    height: 130px;
+  }
+
+  .icon {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .form {
+    max-width: 600px;
+  }
+
+  .uploadBox {
+    width: 140px;
+    height: 140px;
+  }
+
+  .icon {
+    width: 50px;
+    height: 50px;
+  }
+}
