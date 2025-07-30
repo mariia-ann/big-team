@@ -72,6 +72,11 @@
   cursor: pointer;
 }
 
+.registerBtn {
+  background: var(--color-general);
+  color: var(--color-white);
+}
+
 .loginBtn:hover,
 .loginBtn:active,
 .registerBtn:active,
