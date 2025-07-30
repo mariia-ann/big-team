@@ -33,7 +33,6 @@ const LoginForm = () => {
 
   const handleSubmit = (values) => {
     setLoginError(null);
-    console.log(`GETED: Email: ${values.email}, Password: ${values.password}`);
     dispatch(
       loginThunk({
         email: values.email,
