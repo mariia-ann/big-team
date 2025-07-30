@@ -13,3 +13,15 @@ export const fetchAuthors = createAsyncThunk(
     }
   }
 );
+
+export const fetchTopAuthors = createAsyncThunk(
+  "authors/fetchTop",
+  async (_, thunkAPI) => {
+    try {
+      const response = await publicAPI.get("/api/creators/top-creators");
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);

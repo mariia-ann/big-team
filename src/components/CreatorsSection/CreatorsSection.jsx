@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import styles from './CreatorsSection.module.css';
 import arrowIcon from '../../assets/images/icons/arrow.svg';
 import Container from '../Container/Container';
-import { selectCreators } from '../../redux/author/selectors.js';
-import { fetchAuthors } from '../../redux/author/operations.js';
+import { selectTopCreators } from '../../redux/author/selectors.js';
+import { fetchTopAuthors } from '../../redux/author/operations.js';
 import { useDispatch, useSelector } from 'react-redux';
 
 const CreatorsSection = () => {
   // const [creators, setCreators] = useState([]);
-  const creators = useSelector(selectCreators);
+  const creators = useSelector(selectTopCreators);
    const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -27,7 +27,7 @@ const CreatorsSection = () => {
   // }, []);
 
   useEffect(() => {
-    dispatch(fetchAuthors());
+    dispatch(fetchTopAuthors());
   }, [dispatch]);
 
   return (
@@ -43,7 +43,7 @@ const CreatorsSection = () => {
           </div>
           <div className={styles.people}>
             <ul className={styles.list}>
-              {creators.slice(0, 6).map(({ _id, name, avatarUrl }) => (
+              {creators.map(({ _id, name, avatarUrl }) => (
                 <li key={_id} className={styles.card}>
                   <img src={avatarUrl || null} alt={name} className={styles.avatar} />
                   <p className={styles.name}>{name}</p>
