@@ -10,10 +10,12 @@ import UserMenu from "../UserMenu/UserMenu.jsx";
 import AuthNav from "../AuthNav/AuthNav.jsx";
 import { useEffect } from "react";
 import clsx from "clsx";
+import { selectIsLoggedIn } from "../../redux/auth/selectors.js";
+import { useSelector } from "react-redux";
 
 const Navigation = () => {
   const { isOpen, open, close } = useToggle();
-  // const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const setActiveClassBtn = ({ isActive }) => {
     return clsx(style.createLink, isActive && style.activeCreate);
@@ -44,7 +46,7 @@ const Navigation = () => {
             <NavLinks />
           </div>
           <div className={style.tabletSet}>
-            {/* {isLoggedIn ? (
+            {isLoggedIn ? (
               <NavLink to="/create" className={setActiveClassBtn}>
                 Create an article
               </NavLink>
@@ -52,10 +54,7 @@ const Navigation = () => {
               <NavLink to="/register" className={setActiveClassBtn}>
                 Join now
               </NavLink>
-            )} */}
-            <NavLink to="/register" className={setActiveClassBtn}>
-              Join now
-            </NavLink>
+            )}
             <button
               className={style.buttonMenuToggle}
               onClick={isOpen ? close : open}
@@ -69,16 +68,14 @@ const Navigation = () => {
           </div>
         </nav>
         <div className={style.userMenu}>
-          <AuthNav onClick={close} />
-          {/* {isLoggedIn ? <UserMenu /> : <AuthNav />} */}
+          {isLoggedIn ? <UserMenu onClick={close} /> : <AuthNav onClick={close} />}
         </div>
       </div>
 
       {isOpen && (
         <div className={style.mobileMenu}>
           <NavLinks onClick={close} />
-          <AuthNav onClick={close} />
-          {/* {isLoggedIn ? <UserMenu onClick={close} /> : <AuthNav onClick={close} />} */}
+          {isLoggedIn ? <UserMenu onClick={close} /> : <AuthNav onClick={close} />}
         </div>
       )}
     </div>
