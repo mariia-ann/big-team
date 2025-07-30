@@ -29,8 +29,6 @@
   font-size: 40px;
   color: var(--color-darker);
   margin: 0;
-  line-height: 1;
-  letter-spacing: -0.02em;
 }
 
 .fixte {
@@ -197,6 +195,7 @@
   .title {
     font-weight: 800;
     font-size: 92px;
+    line-height: 1;
   }
 
   .buttonGroup {

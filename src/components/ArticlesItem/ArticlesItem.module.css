@@ -3,7 +3,7 @@
   width: 361px;
   padding: 12px;
   height: auto;
-  background: #D1E0D8;
+  background: var(--color-background);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -26,28 +26,27 @@
 }
 
 .author {
-  font-family: var(--font-family);
   font-weight: 700;
   font-size: 16px;
-  color: #070721;
+  color: var(--color-black);
 }
 
 .articleTitle {
-  font-family: var(--font-family);
+
   font-weight: 700;
   font-size: 24px;
-  color: #070721;
+  color: var(--color-black);
   line-height: 120%;
   width: 264px;
   height: auto;
 }
 
 .excerpt {
-  font-family: var(--font-family);
+  
   font-weight: 400;
   font-size: 16px;
   line-height: 155%;
-  color: #070721;
+  color: var(--color-black);
   margin-bottom: 12px;
 }
 
@@ -63,9 +62,9 @@
   height: 40px;
   padding: 8px;
   border-radius: 64px;
-  border: 1px solid #374F42;
-  background: #D1E0D8;
-  color: #374F42;
+  border: 1px solid var(--color-darker);
+  background: var(--color-background);
+  color: var(--color-darker);
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
@@ -84,9 +83,9 @@
 .articleButtonActive,
 .articleButton:hover,
 .articleButton:focus {
-  background: #649179;
-  color: #F7FFFB;
-  border-color: #649179;
+  background: var(--color-general);
+  color: var(--color-white);
+  border-color: var(--color-general);
 }
 
 .bookmarkCircle {
@@ -95,11 +94,11 @@
   height: 40px;
   align-items: center;
   justify-content: center;
-  background: #D1E0D8;
-  border: 1px solid #374F42;
+  background: var(--color-background);
+  border: 1px solid var(--color-darker);
   border-radius: 50%;
   transition: border-color 0.2s, color 0.2s, background 0.2s;
-  color: #374F42;
+  color: var(--color-darker);
 }
 
 .buttonWithBookmark {
@@ -113,17 +112,17 @@
 
 .articleButton:hover,
 .articleButton:focus {
-  background: #649179;
-  color: #F7FFFB;
-  border-color: #649179;
+  background: var(--color-general);
+  color: var(--color-white);
+  border-color: var(--color-general);
 }
 
 
 .bookmarkCircle:hover,
 .bookmarkCircle:focus {
-  background: #649179;
-  color: #F7FFFB;
-  border-color: #649179;
+  background: var(--color-general);
+  color: var(--color-white);
+  border-color: var(--color-general);
 }
 .bookmarkCircle svg {
   stroke: currentColor;
@@ -131,7 +130,7 @@
 }
 .bookmarkCircle:hover svg,
 .bookmarkCircle:focus svg {
-  stroke: #F7FFFB;
+  stroke: var(--color-white);
 }
 
 .articleImage {
