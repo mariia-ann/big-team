@@ -11,7 +11,7 @@ function FooterNavigation() {
           </Link>
         </li>
         <li className={css.footerNavItem}>
-          <Link className={css.footerNavLink} to="/account">
+          <Link className={css.footerNavLink} to="/profile">
             Account
           </Link>
         </li>
