@@ -1,4 +1,4 @@
-import ArticlesItem from "../../ArticlesItem/ArticlesItem";
+import ArticlesItem2 from "../../ArticlesItem2/ArticlesItem2.jsx";
 import s from "./ArticlesList.module.css";
 
 const ArticlesList = ({ articles = [] }) => {
@@ -9,7 +9,7 @@ const ArticlesList = ({ articles = [] }) => {
   return (
     <ul className={s.articlesList}>
       {articles.map((article) => (
-        <ArticlesItem key={article._id.$oid} article={article} />
+        <ArticlesItem2 key={article.id} article={article} />
       ))}
     </ul>
   );

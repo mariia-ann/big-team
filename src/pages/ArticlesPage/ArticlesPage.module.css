@@ -13,7 +13,6 @@
 .dropdownWrapper {
   position: relative;
   display: inline-block;
-  /*min-width: 140px;*/
 }
 
 .dropdown {
@@ -28,13 +27,19 @@
   line-height: 155%;
   color: var(--color-input);
   cursor: pointer;
-  appearance: none; /* приховує стандартну стрілочку */
+  appearance: none; /* приховує стрілочку */
   transition: border 0.2s ease;
 }
 
 .dropdown:focus,
 .dropdown:hover {
   outline: none;
+}
+
+.dropdown option:focus,
+.dropdown option:hover {
+  background-color: var(--color-background);
+  padding: 8px;
 }
 
 .dropdown::after {
@@ -66,11 +71,11 @@
   stroke-width: 1px;
   right: 8px;
   top: 50%;
-  transform: translateY(-50%) rotate(0deg); /* початкове положення */
+  transform: translateY(-50%) rotate(0deg);
   transition: transform 0.5s ease;
   pointer-events: none;
 }
 
 .dropdownIcon.open {
-  transform: translateY(-50%) rotate(180deg); /* обертається при відкритті */
+  transform: translateY(-50%) rotate(180deg);
 }
