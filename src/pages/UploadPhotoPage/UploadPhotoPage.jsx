@@ -1,9 +1,11 @@
-import UploadForm from "../../components/UploadForm/UploadForm.jsx"
+import UploadForm from "../../components/UploadForm/UploadForm.jsx";
 
 const UploadPhoto = () => {
   return (
-    <UploadForm />
-  )
-}
+    <>
+      <UploadForm />;
+    </>
+  );
+};
 
-export default UploadPhoto
+export default UploadPhoto;

@@ -9,10 +9,17 @@ import { NavLink } from "react-router-dom";
 import UserMenu from "../UserMenu/UserMenu.jsx";
 import AuthNav from "../AuthNav/AuthNav.jsx";
 import { useEffect } from "react";
+import clsx from "clsx";
+import { selectIsLoggedIn } from "../../redux/auth/selectors.js";
+import { useSelector } from "react-redux";
 
 const Navigation = () => {
   const { isOpen, open, close } = useToggle();
-  // const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  const setActiveClassBtn = ({ isActive }) => {
+    return clsx(style.createLink, isActive && style.activeCreate);
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -38,28 +45,37 @@ const Navigation = () => {
           <div className={style.desktopLinks}>
             <NavLinks />
           </div>
-          <button
-            className={style.buttonMenuToggle}
-            onClick={isOpen ? close : open}
-          >
-            {isOpen ? (
-              <IconClose className={style.menuToggleIcon} />
+          <div className={style.tabletSet}>
+            {isLoggedIn ? (
+              <NavLink to="/create" className={setActiveClassBtn}>
+                Create an article
+              </NavLink>
             ) : (
-              <IconMenu className={style.menuToggleIcon} />
+              <NavLink to="/register" className={setActiveClassBtn}>
+                Join now
+              </NavLink>
             )}
-          </button>
+            <button
+              className={style.buttonMenuToggle}
+              onClick={isOpen ? close : open}
+            >
+              {isOpen ? (
+                <IconClose className={style.menuToggleIcon} />
+              ) : (
+                <IconMenu className={style.menuToggleIcon} />
+              )}
+            </button>
+          </div>
         </nav>
         <div className={style.userMenu}>
-          <AuthNav onClick={close} />
-          {/* {isLoggedIn ? <UserMenu /> : <AuthNav />} */}
+          {isLoggedIn ? <UserMenu onClick={close} /> : <AuthNav onClick={close} />}
         </div>
       </div>
 
       {isOpen && (
         <div className={style.mobileMenu}>
           <NavLinks onClick={close} />
-          <AuthNav onClick={close} />
-          {/* {isLoggedIn ? <UserMenu onClick={close} /> : <AuthNav onClick={close} />} */}
+          {isLoggedIn ? <UserMenu onClick={close} /> : <AuthNav onClick={close} />}
         </div>
       )}
     </div>

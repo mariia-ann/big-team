@@ -1,7 +1,37 @@
+import Container from "../Container/Container";
+import style from "./HeroSection.module.css";
+import { NavLink } from 'react-router-dom';
+
 const HeroSection = () => {
   return (
-    <div>Hero</div>
-  )
-}
+    <section className={style.section}>
+      <Container>
+        <div className={style.wrapper}>
+          <div className={style.content}>
+            <h1 className={style.title}>
+              Find your <span className={style.fixte}>harmony</span> in community
+            </h1>
+            <div className={style.buttonGroup}>
+              <NavLink
+                to="/articles"
+                className={style.button}
+              >
+                <p className={style.text}>Go to Articles</p>
+              </NavLink>
+              <NavLink
+                to="/register"
+                className={`${style.button} ${style.registerBtn}`}
+              >
+                <p className={style.textRegister}>Register</p>
+              </NavLink>
+            </div>
+          </div>
 
-export default HeroSection
+          <div className={style.image}></div>
+        </div>
+      </Container>
+    </section>
+  );
+};
+
+export default HeroSection;

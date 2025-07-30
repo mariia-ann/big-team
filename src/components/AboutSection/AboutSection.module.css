@@ -51,6 +51,11 @@
     gap: 32px;
   }
 
+  .aboutTitle {
+    font-weight: 700;
+    font-size: 40px;
+  }
+
   .aboutCardWrapper1 {
     flex-direction: row;
     margin-bottom: 24px;
@@ -108,10 +113,4 @@
     width: 392px;
     height: 398px;
   }
-
-  /* .aboutGallery {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 24px;
-  } */
 }
