@@ -14,6 +14,18 @@ export const fetchArticles = createAsyncThunk(
   }
 );
 
+export const fetchArticle = createAsyncThunk(
+  "articles/fetchArticle",
+  async (id, thunkAPI) => {
+    try {
+      const response = await publicAPI.get(`/api/articles/${id}`);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
 export const addArticle = createAsyncThunk(
   "articles/addArticle",
   async (item, thunkAPI) => {

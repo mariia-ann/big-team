@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "../../redux/auth/selectors";
+import { selectIsLoggedIn, selectUser } from "../../redux/auth/selectors";
 import { logoutThunk } from "../../redux/auth/operations";
 import { NavLink } from "react-router-dom";
 import style from "./UserMenu.module.css";
 import IconLogout from "../../assets/images/icons/log-out.svg?react";
 import clsx from "clsx";
-import defaultAvatar from "../../assets/images/defaultAvatar/default-avatar.png";
 
 const UserMenu = ({ onClick }) => {
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const user = useSelector(selectUser);
 
   const setActiveClassCreate = ({ isActive }) => {
@@ -17,6 +17,8 @@ const UserMenu = ({ onClick }) => {
   const setActiveClassProfile = ({ isActive }) => {
     return clsx(style.profileLink, isActive && style.active);
   };
+
+  if (!isLoggedIn) return null;
 
   return (
     <div className={style.userMenu}>
@@ -34,8 +36,8 @@ const UserMenu = ({ onClick }) => {
         <div className={style.userData}>
           <img
             className={style.photo}
-            alt="photo"
-            src={user.avatarUrl || defaultAvatar}
+            alt={user.name || "User"}
+            src={user.avatarUrl || undefined}
             width="40px"
             height="40px"
           />

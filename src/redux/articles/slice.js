@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addArticle, fetchArticles } from "./operations.js";
+import { addArticle, fetchArticle, fetchArticles } from "./operations.js";
 
 const handlePending = (state) => {
   state.isLoading = true;
@@ -14,6 +14,7 @@ const slice = createSlice({
   name: "articles",
   initialState: {
     items: [],
+    currentArticle: null,
     isLoading: false,
     error: null,
   },
@@ -26,6 +27,14 @@ const slice = createSlice({
         state.items = action.payload;
       })
       .addCase(fetchArticles.rejected, handleRejected)
+
+      .addCase(fetchArticle.pending, handlePending)
+      .addCase(fetchArticle.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.currentArticle = action.payload;
+      })
+      .addCase(fetchArticle.rejected, handleRejected)
       
       .addCase(addArticle.pending, handlePending)
       .addCase(addArticle.fulfilled, (state, action) => {

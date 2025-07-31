@@ -49,6 +49,7 @@
   display: flex;
   gap: 8px;
   align-items: center;
+  overflow: hidden;
 }
 
 .photo {
@@ -59,6 +60,8 @@
 .name {
   font-size: 12px;
   font-weight: 700;
+  min-width: 100px;
+  white-space: nowrap;
 }
 
 .line {
