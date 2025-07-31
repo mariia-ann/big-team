@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const CreatorsSection = () => {
   // const [creators, setCreators] = useState([]);
   const creators = useSelector(selectTopCreators);
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // useEffect(() => {
   //   const fetchCreators = async () => {
@@ -45,7 +45,9 @@ const CreatorsSection = () => {
             <ul className={styles.list}>
               {creators.map(({ _id, name, avatarUrl }) => (
                 <li key={_id} className={styles.card}>
-                  <img src={avatarUrl || null} alt={name} className={styles.avatar} />
+                  <Link to={`/api/users/:userId`}>
+                    <img src={avatarUrl || null} alt={name} className={styles.avatar} />
+                  </Link>
                   <p className={styles.name}>{name}</p>
                 </li>
               ))}
