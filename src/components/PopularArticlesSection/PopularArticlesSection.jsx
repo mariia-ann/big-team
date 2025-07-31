@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./PopularArticlesSection.module.css";
 import ArticlesItem from "../ArticlesItem/ArticlesItem";
+import AuthModal from "../ModalErrorSave/ModalErrorSave";
+import { toast } from "react-hot-toast";
 
 import image1_1x from "../../assets/images/Image1-1x.webp";
 import image2_1x_mob from "../../assets/images/Image2-1x-mob.webp";
@@ -25,7 +27,25 @@ const ArrowIcon = () => (
 const PopularArticlesSection = () => {
   const [articles, setArticles] = useState([]);
   const [status, setStatus] = useState("idle");
-  const [error] = useState(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [loadingBookmarkId, setLoadingBookmarkId] = useState(null);
+  const [bookmarked, setBookmarked] = useState([]);
+  const [isAuth, setIsAuth] = useState(false); 
+
+  const openAuthModal = () => setShowAuthModal(true);
+  const closeAuthModal = () => setShowAuthModal(false);
+
+useEffect(() => {
+  try {
+    const token = JSON.parse(localStorage.getItem("token"));
+    if (token) {
+      setIsAuth(true);
+    }
+  } catch (error) {
+    setIsAuth(false);
+  }
+}, []);
+
 
   useEffect(() => {
     setStatus("loading");
@@ -35,7 +55,7 @@ const PopularArticlesSection = () => {
           id: 1,
           author: "Clark",
           title: "When Anxiety Feels Like a Room With No Doors",
-          excerpt: "A deeply personal reflection on living with generalized anxiety and the small rituals that hel...",
+          excerpt: "A deeply personal reflection on living with generalized anxiety...",
           img: image1_1x,
           alt: "Person leaning on a railing and looking at a lake",
         },
@@ -43,7 +63,7 @@ const PopularArticlesSection = () => {
           id: 2,
           author: "Debby",
           title: "The Quiet Power of Doing Nothing",
-          excerpt: "In a culture obsessed with productivity, embracing rest can be an act of resistance – and...",
+          excerpt: "In a culture obsessed with productivity...",
           img: image2_1x_mob,
           alt: "Hands passing a black paper heart",
         },
@@ -51,7 +71,7 @@ const PopularArticlesSection = () => {
           id: 3,
           author: "Max",
           title: "Mindful Mornings: 5-Minute Rituals to Start Your Day with Calm",
-          excerpt: "Simple, science-backed practices that can gently shift your mood and focus before the day begins.",
+          excerpt: "Simple, science-backed practices...",
           img: image3_1x_mob,
           alt: "Person walking on a road during sunrise",
         },
@@ -68,6 +88,27 @@ const PopularArticlesSection = () => {
     }, 600);
   }, []);
 
+  const handleBookmarkToggle = async (id) => {
+    if (!isAuth) {
+      openAuthModal();
+      return;
+    }
+
+    setLoadingBookmarkId(id);
+    try {
+      // Імітація API-запиту
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      setBookmarked((prev) =>
+        prev.includes(id) ? prev.filter((bid) => bid !== id) : [...prev, id]
+      );
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoadingBookmarkId(null);
+    }
+  };
+
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
@@ -78,7 +119,6 @@ const PopularArticlesSection = () => {
           </Link>
         </div>
         {status === "loading" && <p>Loading…</p>}
-        {status === "error" && <p className={styles.error}>Error: {error}</p>}
         {status === "success" && (
           <ul className={styles.articlesList}>
             {articles.map((article, index) => (
@@ -86,16 +126,24 @@ const PopularArticlesSection = () => {
                 key={article.id}
                 article={article}
                 isMiddle={index === 1}
+                isAuth={isAuth}
+                openAuthModal={openAuthModal}
+                isSaved={bookmarked.includes(article.id)}
+                onToggleSaved={() => handleBookmarkToggle(article.id)}
               />
             ))}
           </ul>
         )}
+        {showAuthModal && <AuthModal onClose={closeAuthModal} />}
       </div>
     </section>
   );
 };
 
 export default PopularArticlesSection;
+
+
+
 
 
 
