@@ -1,10 +1,11 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/auth/selectors";
 import { logoutThunk } from "../../redux/auth/operations";
 import { NavLink } from "react-router-dom";
 import style from "./UserMenu.module.css";
 import IconLogout from "../../assets/images/icons/log-out.svg?react";
 import clsx from "clsx";
+import defaultAvatar from "../../assets/images/defaultAvatar/default-avatar.png";
 
 const UserMenu = ({ onClick }) => {
   const dispatch = useDispatch();
@@ -34,16 +35,18 @@ const UserMenu = ({ onClick }) => {
           <img
             className={style.photo}
             alt="photo"
-            src={user.avatarUrl}
+            src={user.avatarUrl || defaultAvatar}
             width="40px"
             height="40px"
           />
-          <p className={style.name}>
-            {user.name}
-          </p>
+          <p className={style.name}>{user.name}</p>
         </div>
         <div className={style.line}></div>
-        <button className={style.btnLogout} onClick={() => dispatch(logoutThunk())} type="button">
+        <button
+          className={style.btnLogout}
+          onClick={() => dispatch(logoutThunk())}
+          type="button"
+        >
           <IconLogout className={style.iconLogout} />
         </button>
         {/* <button type="button" onClick={() => dispatch(logOut())}>
