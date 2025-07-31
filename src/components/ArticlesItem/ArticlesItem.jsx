@@ -1,26 +1,8 @@
+import ButtonAddToBookmarks from "../ArticlesPage/ButtonAddToBookmarks/ButtonAddToBookmarks.jsx";
 import styles from "./ArticlesItem.module.css";
-import IconBookmark from "../../assets/images/icons/bookmark.svg?react";
 
-function ArticleButtonWithBookmark() {
-  return (
-    <div className={styles.buttonWithBookmark}>
-      <button
-        type="button"
-        className={styles.articleButton}
-        onClick={e => e.stopPropagation()}
-      >
-        Learn more
-      </button>
-      <div
-        className={styles.bookmarkCircle}
-        tabIndex={0}
-        onClick={e => e.stopPropagation()}
-      >
-        <IconBookmark />
-      </div>
-    </div>
-  );
-}
+
+
 
 const ArticlesItem = ({ article, isMiddle }) => {
   const {
@@ -45,7 +27,7 @@ const ArticlesItem = ({ article, isMiddle }) => {
         {excerpt || "\u00A0"}
       </div>
       <div className={styles.buttonWrap}>
-        <ArticleButtonWithBookmark />
+        <ButtonAddToBookmarks />
       </div>
     </li>
   );

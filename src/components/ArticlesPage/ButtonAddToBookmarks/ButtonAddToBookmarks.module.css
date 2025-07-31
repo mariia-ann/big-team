@@ -1,0 +1,90 @@
+.articleButton {
+  width: 289px;
+  height: 40px;
+  padding: 8px;
+  border-radius: 64px;
+  border: 1px solid var(--color-darker);
+  background: var(--color-background);
+  color: var(--color-darker);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  box-sizing: border-box;
+  
+}
+
+
+.bookmarkCircle svg {
+  width: 24px;
+  height: 24px;
+}
+.articleButtonActive,
+.articleButton:hover,
+.articleButton:focus {
+  background: var(--color-general);
+  color: var(--color-white);
+  border-color: var(--color-general);
+}
+
+.bookmarkCircle {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background);
+  border: 1px solid var(--color-darker);
+  border-radius: 50%;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  color: var(--color-darker);
+}
+
+.buttonWithBookmark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  flex-wrap: nowrap;
+}
+
+
+.articleButton:hover,
+.articleButton:focus {
+  background: var(--color-general);
+  color: var(--color-white);
+  border-color: var(--color-general);
+}
+
+
+.bookmarkCircle:hover,
+.bookmarkCircle:focus {
+  background: var(--color-general);
+  color: var(--color-white);
+  border-color: var(--color-general);
+}
+.bookmarkCircle svg {
+  stroke: currentColor;
+  transition: stroke 0.2s;
+}
+.bookmarkCircle:hover svg,
+.bookmarkCircle:focus svg {
+  stroke: var(--color-white);
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .articleButton {
+    width: 268px;
+  }
+}
+
+@media (min-width: 1440px) {
+
+   .articleButton {
+    width: 320px;
+  }
+}
