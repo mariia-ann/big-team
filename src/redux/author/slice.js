@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAuthors, fetchTopAuthors } from "./operations.js";
+import { fetchAuthor, fetchAuthors, fetchTopAuthors } from "./operations.js";
 
 const handlePending = (state) => {
   state.isLoading = true;
@@ -15,6 +15,7 @@ const slice = createSlice({
   initialState: {
     items: [],
     topItems: [],
+    currentCreator: null,
     isLoading: false,
     error: null,
   },
@@ -34,7 +35,15 @@ const slice = createSlice({
         state.error = null;
         state.topItems = action.payload;
       })
-      .addCase(fetchTopAuthors.rejected, handleRejected);
+      .addCase(fetchTopAuthors.rejected, handleRejected)
+
+      .addCase(fetchAuthor.pending, handlePending)
+      .addCase(fetchAuthor.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.currentCreator = action.payload;
+      })
+      .addCase(fetchAuthor.rejected, handleRejected);
   },
 });
 
