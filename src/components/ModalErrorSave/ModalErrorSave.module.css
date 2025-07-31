@@ -75,6 +75,7 @@
 .registerBtn {
   background: var(--color-general);
   color: var(--color-white);
+  border: none;
 }
 
 .loginBtn:hover,
