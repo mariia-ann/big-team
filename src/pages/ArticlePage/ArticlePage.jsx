@@ -185,7 +185,7 @@ const demoArticles = [
 ];
 
 const ArticlePage = () => {
-  const { articlesId } = useParams(); // витягуємо ID з URL
+  const { articlesId } = useParams(); // витягуємо ID з URL /
   const [savedArticles, setSavedArticles] = useState([]);
   const [article, setArticle] = useState(null);
   const [relatedArticles, setRelatedArticles] = useState([]);
