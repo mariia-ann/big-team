@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { registerThunk } from "../../redux/auth/operations";
+import { registerThunk, refreshThunk } from "../../redux/auth/operations";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { Formik, Form, ErrorMessage } from "formik";
@@ -17,7 +17,6 @@ const UploadForm = () => {
 
   useEffect(() => {
     const stored = sessionStorage.getItem("registerData");
-
     if (stored) {
       setRegisterData(JSON.parse(stored));
     } else {
@@ -38,6 +37,16 @@ const UploadForm = () => {
     ),
   });
 
+  const submitRegister = async (formData) => {
+    try {
+      await dispatch(registerThunk(formData)).unwrap();
+      await dispatch(refreshThunk()); // <- ключова частина
+      navigate("/");
+    } catch (error) {
+      setFormError(error?.message || "Registration failed.");
+    }
+  };
+
   const handleSubmit = async (values) => {
     if (!registerData) {
       setFormError("Missing registration data.");
@@ -46,7 +55,6 @@ const UploadForm = () => {
 
     const { name, email, password } = registerData;
     const formData = new FormData();
-
     formData.append("name", name);
     formData.append("email", email);
     formData.append("password", password);
@@ -55,12 +63,7 @@ const UploadForm = () => {
       formData.append("avatar", values.photo);
     }
 
-    try {
-      await dispatch(registerThunk(formData)).unwrap();
-      navigate("/");
-    } catch (error) {
-      setFormError(error?.message || "Registration failed.");
-    }
+    await submitRegister(formData);
   };
 
   const handleSkip = async () => {
@@ -71,17 +74,11 @@ const UploadForm = () => {
 
     const { name, email, password } = registerData;
     const formData = new FormData();
-
     formData.append("name", name);
     formData.append("email", email);
     formData.append("password", password);
 
-    try {
-      await dispatch(registerThunk(formData)).unwrap();
-      // navigate("/");
-    } catch (error) {
-      setFormError(error?.message || "Registration failed.");
-    }
+    await submitRegister(formData);
   };
 
   return (
@@ -139,3 +136,4 @@ const UploadForm = () => {
 };
 
 export default UploadForm;
+

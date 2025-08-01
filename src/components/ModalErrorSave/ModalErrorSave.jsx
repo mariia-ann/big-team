@@ -1,9 +1,11 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import s from "./ModalErrorSave.module.css";
 import IoClose from "../../assets/images/icons/close.svg?react";
-import { NavLink } from "react-router-dom";
 
 const AuthModal = ({ onClose }) => {
+  const navigate = useNavigate();
+
   // Закриття по Escape
   useEffect(() => {
     const handleEsc = (e) => {
@@ -20,12 +22,14 @@ const AuthModal = ({ onClose }) => {
 
   // Клік по Login
   const handleLogin = () => {
-    window.location.href = "/login";
+    onClose(); // закрити модалку
+    navigate("/login");
   };
 
   // Клік по Register
   const handleRegister = () => {
-    window.location.href = "/register";
+    onClose(); // закрити модалку
+    navigate("/register");
   };
 
   return (
@@ -39,12 +43,12 @@ const AuthModal = ({ onClose }) => {
           To save this article, you need to <br /> authorize first
         </p>
         <div className={s.buttons}>
-          <NavLink to="/login" className={s.loginBtn}>
+          <button onClick={handleLogin} className={s.loginBtn}>
             Login
-          </NavLink>
-          <NavLink to="/register" className={s.registerBtn}>
+          </button>
+          <button onClick={handleRegister} className={s.registerBtn}>
             Register
-          </NavLink>
+          </button>
         </div>
       </div>
     </div>
@@ -52,4 +56,5 @@ const AuthModal = ({ onClose }) => {
 };
 
 export default AuthModal;
+
 

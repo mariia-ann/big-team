@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./PopularArticlesSection.module.css";
 import ArticlesItem from "../ArticlesItem/ArticlesItem";
 import AuthModal from "../ModalErrorSave/ModalErrorSave";
@@ -25,27 +25,30 @@ const ArrowIcon = () => (
 );
 
 const PopularArticlesSection = () => {
+  const location = useLocation();
   const [articles, setArticles] = useState([]);
   const [status, setStatus] = useState("idle");
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [loadingBookmarkId, setLoadingBookmarkId] = useState(null);
   const [bookmarked, setBookmarked] = useState([]);
-  const [isAuth, setIsAuth] = useState(false); 
+  const [isAuth, setIsAuth] = useState(false);
 
   const openAuthModal = () => setShowAuthModal(true);
   const closeAuthModal = () => setShowAuthModal(false);
 
-useEffect(() => {
-  try {
-    const token = JSON.parse(localStorage.getItem("token"));
+  // Закривати модалку при переході
+  useEffect(() => {
+    setShowAuthModal(false);
+  }, [location]);
+
+  // Перевірка авторизації по токену
+  useEffect(() => {
+    const rawToken = localStorage.getItem("token");
+    const token = rawToken?.replace(/^"|"$/g, ""); // Видаляємо лапки, якщо є
     if (token) {
       setIsAuth(true);
     }
-  } catch (error) {
-    setIsAuth(false);
-  }
-}, []);
-
+  }, []);
 
   useEffect(() => {
     setStatus("loading");
@@ -96,9 +99,7 @@ useEffect(() => {
 
     setLoadingBookmarkId(id);
     try {
-      // Імітація API-запиту
       await new Promise((resolve) => setTimeout(resolve, 500));
-
       setBookmarked((prev) =>
         prev.includes(id) ? prev.filter((bid) => bid !== id) : [...prev, id]
       );
