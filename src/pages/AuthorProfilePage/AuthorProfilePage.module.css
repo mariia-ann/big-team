@@ -1,0 +1,196 @@
+.authorProfile {
+  padding-top: 46px;
+  padding-bottom: 46px;
+  background-color: #f7f7f7;
+  min-height: 100vh;
+  font-family: "Manrope", sans-serif;
+  box-sizing: border-box;
+}
+
+.authorProfile .container {
+  max-width: 361px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.profileHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.authorInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  border-radius: 256px;
+  width: 124px;
+  height: 124px;
+  object-fit: cover;
+}
+
+.myProfileTitle {
+  display: none;
+}
+
+.authorName {
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--color-black);
+  text-align: left;
+  padding-bottom: 4px;
+}
+
+.articlesCount {
+  font-weight: 700;
+  font-size: 18px;
+  color: #000;
+  text-align: left;
+}
+
+.authorTextInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 124px;
+}
+
+.tabs {
+  display: none;
+  justify-content: flex-start;
+  gap: 38px;
+  margin-bottom: 24px;
+}
+
+.tabButton {
+  background-color: transparent;
+  border: none;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-darker);
+  padding: 0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.activeTab {
+  border-bottom: 1px solid var(--color-darker);
+  padding-bottom: 4px;
+}
+
+.articlesList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.loadMoreButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+  border-radius: 64px;
+  padding: 16px;
+  width: 361px;
+  height: 57px;
+  background: var(--color-general);
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--color-white);
+  transition: background-color 0.3s ease;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.loadMoreButton:hover {
+  background-color: #557d6d;
+}
+
+.loading,
+.loadingArticles,
+.error,
+.errorArticles,
+.noAuthor,
+.noArticles {
+  font-size: 1.2rem;
+  color: #777;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.error,
+.errorArticles {
+  color: #d9534f;
+}
+
+.is-current-user-profile .myProfileTitle {
+  display: block;
+  font-weight: 700;
+  font-size: 40px;
+  color: #000;
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.is-current-user-profile .profileHeader {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.is-current-user-profile .avatar {
+  width: 137px;
+  height: 137px;
+}
+
+.is-current-user-profile .tabs {
+  display: flex;
+}
+
+@media (min-width: 768px) {
+  .authorProfile .container {
+    max-width: 704px;
+  }
+
+  .authorInfo {
+    justify-content: flex-start;
+  }
+
+  .avatar,
+  .is-current-user-profile .avatar {
+    width: 137px;
+    height: 137px;
+  }
+
+  .authorTextInfo {
+    height: 137px;
+  }
+
+  .articlesList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .loadMoreButton {
+    width: 289px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .authorProfile .container {
+    max-width: 1224px;
+  }
+
+  .articlesList {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
