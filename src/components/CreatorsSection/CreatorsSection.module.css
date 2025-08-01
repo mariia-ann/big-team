@@ -59,9 +59,9 @@ border-radius: 32px;
 .icon {
 stroke-width: 1px;
 stroke: #374f42;
-height: 16px;
-padding-left: 12px;
-margin-top: 4px;
+height: 24px;
+margin-left: 12px;
+/* margin-top: 4px; */
 }
 
 .avatar {

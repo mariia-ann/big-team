@@ -75,7 +75,6 @@
   .articlesList {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 32px;
     justify-content: center;
   }
 .headerRow {
@@ -103,7 +102,7 @@
   }
   .articlesList > li {
     flex: 0 1 calc(33.333% - 22px);
-    max-width: calc(33.333% - 22px);
+    max-width: calc(33.333% - 16px);
   }
   .articlesList > li:nth-child(4) {
     display: none !important;

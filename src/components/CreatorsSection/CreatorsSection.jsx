@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './CreatorsSection.module.css';
-import arrowIcon from '../../assets/images/icons/arrow.svg';
+import ArrowIcon from '../../assets/images/icons/arrow.svg?react';
 import Container from '../Container/Container';
 import { selectTopCreators } from '../../redux/author/selectors.js';
 import { fetchTopAuthors } from '../../redux/author/operations.js';
@@ -37,8 +37,9 @@ const CreatorsSection = () => {
           <div className={styles.header}>
             <h2 className={styles.title}>Top Creators</h2>
             <Link to='/authors' className={styles.link}>
-              Go to all Creators
-              {<img src={arrowIcon} alt='arrow' className={styles.icon} />}
+              Go to all Creator
+              <ArrowIcon className={styles.icon} />
+              {/* {<img src={arrowIcon} alt='arrow' className={styles.icon} />} */}
             </Link>
           </div>
           <div className={styles.people}>
