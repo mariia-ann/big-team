@@ -1,85 +1,43 @@
-// ArticlesItem.jsx
-import { useState } from "react";
+import ButtonAddToBookmarks from "../ArticlesPage/ButtonAddToBookmarks/ButtonAddToBookmarks.jsx";
 import styles from "./ArticlesItem.module.css";
-import IconBookmark from "../../assets/images/icons/bookmark.svg?react";
-import { toast } from "react-toastify";
-
-function ArticleButtonWithBookmark({
-  isAuth,
-  isSaved,
-  onToggleSaved,
-  openAuthModal,
-}) {
-  const [loading, setLoading] = useState(false);
-
-  const handleBookmarkClick = async (e) => {
-    e.stopPropagation();
-
-    // Якщо НЕавторизований — просто відкриваємо модалку, інше не виконуємо!
-    if (!isAuth) {
-      if (typeof openAuthModal === "function") {
-        openAuthModal();
-      }
-      return;
-    }
-
-    setLoading(true);
-    try {
-      if (typeof onToggleSaved === "function") {
-        await onToggleSaved();
-      }
-      // стейт isSaved зміниться у parent через пропси
-    } catch (error) {
-      // alert("Failed to save article. Try again."); // Можеш включити або залишити пусто
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className={styles.buttonWithBookmark}>
-      <button
-        type="button"
-        className={styles.articleButton}
-        onClick={e => e.stopPropagation()}
-      >
-        Learn more
-      </button>
-      <div
-        className={
-          isSaved
-            ? `${styles.bookmarkCircle} ${styles.bookmarkCircleActive}`
-            : styles.bookmarkCircle
-        }
-        tabIndex={0}
-        onClick={handleBookmarkClick}
-        aria-disabled={loading}
-      >
-        {loading ? (
-          <span className={styles.loader}></span>
-        ) : (
-          <IconBookmark />
-        )}
-      </div>
-    </div>
-  );
-}
 
 const ArticlesItem = ({
   article,
   isMiddle,
   isAuth,
+  openAuthModal,
   isSaved,
   onToggleSaved,
-  openAuthModal,
+  isLoading,
 }) => {
+  if (!article || typeof article !== "object") {
+    console.error("❌ INVALID ARTICLE:", article);
+    return null;
+  }
+
   const {
-    author,
-    title,
-    excerpt,
+    author = "Unknown",
+    title = "",
+    excerpt = "",
     img,
     alt,
   } = article;
+
+  const id = article.id || article._id;
+
+  const safeTitle = String(
+    typeof title === "string" ? title : title?.en || "Untitled"
+  );
+
+  const safeExcerpt = String(
+    typeof excerpt === "string" ? excerpt : excerpt?.en || ""
+  );
+
+  const safeAlt = String(
+    typeof alt === "string" ? alt : safeTitle
+  );
+
+  const safeAuthor = String(author);
 
   return (
     <li className={styles.articleItem}>
@@ -87,25 +45,31 @@ const ArticlesItem = ({
         className={`${styles.articleImage} ${
           isMiddle ? styles.articleImageMiddle : ""
         }`}
-        src={img}
-        alt={alt || title}
+        src={typeof img === "string" ? img : "/default-image.webp"}
+        alt={safeAlt}
         loading="lazy"
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = "/default-image.webp";
+        }}
       />
-      <div className={styles.author}>{author}</div>
-      <div className={styles.articleTitle}>{title}</div>
+      <div className={styles.author}>{safeAuthor}</div>
+      <div className={styles.articleTitle}>{safeTitle}</div>
       <div
         className={`${styles.excerpt} ${
           isMiddle ? styles.excerptMiddle : ""
         }`}
       >
-        {excerpt || "\u00A0"}
+        {safeExcerpt || "\u00A0"}
       </div>
       <div className={styles.buttonWrap}>
-        <ArticleButtonWithBookmark
+        <ButtonAddToBookmarks
+          articleId={id}
           isAuth={isAuth}
+          openAuthModal={openAuthModal}
           isSaved={isSaved}
           onToggleSaved={onToggleSaved}
-          openAuthModal={openAuthModal}
+          isLoading={isLoading}
         />
       </div>
     </li>
@@ -113,6 +77,9 @@ const ArticlesItem = ({
 };
 
 export default ArticlesItem;
+
+
+
 
 
 
