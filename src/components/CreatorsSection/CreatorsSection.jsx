@@ -46,7 +46,7 @@ const CreatorsSection = () => {
             <ul className={styles.list}>
               {creators.map(({ _id, name, avatarUrl }) => (
                 <li key={_id} className={styles.card}>
-                  <Link to={`/api/users/:userId`}>
+                  <Link to={`/authors/${_id}`}>
                     <img src={avatarUrl || null} alt={name} className={styles.avatar} />
                   </Link>
                   <p className={styles.name}>{name}</p>
