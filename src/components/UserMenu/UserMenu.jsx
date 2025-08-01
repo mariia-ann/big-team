@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn, selectUser } from "../../redux/auth/selectors";
 import { logoutThunk } from "../../redux/auth/operations";
 import { NavLink } from "react-router-dom";
@@ -41,12 +41,14 @@ const UserMenu = ({ onClick }) => {
             width="40px"
             height="40px"
           />
-          <p className={style.name}>
-            {user.name}
-          </p>
+          <p className={style.name}>{user.name}</p>
         </div>
         <div className={style.line}></div>
-        <button className={style.btnLogout} onClick={() => dispatch(logoutThunk())} type="button">
+        <button
+          className={style.btnLogout}
+          onClick={() => dispatch(logoutThunk())}
+          type="button"
+        >
           <IconLogout className={style.iconLogout} />
         </button>
         {/* <button type="button" onClick={() => dispatch(logOut())}>
