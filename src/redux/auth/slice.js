@@ -10,6 +10,7 @@ const initialState = {
   user: {
     email: null,
     name: null,
+    avatarUrl: null,
   },
   token: null,
   isRefreshing: false,
@@ -25,18 +26,28 @@ const slice = createSlice({
         state.user = {
           name: action.payload.data.name,
           email: action.payload.data.email,
+          avatarUrl: action.payload.data.avatarUrl,
         };
-        // state.token = action.payload.token;
+        state.token = action.payload.data.accessToken;
         state.isLoggedIn = true;
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
-        // state.user = action.payload.user;
+        state.user = {
+          name: action.payload.data.name,
+          email: action.payload.data.email,
+          avatarUrl: action.payload.data.avatarUrl,
+        };
         state.token = action.payload.data.accessToken;
         state.isLoggedIn = true;
       })
       .addCase(refreshThunk.fulfilled, (state, action) => {
         state.isLoggedIn = true;
         state.isRefreshing = false;
+        state.user = {
+          name: action.payload.data.name,
+          email: action.payload.data.email,
+          avatarUrl: action.payload.data.avatarUrl,
+        };
       })
       .addCase(refreshThunk.pending, (state, action) => {
         state.isRefreshing = true;

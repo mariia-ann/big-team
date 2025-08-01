@@ -1,0 +1,71 @@
+.articlesHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px 0;
+}
+
+.articleCount {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.dropdownWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown {
+  border: 1px solid var(--color-input-light);
+  border-radius: 4px;
+  padding: 4px 8px;
+  width: 169px;
+  height: 33px;
+  background-color: var(--color-white);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 155%;
+  color: var(--color-input);
+  cursor: pointer;
+  appearance: none; /* приховує стрілочку */
+  transition: border 0.2s ease;
+}
+
+.dropdown:focus,
+.dropdown:hover {
+  outline: none;
+}
+
+.dropdown option:focus,
+.dropdown option:hover {
+  background-color: var(--color-background);
+  padding: 8px;
+}
+
+.dropdown::after {
+  width: 304px;
+}
+
+.dropdownWrapper::after {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #888;
+  pointer-events: none;
+}
+
+.dropdownIcon {
+  position: absolute;
+  stroke-width: 1px;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+  transition: transform 0.5s ease;
+  pointer-events: none;
+}
+
+.dropdownIcon.open {
+  transform: translateY(-50%) rotate(180deg);
+}

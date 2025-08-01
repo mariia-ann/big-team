@@ -7,6 +7,9 @@ import image1_1x from "../../assets/images/Image1-1x.webp";
 import image2_1x_mob from "../../assets/images/Image2-1x-mob.webp";
 import image3_1x_mob from "../../assets/images/Image3-1x-mob.webp";
 import image4_1x_mob from "../../assets/images/Image4-1x-mob.webp";
+// import { useDispatch, useSelector } from "react-redux";
+// import { selectArticles } from "../../redux/articles/selectors.js";
+// import { fetchArticles } from "../../redux/articles/operations.js";
 
 const ArrowIcon = () => (
   <svg width="16" height="17" viewBox="0 0 964 1024">
@@ -24,11 +27,16 @@ const ArrowIcon = () => (
 
 const PopularArticlesSection = () => {
   const [articles, setArticles] = useState([]);
-  const [status, setStatus] = useState("idle");
-  const [error] = useState(null);
+  // const [status, setStatus] = useState("idle");
+  // const [error] = useState(null);
+  // const dispatch = useDispatch();
+  // const articles = useSelector(selectArticles)
+
+  //  useEffect(() => {
+  //     dispatch(fetchArticles());
+  //   }, [dispatch]);
 
   useEffect(() => {
-    setStatus("loading");
     setTimeout(() => {
       setArticles([
         {
@@ -64,8 +72,7 @@ const PopularArticlesSection = () => {
           alt: "Mental Health Matters on grey background",
         },
       ]);
-      setStatus("success");
-    }, 600);
+    }, 100);
   }, []);
 
   return (
@@ -77,19 +84,15 @@ const PopularArticlesSection = () => {
             Go to all Articles <ArrowIcon />
           </Link>
         </div>
-        {status === "loading" && <p>Loading…</p>}
-        {status === "error" && <p className={styles.error}>Error: {error}</p>}
-        {status === "success" && (
           <ul className={styles.articlesList}>
             {articles.map((article, index) => (
               <ArticlesItem
-                key={article.id}
+                key={article._id}
                 article={article}
                 isMiddle={index === 1}
               />
             ))}
           </ul>
-        )}
       </div>
     </section>
   );

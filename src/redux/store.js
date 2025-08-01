@@ -26,7 +26,7 @@ const persistedReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     articles: articlesReducer,
-    author: authorReducer,
+    authors: authorReducer,
     auth: persistedReducer,
   },
   middleware: (getDefaultMiddleware) =>

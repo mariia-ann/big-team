@@ -6,8 +6,13 @@ import { useState } from "react";
 import eyeOpen from "../../assets/images/icons/eye.svg";
 import eyeClosed from "../../assets/images/icons/eye-clossed.svg";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginThunk } from "../../redux/auth/operations";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .required("Email is required")
@@ -17,6 +22,7 @@ const LoginForm = () => {
       .min(6, "Password must be at least 6 characters"),
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState(null);
 
   const initialValues = {
     email: "",
@@ -25,14 +31,44 @@ const LoginForm = () => {
   const emailFieldId = useId();
   const passwordFieldId = useId();
 
+  const handleSubmit = (values) => {
+    setLoginError(null);
+    dispatch(
+      loginThunk({
+        email: values.email,
+        password: values.password,
+      })
+    )
+      .unwrap()
+      .then(() => {
+        console.log(`Login successful`);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Login failed:", error);
+        setLoginError(`Error :) ${error}`);
+      });
+  };
+
   return (
     <div className={css.wrapper}>
       <div className={css.container}>
         <h3 className={css.title}>Login</h3>
+        {loginError && (
+          <div
+            style={{
+              color: "red",
+              marginTop: "5px",
+              marginBottom: "20px",
+            }}
+          >
+            {loginError}
+          </div>
+        )}
         <Formik
           initialValues={initialValues}
-          onSubmit={{}}
           validationSchema={validationSchema}
+          onSubmit={handleSubmit}
         >
           <Form>
             <div className={css.inputGroup}>
