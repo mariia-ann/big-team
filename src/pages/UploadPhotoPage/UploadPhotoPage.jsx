@@ -1,9 +1,12 @@
+import Container from "../../components/Container/Container.jsx";
 import UploadForm from "../../components/UploadForm/UploadForm.jsx";
 
 const UploadPhoto = () => {
   return (
     <>
-      <UploadForm />;
+      <Container>
+        <UploadForm />
+      </Container>
     </>
   );
 };

@@ -1,14 +1,17 @@
-import { useDispatch, useSelector } from "react-redux"
-import { selectUser } from "../../redux/auth/selectors";
-import { logoutThunk } from "../../redux/auth/operations";
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn, selectUser } from "../../redux/auth/selectors";
 import { NavLink } from "react-router-dom";
 import style from "./UserMenu.module.css";
 import IconLogout from "../../assets/images/icons/log-out.svg?react";
+import defaultAvatar from "../../assets/images/defaultAvatar/default-avatar.png";
 import clsx from "clsx";
+import { useToggle } from "../../hooks/useToggle.js";
+import ModalLogOut from "../ModalLogOut/ModalLogOut.jsx";
 
 const UserMenu = ({ onClick }) => {
-  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const user = useSelector(selectUser);
+  const { isOpen, open, close } = useToggle();
 
   const setActiveClassCreate = ({ isActive }) => {
     return clsx(style.createLink, isActive && style.activeCreate);
@@ -16,6 +19,8 @@ const UserMenu = ({ onClick }) => {
   const setActiveClassProfile = ({ isActive }) => {
     return clsx(style.profileLink, isActive && style.active);
   };
+
+  if (!isLoggedIn) return null;
 
   return (
     <div className={style.userMenu}>
@@ -33,23 +38,24 @@ const UserMenu = ({ onClick }) => {
         <div className={style.userData}>
           <img
             className={style.photo}
-            alt="photo"
-            src={user.avatarUrl}
+            alt={user.name || "User"}
+            src={user.avatarUrl || defaultAvatar}
             width="40px"
             height="40px"
           />
-          <p className={style.name}>
-            {user.name}
-          </p>
+          <p className={style.name}>{user.name}</p>
         </div>
         <div className={style.line}></div>
-        <button className={style.btnLogout} onClick={() => dispatch(logoutThunk())} type="button">
+        <button
+          className={style.btnLogout}
+          // onClick={() => dispatch(logoutThunk())}
+          onClick={open}
+          type="button"
+        >
           <IconLogout className={style.iconLogout} />
         </button>
-        {/* <button type="button" onClick={() => dispatch(logOut())}>
-        Log Out
-      </button> */}
       </div>
+      {isOpen && (<ModalLogOut onClose={close} />)}
     </div>
   );
 };
