@@ -1,52 +1,44 @@
-import css from "./LoginForm.module.css";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useId } from "react";
-import { useState } from "react";
+import toast from "react-hot-toast";
+import { useId, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { loginThunk } from "../../redux/auth/operations";
+import css from "./LoginForm.module.css";
 import eyeOpen from "../../assets/images/icons/eye.svg";
 import eyeClosed from "../../assets/images/icons/eye-clossed.svg";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { loginThunk } from "../../redux/auth/operations";
-import { useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
+const LoginForm = ({ onSuccess, onError }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-      .required("Email is required")
-      .email("Invalid email format"),
+      .email("Invalid email format")
+      .required("Email is required"),
     password: Yup.string()
-      .required("Password is required")
-      .min(6, "Password must be at least 6 characters"),
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
   });
+
   const [showPassword, setShowPassword] = useState(false);
-  const [loginError, setLoginError] = useState(null);
+  const initialValues = { email: "", password: "" };
+  const emailId = useId();
+  const passwordId = useId();
 
-  const initialValues = {
-    email: "",
-    password: "",
-  };
-  const emailFieldId = useId();
-  const passwordFieldId = useId();
-
-  const handleSubmit = (values) => {
-    setLoginError(null);
-    dispatch(
-      loginThunk({
-        email: values.email,
-        password: values.password,
-      })
-    )
+  const handleSubmit = async (values) => {
+    dispatch(loginThunk(values))
       .unwrap()
       .then(() => {
-        console.log(`Login successful`);
+        onSuccess?.();
         navigate("/");
+        toast.success("Login successful!");
       })
       .catch((error) => {
-        console.error("Login failed:", error);
-        setLoginError(`Error :) ${error}`);
+        onError?.(error);
+        toast.error(error);
       });
   };
 
@@ -54,64 +46,74 @@ const LoginForm = () => {
     <div className={css.wrapper}>
       <div className={css.container}>
         <h3 className={css.title}>Login</h3>
-        {loginError && (
-          <div
-            style={{
-              color: "red",
-              marginTop: "5px",
-              marginBottom: "20px",
-            }}
-          >
-            {loginError}
-          </div>
-        )}
+
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          <Form>
-            <div className={css.inputGroup}>
-              <label htmlFor={emailFieldId} className={css.label}>
-                Enter your email address
-              </label>
-              <Field
-                name="email"
-                type="email"
-                id={emailFieldId}
-                className={css.input}
-              />
-            </div>
-            <div className={css.inputGroup}>
-              <label htmlFor={passwordFieldId} className={css.label}>
-                Enter a password
-              </label>
-              <div className={css.passwordEye}>
+          {({ validateForm }) => (
+            <Form>
+              <div className={css.inputGroup}>
+                <label htmlFor={emailId} className={css.label}>
+                  Email
+                </label>
                 <Field
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  id={passwordFieldId}
+                  name="email"
+                  type="email"
+                  id={emailId}
                   className={css.input}
                 />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className={css.eyeButton}
-                >
-                  {showPassword ? (
-                    <img src={eyeOpen} alt="Show password" />
-                  ) : (
-                    <img src={eyeClosed} alt="Hide password" />
-                  )}
-                </button>
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className={css.error}
+                />
               </div>
-            </div>
 
-            <button type="submit" className={css.btn}>
-              Login
-            </button>
-          </Form>
+              <div className={css.inputGroup}>
+                <label htmlFor={passwordId} className={css.label}>
+                  Password
+                </label>
+                <div className={css.passwordEye}>
+                  <Field
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    id={passwordId}
+                    className={css.input}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className={css.eyeButton}
+                  >
+                    <img
+                      src={showPassword ? eyeOpen : eyeClosed}
+                      alt={showPassword ? "Show password" : "Hide password"}
+                    />
+                  </button>
+                </div>
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className={css.error}
+                />
+              </div>
+
+              <button
+                type="submit"
+                className={css.btn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSubmit(initialValues, { validateForm });
+                }}
+              >
+                Login
+              </button>
+            </Form>
+          )}
         </Formik>
+
         <p className={css.text}>
           Don't have an account?{" "}
           <NavLink to="/register" className={css.navlink}>
