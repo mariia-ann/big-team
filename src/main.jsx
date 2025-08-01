@@ -8,13 +8,15 @@ import { persistor, store } from "./redux/store.js";
 import { Provider } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import { PersistGate } from "redux-persist/integration/react";
+import NothingFound from "./components/NothingFound/NothingFound.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          <App />
+          <NothingFound />
+          {/* <App /> */}
           <Toaster />
         </BrowserRouter>
       </PersistGate>

@@ -1,0 +1,99 @@
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 40px;
+  padding-top: 20px;
+  margin-bottom: 24px;
+}
+
+.userText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.username {
+  font-weight: 700;
+  font-size: 24px;
+  text-align: center;
+}
+
+.articleCount {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.avatar {
+  border-radius: 256px;
+  width: 137px;
+  height: 137px;
+  object-fit: cover;
+  display: block;
+}
+
+.tabs {
+  margin-top: 24px;
+  margin-bottom: 51px;
+  display: flex;
+  gap: 38px;
+}
+
+.tabs button {
+  font-weight: 700;
+  font-size: 16px;
+  padding: 0px 0px 4px 0px;
+  background: none;
+}
+
+.tabs .active {
+  border-bottom: 1px solid var(--color-darker);
+}
+
+@media (min-width: 768px) {
+  .username {
+    font-size: 32px;
+  }
+
+  .articleCount {
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .avatar {
+    border-radius: 256px;
+    width: 137px;
+    height: 137px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .user-info img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .tabs {
+    margin-bottom: 40px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .profile {
+    max-width: 800px;
+  }
+
+  .tabs button {
+    font-size: 18px;
+  }
+
+  .tabs {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+}
