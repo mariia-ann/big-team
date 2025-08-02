@@ -1,19 +1,66 @@
-import { Formik, Form, Field } from "formik";
-import css from "./AddArticleForm.module.css";
-import { useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { addArticle } from "../../redux/articles/operations";
+import { selectUser } from "../../redux/auth/selectors";
 import IconUploadFoto from "../../assets/images/icons/media.svg?react";
+import css from "./AddArticleForm.module.css";
+
+const validationSchema = Yup.object({
+  title: Yup.string()
+    .min(3, "Title must be at least 3 characters")
+    .max(100, "Title must be under 100 characters")
+    .required("Title is required"),
+  text: Yup.string()
+    .min(10, "Text must be at least 10 characters")
+    .required("Text is required"),
+  image: Yup.mixed().required("Image is required"),
+});
 
 export const CreateArticleForm = () => {
   const [previewUrl, setPreviewUrl] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector(selectUser);
+  const textRef = useRef();
+
+  const initialValues = {
+    title: "",
+    text: "",
+    image: null,
+  };
+
+  const handleSubmit = async (values, { resetForm }) => {
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("article", values.text);
+    formData.append("img", values.image);
+    formData.append("name", user.name);
+    formData.append("desc", values.text.slice(0, 200) + "...");
+    formData.append("date", new Date().toISOString().split("T")[0]);
+    formData.append("rate", 0);
+
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value instanceof File ? value.name : value);
+    } //це тимчасово для перевірки
+
+    try {
+      const response = await dispatch(addArticle(formData)).unwrap();
+      resetForm();
+      setPreviewUrl(null);
+      // navigate(`/articles/${response.data._id}`);
+    } catch (error) {
+      console.error("Failed to add article:", error);
+    }
+  };
 
   return (
     <Formik
-      initialValues={{ title: "", text: "", image: null }}
-      onSubmit={(values, { resetForm }) => {
-        console.log("Submitting:", values);
-        resetForm();
-        setPreviewUrl(null);
-      }}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
     >
       {({ setFieldValue, values }) => {
         const handleImageChange = (event) => {
@@ -21,6 +68,14 @@ export const CreateArticleForm = () => {
           setFieldValue("image", file);
           setPreviewUrl(file ? URL.createObjectURL(file) : null);
         };
+
+        const handleInput = (event) => {
+          const textarea = event.target;
+          textarea.style.height = "auto";
+          textarea.style.height = textarea.scrollHeight + "px";
+          setFieldValue("text", textarea.value);
+        };
+
         return (
           <Form className={css.form}>
             <h2 className={css.heading}>Create an article</h2>
@@ -47,6 +102,11 @@ export const CreateArticleForm = () => {
                     )}
                   </div>
                 </label>
+                <ErrorMessage
+                  name="image"
+                  component="div"
+                  className={css.error}
+                />
               </div>
 
               <div className={css.inputsWrapper}>
@@ -57,14 +117,29 @@ export const CreateArticleForm = () => {
                     placeholder="Enter the title"
                     className={css.input}
                   />
+                  <ErrorMessage
+                    name="title"
+                    component="div"
+                    className={css.error}
+                  />
                 </label>
               </div>
-              <Field
-                as="textarea"
-                name="text"
-                placeholder="Enter a text"
-                className={css.textarea}
-              />
+
+              <label className={css.label}>
+                <textarea
+                  name="text"
+                  placeholder="Enter a text"
+                  className={css.textarea}
+                  ref={textRef}
+                  value={values.text}
+                  onInput={handleInput}
+                />
+                <ErrorMessage
+                  name="text"
+                  component="div"
+                  className={css.error}
+                />
+              </label>
             </div>
 
             <button type="submit" className={css.submitButton}>
