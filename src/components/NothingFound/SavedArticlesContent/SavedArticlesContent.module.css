@@ -12,7 +12,7 @@
   height: 40px;
   padding: 13px;
   fill: transparent;
-  stroke: var(--color-background);
+  stroke: var(--color-black);
 }
 
 .title {
@@ -38,6 +38,10 @@
   padding: 8px;
   width: 100%;
   box-sizing: border-box;
+}
+.button:hover,
+.button:focus {
+  background-color: var(--color-general);
 }
 
 @media (min-width: 768px) {
