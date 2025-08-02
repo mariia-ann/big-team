@@ -72,8 +72,13 @@
   font-size: 24px;
   text-align: center;
   color: var(--color-black);
-  margin-top: auto;
+  margin-top: 0;
   margin-bottom: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .loadMore {
@@ -159,6 +164,10 @@
   .avatarWrap {
     width: 262px;
     height: 262px;
+  }
+
+  .name {
+    min-width: 0;
   }
 
   .loadMore {

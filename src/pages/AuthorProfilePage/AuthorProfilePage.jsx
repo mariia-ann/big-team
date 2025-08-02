@@ -1,15 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { selectIsLoggedIn, selectUser } from "../../redux/auth/selectors.js";
-
 import Container from "../../components/Container/Container";
-import ArticlesItem from "../../components/ArticlesItem/ArticlesItem.jsx";
+import ArticlesItem2 from "../../components/ArticlesItem2/ArticlesItem2.jsx";
 import css from "./AuthorProfilePage.module.css";
 
 const ITEMS_PER_PAGE = 12;
-const BASE_URL = "https://harmoniq-server-big-team.onrender.com";
+const BASE_URL = "https://harmoniq-server-big-team.onrender.com/api";
 
 const AuthorProfilePage = () => {
   const { authorsId } = useParams();
@@ -18,23 +15,10 @@ const AuthorProfilePage = () => {
   const [isLoadingProfile, setIsLoadingProfile] = useState(true);
   const [errorProfile, setErrorProfile] = useState(null);
 
-  const [allMyArticles, setAllMyArticles] = useState([]);
-  const [myArticlesPage, setMyArticlesPage] = useState(1);
-  const [isLoadingMyArticles, setIsLoadingMyArticles] = useState(true);
-  const [errorMyArticles, setErrorMyArticles] = useState(null);
-
-  const [allSavedArticles, setAllSavedArticles] = useState([]);
-  const [savedArticlesPage, setSavedArticlesPage] = useState(1);
-  const [isLoadingSavedArticles, setIsLoadingSavedArticles] = useState(true);
-  const [errorSavedArticles, setErrorSavedArticles] = useState(null);
-
-  const [currentTab, setCurrentTab] = useState("myArticles");
-
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const loggedInUser = useSelector(selectUser);
-  const loggedInUserId = loggedInUser ? loggedInUser.id : null;
-
-  const isCurrentUserProfile = isLoggedIn && authorsId === loggedInUserId;
+  const [allAuthorArticles, setAllAuthorArticles] = useState([]);
+  const [articlesPage, setArticlesPage] = useState(1);
+  const [isLoadingArticles, setIsLoadingArticles] = useState(true);
+  const [errorArticles, setErrorArticles] = useState(null);
 
   const listRef = useRef(null);
 
@@ -43,7 +27,7 @@ const AuthorProfilePage = () => {
       setIsLoadingProfile(true);
       setErrorProfile(null);
       try {
-        const response = await axios.get(`${BASE_URL}/api/users/${authorsId}`);
+        const response = await axios.get(`${BASE_URL}/users/${authorsId}`);
         setAuthorProfile(response.data.data);
       } catch (err) {
         console.error("Failed to fetch author profile:", err);
@@ -60,29 +44,33 @@ const AuthorProfilePage = () => {
 
     if (authorsId) {
       fetchProfile();
-    } else {
-      setIsLoadingProfile(false);
-      setErrorProfile("Author ID is missing in the URL.");
     }
   }, [authorsId]);
 
   useEffect(() => {
     const fetchAndFilterArticles = async () => {
-      setIsLoadingMyArticles(true);
-      setErrorMyArticles(null);
+      setIsLoadingArticles(true);
+      setErrorArticles(null);
       try {
-        const response = await axios.get(`${BASE_URL}/api/articles`);
-        const allArticles = response.data.data.data;
+        const response = await axios.get(`${BASE_URL}/articles`);
+        const articlesData = response.data.data.data;
 
-        const filteredArticles = allArticles.filter(
+        if (!Array.isArray(articlesData)) {
+          throw new Error(
+            "Invalid data format received from API. Expected an array of articles."
+          );
+        }
+
+        const filteredArticles = articlesData.filter(
           (article) => article.ownerId === authorsId
         );
-        setAllMyArticles(filteredArticles || []);
+
+        setAllAuthorArticles(filteredArticles);
       } catch (err) {
         console.error("Failed to fetch articles:", err);
-        setErrorMyArticles("Failed to load articles. Please try again later.");
+        setErrorArticles("Failed to load articles. Please try again later.");
       } finally {
-        setIsLoadingMyArticles(false);
+        setIsLoadingArticles(false);
       }
     };
 
@@ -91,63 +79,21 @@ const AuthorProfilePage = () => {
     }
   }, [authorsId]);
 
-  useEffect(() => {
-    const fetchSaved = async () => {
-      setIsLoadingSavedArticles(true);
-      setErrorSavedArticles(null);
-      try {
-        const response = await axios.get(
-          `${BASE_URL}/api/users/${authorsId}/saved-articles`
-        );
-        const savedArticlesData = response.data.data.savedArticles;
-        setAllSavedArticles(savedArticlesData);
-      } catch (err) {
-        console.error("Failed to fetch saved articles:", err);
-        setErrorSavedArticles(
-          "Failed to load saved articles. Please try again later."
-        );
-      } finally {
-        setIsLoadingSavedArticles(false);
-      }
-    };
-
-    if (isCurrentUserProfile) {
-      fetchSaved();
-    }
-  }, [isCurrentUserProfile, authorsId]);
-
-  const displayedArticles =
-    currentTab === "myArticles"
-      ? allMyArticles.slice(0, myArticlesPage * ITEMS_PER_PAGE)
-      : allSavedArticles.slice(0, savedArticlesPage * ITEMS_PER_PAGE);
-
+  const displayedArticles = allAuthorArticles.slice(
+    0,
+    articlesPage * ITEMS_PER_PAGE
+  );
   const currentArticlesHasMore =
-    currentTab === "myArticles"
-      ? myArticlesPage * ITEMS_PER_PAGE < allMyArticles.length
-      : savedArticlesPage * ITEMS_PER_PAGE < allSavedArticles.length;
-
-  const currentIsLoadingArticles =
-    currentTab === "myArticles" ? isLoadingMyArticles : isLoadingSavedArticles;
-
-  const currentErrorArticles =
-    currentTab === "myArticles" ? errorMyArticles : errorSavedArticles;
+    articlesPage * ITEMS_PER_PAGE < allAuthorArticles.length;
 
   const handleLoadMore = () => {
-    if (currentTab === "myArticles") {
-      setMyArticlesPage((prevPage) => prevPage + 1);
-    } else {
-      setSavedArticlesPage((prevPage) => prevPage + 1);
-    }
+    setArticlesPage((prevPage) => prevPage + 1);
   };
 
   useEffect(() => {
     if (listRef.current) {
-      const firstNewItemIndex =
-        (currentTab === "myArticles"
-          ? myArticlesPage - 1
-          : savedArticlesPage - 1) * ITEMS_PER_PAGE;
+      const firstNewItemIndex = (articlesPage - 1) * ITEMS_PER_PAGE;
       const targetElement = listRef.current.children[firstNewItemIndex];
-
       if (targetElement) {
         window.scrollTo({
           top: targetElement.offsetTop,
@@ -155,13 +101,13 @@ const AuthorProfilePage = () => {
         });
       }
     }
-  }, [displayedArticles, currentTab, myArticlesPage, savedArticlesPage]);
+  }, [displayedArticles]);
 
   if (isLoadingProfile) {
     return (
       <section className={css.authorProfile}>
-        <Container className={css.container}>
-          <p className={css.loading}>Loading author profile...</p>
+        <Container>
+          <p className={css.loading}>Downloading the author's profile...</p>
         </Container>
       </section>
     );
@@ -170,7 +116,7 @@ const AuthorProfilePage = () => {
   if (errorProfile) {
     return (
       <section className={css.authorProfile}>
-        <Container className={css.container}>
+        <Container>
           <p className={css.error}>{errorProfile}</p>
         </Container>
       </section>
@@ -180,7 +126,7 @@ const AuthorProfilePage = () => {
   if (!authorProfile) {
     return (
       <section className={css.authorProfile}>
-        <Container className={css.container}>
+        <Container>
           <p className={css.noAuthor}>Author not found.</p>
         </Container>
       </section>
@@ -188,26 +134,19 @@ const AuthorProfilePage = () => {
   }
 
   return (
-    <section
-      className={`${css.authorProfile} ${
-        isCurrentUserProfile ? css["is-current-user-profile"] : ""
-      }`}
-    >
-      <Container className={css.container}>
-        {isCurrentUserProfile && (
-          <h1 className={css.myProfileTitle}>My Profile</h1>
-        )}
+    <section className={css.authorProfile}>
+      <Container>
         <div className={css.profileHeader}>
           <div className={css.authorInfo}>
             <img
               src={
                 authorProfile.avatarUrl ||
-                "https://placehold.co/100x100/aabbcc/ffffff?text=No+Avatar"
+                "https://placehold.co/124x124/aabbcc/ffffff?text=No+Avatar"
               }
               alt={authorProfile.name}
               className={css.avatar}
             />
-            <div className={css.authorTextInfo}>
+            <div className={css.textInfo}>
               <h2 className={css.authorName}>{authorProfile.name}</h2>
               <p className={css.articlesCount}>
                 {authorProfile.articlesAmount} articles
@@ -216,45 +155,24 @@ const AuthorProfilePage = () => {
           </div>
         </div>
 
-        {isCurrentUserProfile && (
-          <div className={css.tabs}>
-            <button
-              className={`${css.tabButton} ${
-                currentTab === "myArticles" ? css.activeTab : ""
-              }`}
-              onClick={() => setCurrentTab("myArticles")}
-            >
-              My Articles
-            </button>
-            <button
-              className={`${css.tabButton} ${
-                currentTab === "savedArticles" ? css.activeTab : ""
-              }`}
-              onClick={() => setCurrentTab("savedArticles")}
-            >
-              Saved Articles
-            </button>
-          </div>
-        )}
-
         <div className={css.articlesSection}>
-          {currentIsLoadingArticles ? (
+          {isLoadingArticles ? (
             <p className={css.loadingArticles}>Loading articles...</p>
-          ) : currentErrorArticles ? (
-            <p className={css.errorArticles}>{currentErrorArticles}</p>
+          ) : errorArticles ? (
+            <p className={css.errorArticles}>{errorArticles}</p>
           ) : displayedArticles.length === 0 ? (
-            <p className={css.noArticles}>Nothing found.</p>
+            <p className={css.noArticles}>This author has no articles yet..</p>
           ) : (
             <ul className={css.articlesList} ref={listRef}>
               {displayedArticles.map((article) => (
-                <ArticlesItem key={article._id} article={article} />
+                <ArticlesItem2 key={article._id} article={article} />
               ))}
             </ul>
           )}
 
-          {currentArticlesHasMore && !currentIsLoadingArticles && (
+          {currentArticlesHasMore && !isLoadingArticles && (
             <button className={css.loadMoreButton} onClick={handleLoadMore}>
-              Load More
+              <span className={css.loadMoreButtonText}>Load More</span>
             </button>
           )}
         </div>
