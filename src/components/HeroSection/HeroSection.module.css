@@ -40,13 +40,11 @@
   flex-direction: column;
   gap: 24px;
   width: 361px;
-  height: 138px;
 }
 
 .alignBottom {
   display: flex;
   justify-content: flex-end;
-  padding-top: 70px;
   height: 100%;
 }
 
@@ -144,7 +142,7 @@
 }
 
 .hidden {
-  visibility: hidden;
+  display: none;
 }
 
 @media (min-width: 768px) {
@@ -175,11 +173,13 @@
     width: 249px;
     height: 138px;
     gap: 24px;
+    align-items: flex-start;
   }
+
   .alignBottom {
-    padding-top: 195px;
-    height: 100%;
+    margin-bottom: 80px;
   }
+
   .image {
     position: relative;
     z-index: 1;
@@ -241,6 +241,8 @@
   }
 
   .alignBottom {
-    padding-top: 155px;
+    height: 100%;
+    display: flex;
+    justify-content: start;
   }
 }

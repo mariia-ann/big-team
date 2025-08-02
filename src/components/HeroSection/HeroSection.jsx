@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../../redux/auth/selectors.js";
 import Container from "../Container/Container";
 import style from "./HeroSection.module.css";
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 import clsx from "clsx";
 
 const HeroSection = () => {
@@ -18,19 +18,15 @@ const HeroSection = () => {
             </h1>
 
             <div className={clsx(style.buttonGroup, isLoggedIn && style.alignBottom)}>
-              <NavLink
-                to="/articles"
-                className={style.button}
-              >
+              <NavLink to="/articles" className={style.button}>
                 <p className={style.text}>Go to Articles</p>
               </NavLink>
 
-              <NavLink
-                to="/register"
-                className={clsx(style.button, style.registerBtn, isLoggedIn && style.hidden)}
-              >
-                <p className={style.textRegister}>Register</p>
-              </NavLink>
+              {!isLoggedIn && (
+                <NavLink to="/register" className={clsx(style.button, style.registerBtn)}>
+                  <p className={style.textRegister}>Register</p>
+                </NavLink>
+              )}
             </div>
           </div>
 
@@ -42,4 +38,3 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
-
