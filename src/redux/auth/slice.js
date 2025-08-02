@@ -43,6 +43,11 @@ const slice = createSlice({
       .addCase(refreshThunk.fulfilled, (state, action) => {
         state.isLoggedIn = true;
         state.isRefreshing = false;
+        state.user = {
+          name: action.payload.data.name,
+          email: action.payload.data.email,
+          avatarUrl: action.payload.data.avatarUrl,
+        };
       })
       .addCase(refreshThunk.pending, (state, action) => {
         state.isRefreshing = true;

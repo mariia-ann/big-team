@@ -68,14 +68,22 @@ const Navigation = () => {
           </div>
         </nav>
         <div className={style.userMenu}>
-          {isLoggedIn ? <UserMenu onClick={close} /> : <AuthNav onClick={close} />}
+          {isLoggedIn ? (
+            <UserMenu onClick={close} />
+          ) : (
+            <AuthNav onClick={close} />
+          )}
         </div>
       </div>
 
       {isOpen && (
         <div className={style.mobileMenu}>
           <NavLinks onClick={close} />
-          {isLoggedIn ? <UserMenu onClick={close} /> : <AuthNav onClick={close} />}
+          {isLoggedIn ? (
+            <UserMenu onClick={close} />
+          ) : (
+            <AuthNav onClick={close} />
+          )}
         </div>
       )}
     </div>
