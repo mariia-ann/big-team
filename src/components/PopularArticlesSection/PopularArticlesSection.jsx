@@ -1,120 +1,100 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
+
 import styles from "./PopularArticlesSection.module.css";
 import ArticlesItem from "../ArticlesItem/ArticlesItem";
 import AuthModal from "../ModalErrorSave/ModalErrorSave";
-import { toast } from "react-hot-toast";
-import { publicAPI } from "../../redux/api/publicAPI";
+import Loader from "../Loader/Loader";
+import ArrowIcon from "../../assets/images/icons/arrow.svg?react";
 
-const ArrowIcon = () => (
-  <svg width="16" height="17" viewBox="0 0 964 1024">
-    <path
-      fill="none"
-      strokeLinejoin="round"
-      strokeLinecap="round"
-      strokeMiterlimit="4"
-      strokeWidth="60.2353"
-      stroke="#374F42"
-      d="M52.704 935.412l858.024-858.353M910.728 77.059h-462.099M910.728 77.059v462.101"
-    />
-  </svg>
-);
+import { fetchArticles } from "../../redux/articles/operations";
+import {
+  selectArticles,
+  selectLoading,
+  selectError,
+} from "../../redux/articles/selectors";
 
 const PopularArticlesSection = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
-  const [articles, setArticles] = useState([]);
+
+  const articlesRaw = useSelector(selectArticles);
+  const isLoading = useSelector(selectLoading);
+  const error = useSelector(selectError);
+
+  const [visibleCount, setVisibleCount] = useState(4);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [loadingBookmarkId, setLoadingBookmarkId] = useState(null);
   const [bookmarked, setBookmarked] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
 
-  const openAuthModal = () => setShowAuthModal(true);
-  const closeAuthModal = () => setShowAuthModal(false);
+ 
+  useEffect(() => {
+    const token = localStorage.getItem("token")?.replace(/^"|"$/g, "");
+    setIsAuth(!!token);
+  }, []);
 
+  
+  useEffect(() => {
+    dispatch(fetchArticles());
+  }, [dispatch]);
+
+ 
+  useEffect(() => {
+    if (error) {
+      toast.error("Failed to load articles");
+    }
+  }, [error]);
+
+  
   useEffect(() => {
     setShowAuthModal(false);
   }, [location]);
 
+  
   useEffect(() => {
-    const rawToken = localStorage.getItem("token");
-    const token = rawToken?.replace(/^"|"$/g, "");
-    setIsAuth(!!token);
-  }, []);
-
-  // Статические данные (fallback)
-  useEffect(() => {
-    setArticles([
-      {
-        id: "a1",
-        author: "Clark",
-        title: "When Anxiety Feels Like a Room With No Doors",
-        excerpt: "A deeply personal reflection on living with generalized anxiety...",
-        alt: "Person leaning on a railing and looking at a lake",
-      },
-      {
-        id: "a2",
-        author: "Debby",
-        title: "The Quiet Power of Doing Nothing",
-        excerpt: "In a culture obsessed with productivity...",
-        alt: "Hands passing a black paper heart",
-      },
-      {
-        id: "a3",
-        author: "Max",
-        title: "Mindful Mornings: 5-Minute Rituals to Start Your Day with Calm",
-        excerpt: "Simple, science-backed practices...",
-        alt: "Person walking on a road during sunrise",
-      },
-      {
-        id: "a4",
-        author: "Clark",
-        title: "Meditation Techniques That Actually Work",
-        excerpt: "10 advices how mediations can help you feeling better",
-        alt: "Mental Health Matters on grey background",
-      },
-    ]);
-  }, []);
-
-  // Подгружаем изображения и id из бэка
-  useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        const res = await publicAPI.get("/api/articles");
-
-        const imgArticles = Array.isArray(res?.data?.data?.data)
-          ? res.data.data.data
-          : [];
-
-        setArticles((prev) =>
-          prev.map((article, i) => ({
-            ...article,
-            id: article.id || article._id || imgArticles[i]?._id,
-            img: imgArticles[i]?.img || "/default-image.webp",
-          }))
-        );
-      } catch (error) {
-        console.error("❌ Failed to load article images:", error);
-        toast.error("Failed to load article images");
-      }
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setVisibleCount(width >= 1440 ? 3 : 4);
     };
-
-    fetchImages();
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  
+  const articles = Array.isArray(articlesRaw)
+    ? articlesRaw
+    : Array.isArray(articlesRaw?.data)
+    ? articlesRaw.data
+    : Array.isArray(articlesRaw?.data?.data)
+    ? articlesRaw.data.data
+    : [];
+
+  const visibleArticles = articles.slice(0, visibleCount);
+
+ 
   const handleBookmarkToggle = async (id) => {
     if (!isAuth) {
-      openAuthModal();
+      setShowAuthModal(true);
       return;
     }
 
     setLoadingBookmarkId(id);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      setBookmarked((prev) => {
-        const isNowBookmarked = !prev.includes(id);
-        toast.success(isNowBookmarked ? "Saved to bookmarks" : "Removed from bookmarks");
-        return isNowBookmarked ? [...prev, id] : prev.filter((bid) => bid !== id);
-      });
+      await new Promise((res) => setTimeout(res, 500));
+      setBookmarked((prev) =>
+        prev.includes(id)
+          ? prev.filter((bid) => bid !== id)
+          : [...prev, id]
+      );
+      toast.success(
+        bookmarked.includes(id)
+          ? "Removed from bookmarks"
+          : "Saved to bookmarks"
+      );
     } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {
@@ -128,32 +108,48 @@ const PopularArticlesSection = () => {
         <div className={styles.headerRow}>
           <h2 className={styles.title}>Popular Articles</h2>
           <Link to="/articles" className={styles.allLink}>
-            Go to all Articles <ArrowIcon />
+            Go to all Articles <ArrowIcon className={styles.icon} />
           </Link>
         </div>
 
-        <ul className={styles.articlesList}>
-          {articles.map((article, index) => (
-            <ArticlesItem
-              key={article.id}
-              article={article}
-              isMiddle={index === 1}
-              isAuth={isAuth}
-              openAuthModal={openAuthModal}
-              isSaved={bookmarked.includes(article.id)}
-              onToggleSaved={() => handleBookmarkToggle(article.id)}
-              isLoading={loadingBookmarkId === article.id}
-            />
-          ))}
-        </ul>
+        {isLoading ? (
+          <div className={styles.loaderWrapper}>
+            <Loader />
+          </div>
+        ) : error ? (
+          <p className={styles.error}>Something went wrong</p>
+        ) : visibleArticles.length === 0 ? (
+          <p className={styles.empty}>No articles found</p>
+        ) : (
+          <ul className={styles.articlesList}>
+            {visibleArticles.map((article, index) => (
+              <ArticlesItem
+                key={article._id}
+                article={article}
+                isMiddle={index === 1}
+                isAuth={isAuth}
+                openAuthModal={() => setShowAuthModal(true)}
+                isSaved={bookmarked.includes(article._id)}
+                onToggleSaved={() => handleBookmarkToggle(article._id)}
+                isLoading={loadingBookmarkId === article._id}
+              />
+            ))}
+          </ul>
+        )}
 
-        {showAuthModal && <AuthModal onClose={closeAuthModal} />}
+        {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
       </div>
     </section>
   );
 };
 
 export default PopularArticlesSection;
+
+
+
+
+
+
 
 
 

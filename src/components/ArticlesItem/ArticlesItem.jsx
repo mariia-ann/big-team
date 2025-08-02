@@ -1,43 +1,36 @@
-import ButtonAddToBookmarks from "../ArticlesPage/ButtonAddToBookmarks/ButtonAddToBookmarks.jsx";
 import styles from "./ArticlesItem.module.css";
+import BookmarkHandler from "../BookmarkHandler/BookmarkHandler";
 
 const ArticlesItem = ({
   article,
   isMiddle,
   isAuth,
   openAuthModal,
-  isSaved,
-  onToggleSaved,
-  isLoading,
 }) => {
   if (!article || typeof article !== "object") {
     console.error("❌ INVALID ARTICLE:", article);
     return null;
   }
 
-  const {
-    author = "Unknown",
-    title = "",
-    excerpt = "",
-    img,
-    alt,
-  } = article;
+ 
+  const id = article._id || article.id;
+  const safeAuthor = String(article.author || "Unknown");
 
-  const id = article.id || article._id;
+  const safeTitle = typeof article.title === "string"
+    ? article.title
+    : article.title?.en || "Untitled";
 
-  const safeTitle = String(
-    typeof title === "string" ? title : title?.en || "Untitled"
-  );
+  const safeExcerpt = typeof article.excerpt === "string"
+    ? article.excerpt
+    : article.excerpt?.en || "";
 
-  const safeExcerpt = String(
-    typeof excerpt === "string" ? excerpt : excerpt?.en || ""
-  );
+  const safeImg = typeof article.img === "string"
+    ? article.img
+    : "/default-image.webp";
 
-  const safeAlt = String(
-    typeof alt === "string" ? alt : safeTitle
-  );
-
-  const safeAuthor = String(author);
+  const safeAlt = typeof article.alt === "string"
+    ? article.alt
+    : safeTitle;
 
   return (
     <li className={styles.articleItem}>
@@ -45,7 +38,7 @@ const ArticlesItem = ({
         className={`${styles.articleImage} ${
           isMiddle ? styles.articleImageMiddle : ""
         }`}
-        src={typeof img === "string" ? img : "/default-image.webp"}
+        src={safeImg}
         alt={safeAlt}
         loading="lazy"
         onError={(e) => {
@@ -63,13 +56,10 @@ const ArticlesItem = ({
         {safeExcerpt || "\u00A0"}
       </div>
       <div className={styles.buttonWrap}>
-        <ButtonAddToBookmarks
+        <BookmarkHandler
           articleId={id}
           isAuth={isAuth}
           openAuthModal={openAuthModal}
-          isSaved={isSaved}
-          onToggleSaved={onToggleSaved}
-          isLoading={isLoading}
         />
       </div>
     </li>
@@ -77,6 +67,7 @@ const ArticlesItem = ({
 };
 
 export default ArticlesItem;
+
 
 
 

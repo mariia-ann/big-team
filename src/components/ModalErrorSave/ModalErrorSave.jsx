@@ -1,39 +1,10 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import s from "./ModalErrorSave.module.css";
 import IoClose from "../../assets/images/icons/close.svg?react";
+import { NavLink } from "react-router-dom";
 
-const AuthModal = ({ onClose }) => {
-  const navigate = useNavigate();
-
-  // Закриття по Escape
-  useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
-  }, [onClose]);
-
-  // Закриття по бекдропу
-  const handleBackdropClick = (e) => {
-    if (e.target === e.currentTarget) onClose();
-  };
-
-  // Клік по Login
-  const handleLogin = () => {
-    onClose(); // закрити модалку
-    navigate("/login");
-  };
-
-  // Клік по Register
-  const handleRegister = () => {
-    onClose(); // закрити модалку
-    navigate("/register");
-  };
-
+const ModalErrorSave = ({ onClose }) => {
   return (
-    <div className={s.backdrop} onClick={handleBackdropClick}>
+    <div className={s.backdrop} onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className={s.modal}>
         <button className={s.closeBtn} onClick={onClose}>
           <IoClose />
@@ -43,18 +14,19 @@ const AuthModal = ({ onClose }) => {
           To save this article, you need to <br /> authorize first
         </p>
         <div className={s.buttons}>
-          <button onClick={handleLogin} className={s.loginBtn}>
+          <NavLink to="/login" className={s.loginBtn} onClick={onClose}>
             Login
-          </button>
-          <button onClick={handleRegister} className={s.registerBtn}>
+          </NavLink>
+          <NavLink to="/register" className={s.registerBtn} onClick={onClose}>
             Register
-          </button>
+          </NavLink>
         </div>
       </div>
     </div>
   );
 };
 
-export default AuthModal;
+export default ModalErrorSave;
+
 
 

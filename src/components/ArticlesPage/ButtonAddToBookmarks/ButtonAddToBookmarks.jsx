@@ -1,24 +1,7 @@
 import IconBookmark from "../../../assets/images/icons/bookmark.svg?react";
 import styles from "./ButtonAddToBookmarks.module.css";
 
-const ButtonAddToBookmarks = ({
-  isAuth,
-  isSaved,
-  isLoading,
-  onToggleSaved,
-  openAuthModal,
-}) => {
-  const handleBookmarkClick = (e) => {
-    e.stopPropagation();
-
-    if (!isAuth) {
-      openAuthModal();
-      return;
-    }
-
-    onToggleSaved(); 
-  };
-
+const ButtonAddToBookmarks = ({ isSaved, isLoading, onClick }) => {
   return (
     <div className={styles.buttonWithBookmark}>
       <button
@@ -30,9 +13,14 @@ const ButtonAddToBookmarks = ({
       </button>
 
       <div
-        className={`${styles.bookmarkCircle} ${isSaved ? styles.bookmarkActive : ""}`}
+        className={`${styles.bookmarkCircle} ${
+          isSaved ? styles.bookmarkActive : ""
+        }`}
         tabIndex={0}
-        onClick={handleBookmarkClick}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick();
+        }}
       >
         {isLoading ? "..." : <IconBookmark />}
       </div>
@@ -41,6 +29,7 @@ const ButtonAddToBookmarks = ({
 };
 
 export default ButtonAddToBookmarks;
+
 
 
 

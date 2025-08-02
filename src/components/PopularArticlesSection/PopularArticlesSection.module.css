@@ -18,6 +18,11 @@
 }
 
   
+.icon {
+  stroke: #374f42;
+  height: 24px;
+  margin-left: 12px;
+}
 
 
 .title {
