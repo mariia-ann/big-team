@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./PopularArticlesSection.module.css";
 import ArticlesItem from "../ArticlesItem/ArticlesItem";
-
-import image1_1x from "../../assets/images/Image1-1x.webp";
-import image2_1x_mob from "../../assets/images/Image2-1x-mob.webp";
-import image3_1x_mob from "../../assets/images/Image3-1x-mob.webp";
-import image4_1x_mob from "../../assets/images/Image4-1x-mob.webp";
-// import { useDispatch, useSelector } from "react-redux";
-// import { selectArticles } from "../../redux/articles/selectors.js";
-// import { fetchArticles } from "../../redux/articles/operations.js";
+import AuthModal from "../ModalErrorSave/ModalErrorSave";
+import { toast } from "react-hot-toast";
+import { publicAPI } from "../../redux/api/publicAPI";
 
 const ArrowIcon = () => (
   <svg width="16" height="17" viewBox="0 0 964 1024">
@@ -26,54 +21,106 @@ const ArrowIcon = () => (
 );
 
 const PopularArticlesSection = () => {
+  const location = useLocation();
   const [articles, setArticles] = useState([]);
-  // const [status, setStatus] = useState("idle");
-  // const [error] = useState(null);
-  // const dispatch = useDispatch();
-  // const articles = useSelector(selectArticles)
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [loadingBookmarkId, setLoadingBookmarkId] = useState(null);
+  const [bookmarked, setBookmarked] = useState([]);
+  const [isAuth, setIsAuth] = useState(false);
 
-  //  useEffect(() => {
-  //     dispatch(fetchArticles());
-  //   }, [dispatch]);
+  const openAuthModal = () => setShowAuthModal(true);
+  const closeAuthModal = () => setShowAuthModal(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      setArticles([
-        {
-          id: 1,
-          author: "Clark",
-          title: "When Anxiety Feels Like a Room With No Doors",
-          excerpt: "A deeply personal reflection on living with generalized anxiety and the small rituals that hel...",
-          img: image1_1x,
-          alt: "Person leaning on a railing and looking at a lake",
-        },
-        {
-          id: 2,
-          author: "Debby",
-          title: "The Quiet Power of Doing Nothing",
-          excerpt: "In a culture obsessed with productivity, embracing rest can be an act of resistance – and...",
-          img: image2_1x_mob,
-          alt: "Hands passing a black paper heart",
-        },
-        {
-          id: 3,
-          author: "Max",
-          title: "Mindful Mornings: 5-Minute Rituals to Start Your Day with Calm",
-          excerpt: "Simple, science-backed practices that can gently shift your mood and focus before the day begins.",
-          img: image3_1x_mob,
-          alt: "Person walking on a road during sunrise",
-        },
-        {
-          id: 4,
-          author: "Clark",
-          title: "When Anxiety Feels Like a Room With No Doors",
-          excerpt: "10 advices how mediations can help you feeling better",
-          img: image4_1x_mob,
-          alt: "Mental Health Matters on grey background",
-        },
-      ]);
-    }, 100);
+    setShowAuthModal(false);
+  }, [location]);
+
+  useEffect(() => {
+    const rawToken = localStorage.getItem("token");
+    const token = rawToken?.replace(/^"|"$/g, "");
+    setIsAuth(!!token);
   }, []);
+
+  // Статические данные (fallback)
+  useEffect(() => {
+    setArticles([
+      {
+        id: "a1",
+        author: "Clark",
+        title: "When Anxiety Feels Like a Room With No Doors",
+        excerpt: "A deeply personal reflection on living with generalized anxiety...",
+        alt: "Person leaning on a railing and looking at a lake",
+      },
+      {
+        id: "a2",
+        author: "Debby",
+        title: "The Quiet Power of Doing Nothing",
+        excerpt: "In a culture obsessed with productivity...",
+        alt: "Hands passing a black paper heart",
+      },
+      {
+        id: "a3",
+        author: "Max",
+        title: "Mindful Mornings: 5-Minute Rituals to Start Your Day with Calm",
+        excerpt: "Simple, science-backed practices...",
+        alt: "Person walking on a road during sunrise",
+      },
+      {
+        id: "a4",
+        author: "Clark",
+        title: "Meditation Techniques That Actually Work",
+        excerpt: "10 advices how mediations can help you feeling better",
+        alt: "Mental Health Matters on grey background",
+      },
+    ]);
+  }, []);
+
+  // Подгружаем изображения и id из бэка
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const res = await publicAPI.get("/api/articles");
+
+        const imgArticles = Array.isArray(res?.data?.data?.data)
+          ? res.data.data.data
+          : [];
+
+        setArticles((prev) =>
+          prev.map((article, i) => ({
+            ...article,
+            id: article.id || article._id || imgArticles[i]?._id,
+            img: imgArticles[i]?.img || "/default-image.webp",
+          }))
+        );
+      } catch (error) {
+        console.error("❌ Failed to load article images:", error);
+        toast.error("Failed to load article images");
+      }
+    };
+
+    fetchImages();
+  }, []);
+
+  const handleBookmarkToggle = async (id) => {
+    if (!isAuth) {
+      openAuthModal();
+      return;
+    }
+
+    setLoadingBookmarkId(id);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      setBookmarked((prev) => {
+        const isNowBookmarked = !prev.includes(id);
+        toast.success(isNowBookmarked ? "Saved to bookmarks" : "Removed from bookmarks");
+        return isNowBookmarked ? [...prev, id] : prev.filter((bid) => bid !== id);
+      });
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoadingBookmarkId(null);
+    }
+  };
 
   return (
     <section className={styles.section}>
@@ -84,21 +131,41 @@ const PopularArticlesSection = () => {
             Go to all Articles <ArrowIcon />
           </Link>
         </div>
-          <ul className={styles.articlesList}>
-            {articles.map((article, index) => (
-              <ArticlesItem
-                key={article._id}
-                article={article}
-                isMiddle={index === 1}
-              />
-            ))}
-          </ul>
+
+        <ul className={styles.articlesList}>
+          {articles.map((article, index) => (
+            <ArticlesItem
+              key={article.id}
+              article={article}
+              isMiddle={index === 1}
+              isAuth={isAuth}
+              openAuthModal={openAuthModal}
+              isSaved={bookmarked.includes(article.id)}
+              onToggleSaved={() => handleBookmarkToggle(article.id)}
+              isLoading={loadingBookmarkId === article.id}
+            />
+          ))}
+        </ul>
+
+        {showAuthModal && <AuthModal onClose={closeAuthModal} />}
       </div>
     </section>
   );
 };
 
 export default PopularArticlesSection;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
