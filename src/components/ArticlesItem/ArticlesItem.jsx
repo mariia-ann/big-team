@@ -1,72 +1,43 @@
-import styles from "./ArticlesItem.module.css";
-import BookmarkHandler from "../BookmarkHandler/BookmarkHandler";
+import { Link } from "react-router-dom";
+import styles from "./ArticlesItem2.module.css";
+import ButtonAddToBookmarks from "../ArticlesPage/ButtonAddToBookmarks/ButtonAddToBookmarks";
 
-const ArticlesItem = ({
-  article,
-  isMiddle,
-  isAuth,
-  openAuthModal,
-}) => {
-  if (!article || typeof article !== "object") {
-    console.error("❌ INVALID ARTICLE:", article);
-    return null;
-  }
-
- 
-  const id = article._id || article.id;
-  const safeAuthor = String(article.author || "Unknown");
-
-  const safeTitle = typeof article.title === "string"
-    ? article.title
-    : article.title?.en || "Untitled";
-
-  const safeExcerpt = typeof article.excerpt === "string"
-    ? article.excerpt
-    : article.excerpt?.en || "";
-
-  const safeImg = typeof article.img === "string"
-    ? article.img
-    : "/default-image.webp";
-
-  const safeAlt = typeof article.alt === "string"
-    ? article.alt
-    : safeTitle;
+const ArticlesItem = ({ article, isAuth, openAuthModal }) => {
+  const { _id, title, desc, img, ownerId, ownerName } = article;
 
   return (
     <li className={styles.articleItem}>
-      <img
-        className={`${styles.articleImage} ${
-          isMiddle ? styles.articleImageMiddle : ""
-        }`}
-        src={safeImg}
-        alt={safeAlt}
-        loading="lazy"
-        onError={(e) => {
-          e.target.onerror = null;
-          e.target.src = "/default-image.webp";
-        }}
-      />
-      <div className={styles.author}>{safeAuthor}</div>
-      <div className={styles.articleTitle}>{safeTitle}</div>
-      <div
-        className={`${styles.excerpt} ${
-          isMiddle ? styles.excerptMiddle : ""
-        }`}
-      >
-        {safeExcerpt || "\u00A0"}
-      </div>
-      <div className={styles.buttonWrap}>
-        <BookmarkHandler
-          articleId={id}
-          isAuth={isAuth}
-          openAuthModal={openAuthModal}
-        />
+      {img && (
+        <div className={styles.imageWrapper}>
+          <img className={styles.articleImage} src={img} alt={title} />
+        </div>
+      )}
+      <div className={styles.wrapper}>
+        <div className={styles.content}>
+          <p className={styles.articleOwner}>{ownerName || ownerId}</p>
+          <h3 className={styles.articleTitle}>{title}</h3>
+          <p className={styles.desc}>{desc}</p>
+        </div>
+        <div className={styles.actions}>
+          <Link className={styles.articleButton} to={`/articles/${_id}`}>
+            Learn more
+          </Link>
+          <ButtonAddToBookmarks
+            articleId={_id}
+            isAuth={isAuth}
+            openAuthModal={openAuthModal}
+          />
+        </div>
       </div>
     </li>
   );
 };
 
 export default ArticlesItem;
+
+
+
+
 
 
 

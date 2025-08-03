@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import ButtonAddToBookmarks2 from "../ArticlesPage/ButtonAddToBookmarks2/ButtonAddToBookmarks2";
-import s from "./ArticlesItem2.module.css";
+import ButtonAddToBookmarks from "../ArticlesPage/ButtonAddToBookmarks/ButtonAddToBookmarks";
+import s from "../ArticlesItem2/ArticlesItem2.module.css";
 
-const ArticlesItem2 = ({ article }) => {
-  const { _id, title, desc, img, ownerId, date } = article;
+const ArticlesItem2 = ({ article, isAuth, openAuthModal }) => {
+  const { _id, title, desc, img, ownerId } = article;
 
   return (
     <div className={s.articleItem}>
@@ -20,10 +20,16 @@ const ArticlesItem2 = ({ article }) => {
         </div>
         <div className={s.actions}>
           <Link to={`/articles/${_id.$oid}`}>Learn more</Link>
-          <ButtonAddToBookmarks2 articleId={_id.$oid} />
+          <ButtonAddToBookmarks
+            articleId={_id.$oid}
+            isAuth={isAuth}
+            openAuthModal={openAuthModal}
+          />
         </div>
       </div>
     </div>
   );
 };
+
 export default ArticlesItem2;
+

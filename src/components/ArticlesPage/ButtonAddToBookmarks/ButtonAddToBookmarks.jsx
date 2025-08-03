@@ -1,29 +1,41 @@
+import { useState } from "react";
+import { toast } from "react-hot-toast";
 import IconBookmark from "../../../assets/images/icons/bookmark.svg?react";
 import styles from "./ButtonAddToBookmarks.module.css";
 
-const ButtonAddToBookmarks = ({ isSaved, isLoading, onClick }) => {
-  return (
-    <div className={styles.buttonWithBookmark}>
-      <button
-        type="button"
-        className={styles.articleButton}
-        onClick={(e) => e.stopPropagation()}
-      >
-        Learn more
-      </button>
+const ButtonAddToBookmarks = ({ isAuth, openAuthModal, articleId }) => {
+  const [isSaved, setIsSaved] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-      <div
-        className={`${styles.bookmarkCircle} ${
-          isSaved ? styles.bookmarkActive : ""
-        }`}
-        tabIndex={0}
-        onClick={(e) => {
-          e.stopPropagation();
-          onClick();
-        }}
-      >
-        {isLoading ? "..." : <IconBookmark />}
-      </div>
+  const handleToggle = async (e) => {
+    e.stopPropagation();
+    if (!isAuth) {
+      openAuthModal && openAuthModal();
+      return;
+    }
+    setIsLoading(true);
+    try {
+      // Тут буде реальний API-запит
+      await new Promise((res) => setTimeout(res, 500));
+      setIsSaved((prev) => {
+        const next = !prev;
+        toast.success(next ? "Saved to bookmarks" : "Removed from bookmarks");
+        return next;
+      });
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div
+      className={`${styles.bookmarkCircle} ${isSaved ? styles.bookmarkActive : ""}`}
+      tabIndex={0}
+      onClick={handleToggle}
+    >
+      {isLoading ? "..." : <IconBookmark />}
     </div>
   );
 };

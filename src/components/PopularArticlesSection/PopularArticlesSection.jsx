@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 
 import styles from "./PopularArticlesSection.module.css";
-import ArticlesItem from "../ArticlesItem/ArticlesItem";
+import ArticlesItem from "../ArticlesItem2/ArticlesItem2.jsx";
 import AuthModal from "../ModalErrorSave/ModalErrorSave";
 import Loader from "../Loader/Loader";
 import ArrowIcon from "../../assets/images/icons/arrow.svg?react";
@@ -24,71 +24,57 @@ const PopularArticlesSection = () => {
   const isLoading = useSelector(selectLoading);
   const error = useSelector(selectError);
 
+ 
+  const articles = Array.isArray(articlesRaw)
+    ? articlesRaw
+    : Array.isArray(articlesRaw?.data)
+    ? articlesRaw.data
+    : [];
+
   const [visibleCount, setVisibleCount] = useState(4);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [loadingBookmarkId, setLoadingBookmarkId] = useState(null);
   const [bookmarked, setBookmarked] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
 
- 
+  const visibleArticles = articles.slice(0, visibleCount);
+
   useEffect(() => {
     const token = localStorage.getItem("token")?.replace(/^"|"$/g, "");
     setIsAuth(!!token);
   }, []);
 
-  
   useEffect(() => {
     dispatch(fetchArticles());
   }, [dispatch]);
 
- 
   useEffect(() => {
-    if (error) {
-      toast.error("Failed to load articles");
-    }
+    if (error) toast.error("Failed to load articles");
   }, [error]);
 
-  
   useEffect(() => {
     setShowAuthModal(false);
   }, [location]);
 
-  
   useEffect(() => {
     const handleResize = () => {
-      const width = window.innerWidth;
-      setVisibleCount(width >= 1440 ? 3 : 4);
+      setVisibleCount(window.innerWidth >= 1440 ? 3 : 4);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  
-  const articles = Array.isArray(articlesRaw)
-    ? articlesRaw
-    : Array.isArray(articlesRaw?.data)
-    ? articlesRaw.data
-    : Array.isArray(articlesRaw?.data?.data)
-    ? articlesRaw.data.data
-    : [];
-
-  const visibleArticles = articles.slice(0, visibleCount);
-
- 
   const handleBookmarkToggle = async (id) => {
     if (!isAuth) {
       setShowAuthModal(true);
       return;
     }
-
     setLoadingBookmarkId(id);
     try {
       await new Promise((res) => setTimeout(res, 500));
       setBookmarked((prev) =>
-        prev.includes(id)
-          ? prev.filter((bid) => bid !== id)
-          : [...prev, id]
+        prev.includes(id) ? prev.filter((bid) => bid !== id) : [...prev, id]
       );
       toast.success(
         bookmarked.includes(id)
@@ -122,19 +108,21 @@ const PopularArticlesSection = () => {
           <p className={styles.empty}>No articles found</p>
         ) : (
           <ul className={styles.articlesList}>
-            {visibleArticles.map((article, index) => (
-              <ArticlesItem
-                key={article._id}
-                article={article}
-                isMiddle={index === 1}
-                isAuth={isAuth}
-                openAuthModal={() => setShowAuthModal(true)}
-                isSaved={bookmarked.includes(article._id)}
-                onToggleSaved={() => handleBookmarkToggle(article._id)}
-                isLoading={loadingBookmarkId === article._id}
-              />
-            ))}
-          </ul>
+  {visibleArticles.map((article, index) => (
+    <li key={article._id}>
+      <ArticlesItem
+        article={article}
+        isMiddle={index === 1}
+        isAuth={isAuth}
+        openAuthModal={() => setShowAuthModal(true)}
+        isSaved={bookmarked.includes(article._id)}
+        onToggleSaved={() => handleBookmarkToggle(article._id)}
+        isLoading={loadingBookmarkId === article._id}
+      />
+    </li>
+  ))}
+</ul>
+
         )}
 
         {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
@@ -144,6 +132,10 @@ const PopularArticlesSection = () => {
 };
 
 export default PopularArticlesSection;
+
+
+
+
 
 
 
