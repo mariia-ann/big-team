@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import IoClose from "../../../assets/images/icons/alert.svg?react";
 import s from "./SavedArticlesContent.module.css";
 const SavedArticlesContent = () => (
@@ -5,7 +6,9 @@ const SavedArticlesContent = () => (
     <IoClose className={s.logo} />
     <p className={s.title}>Nothing found.</p>
     <p className={s.description}>Save your first article</p>
-    <button className={s.button}>Go to articles</button>
+    <Link to="/articles" className={s.link}>
+      Go to articles
+    </Link>
   </div>
 );
 

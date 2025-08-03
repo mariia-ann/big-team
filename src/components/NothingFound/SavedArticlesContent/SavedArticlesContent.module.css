@@ -28,7 +28,7 @@
   margin-bottom: 83px;
 }
 
-.button {
+.link {
   font-weight: 700;
   font-size: 16px;
   color: var(--color-darker);
@@ -36,11 +36,14 @@
   border: 1px solid var(--color-darker);
   border-radius: 64px;
   padding: 8px;
+  display: block;
   width: 100%;
+  text-align: center;
+  text-decoration: none;
   box-sizing: border-box;
 }
-.button:hover,
-.button:focus {
+.link:hover,
+.link:focus {
   background-color: var(--color-general);
 }
 

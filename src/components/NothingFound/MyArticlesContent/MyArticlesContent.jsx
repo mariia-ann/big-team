@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import IconLogo from "../../../assets/images/icons/alert.svg?react";
 import s from "../SavedArticlesContent/SavedArticlesContent.module.css";
 const MyArticlesContent = () => (
@@ -5,7 +6,9 @@ const MyArticlesContent = () => (
     <IconLogo className={s.logo} />
     <p className={s.title}>Nothing found.</p>
     <p className={s.description}>Write your first article</p>
-    <button className={s.button}>Create an article</button>
+    <Link to="/create" className={s.link}>
+      Create an article
+    </Link>
   </div>
 );
 
