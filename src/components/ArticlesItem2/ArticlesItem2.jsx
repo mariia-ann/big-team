@@ -3,7 +3,7 @@ import ButtonAddToBookmarks2 from "../ArticlesPage/ButtonAddToBookmarks2/ButtonA
 import s from "./ArticlesItem2.module.css";
 
 const ArticlesItem2 = ({ article }) => {
-  const { _id, title, desc, img, ownerId, date } = article;
+  const { _id, title, desc, img, ownerId } = article;
 
   return (
     <div className={s.articleItem}>
@@ -14,7 +14,7 @@ const ArticlesItem2 = ({ article }) => {
       )}
       <div className={s.wrapper}>
         <div className={s.content}>
-          <p className={s.articleOwner}>{ownerId?.$oid}</p>
+          <p className={s.articleOwner}>{ownerId}</p>
           <h3 className={s.articleTitle}>{title}</h3>
           <p className={s.articleDescription}>{desc}</p>
         </div>
