@@ -48,6 +48,7 @@ const slice = createSlice({
           email: action.payload.data.email,
           avatarUrl: action.payload.data.avatarUrl,
         };
+        state.token = action.payload.data.accessToken;
       })
       .addCase(refreshThunk.pending, (state, action) => {
         state.isRefreshing = true;

@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAuthor, fetchAuthors, fetchTopAuthors } from "./operations.js";
+import {
+  addAuthorSavedArticles,
+  fetchAuthor,
+  fetchAuthors,
+  fetchAuthorSavedArticles,
+  fetchTopAuthors,
+} from "./operations.js";
 
 const handlePending = (state) => {
   state.isLoading = true;
@@ -15,6 +21,7 @@ const slice = createSlice({
   initialState: {
     items: [],
     topItems: [],
+    savedArticles: [],
     currentCreator: null,
     isLoading: false,
     error: null,
@@ -43,7 +50,30 @@ const slice = createSlice({
         state.error = null;
         state.currentCreator = action.payload;
       })
-      .addCase(fetchAuthor.rejected, handleRejected);
+      .addCase(fetchAuthor.rejected, handleRejected)
+
+      .addCase(fetchAuthorSavedArticles.pending, handlePending)
+      .addCase(fetchAuthorSavedArticles.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.savedArticles = action.payload;
+      })
+      .addCase(fetchAuthorSavedArticles.rejected, handleRejected)
+
+      .addCase(addAuthorSavedArticles.pending, handlePending)
+      .addCase(addAuthorSavedArticles.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+
+        const newArticle = action.payload;
+        const exists = state.savedArticles.some(
+          (a) => a._id === newArticle._id
+        );
+        if (!exists) {
+          state.savedArticles.push(newArticle);
+        }
+      })
+      .addCase(addAuthorSavedArticles.rejected, handleRejected);
   },
 });
 
