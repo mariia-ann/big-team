@@ -37,3 +37,27 @@ export const fetchAuthor = createAsyncThunk(
     }
   }
 );
+
+export const fetchAuthorSavedArticles = createAsyncThunk(
+  "authors/fetchAuthorSavedArticles",
+  async (id, thunkAPI) => {
+    try {
+      const response = await publicAPI.get(`/${id}/saved-articles`);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const addAuthorSavedArticles = createAsyncThunk(
+  "authors/addAuthorSavedArticles",
+  async ({ userId, articleId }, thunkAPI) => {
+    try {
+      const response = await publicAPI.post(`/${userId}/saved-articles/${articleId}`);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
