@@ -17,7 +17,11 @@
   gap: 16px;
 }
 
-  
+  .icon {
+    stroke: var(--color-darker);
+    width: 24px;
+    height: 24px;
+  }
 
 
 .title {
