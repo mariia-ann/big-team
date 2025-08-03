@@ -17,7 +17,12 @@
   gap: 16px;
 }
 
-  
+.icon {
+  stroke: var(--color-darker);
+  width: 24px;
+  height: 24px;
+  stroke-width: 1px;
+}  
 
 
 .title {
@@ -65,9 +70,14 @@
   max-width: calc((100% - 24px) / 2);
 }
 
-    .allLink {
+    /* .allLink {
     display: none;
-  }
+  } */
+   .headerRow {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+   }
    .title {
     margin-bottom: 16px;
   }
