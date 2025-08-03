@@ -1,36 +1,29 @@
 import { Link } from "react-router-dom";
-import styles from "./ArticlesItem2.module.css";
-import ButtonAddToBookmarks from "../ArticlesPage/ButtonAddToBookmarks/ButtonAddToBookmarks";
+import s from "./ArticlesItem.module.css";
+import ButtonAddToBookmarks from "../ButtonAddToBookmarks/ButtonAddToBookmarks.jsx";
 
-const ArticlesItem = ({ article, isAuth, openAuthModal }) => {
-  const { _id, title, desc, img, ownerId, ownerName } = article;
+const ArticlesItem = ({ article, authorName }) => {
+  const { _id, title, desc, img } = article;
 
   return (
-    <li className={styles.articleItem}>
+    <div className={s.articleItem}>
       {img && (
-        <div className={styles.imageWrapper}>
-          <img className={styles.articleImage} src={img} alt={title} />
+        <div className={s.imageWrapper}>
+          <img className={s.articleImage} src={img} alt={title} />
         </div>
       )}
-      <div className={styles.wrapper}>
-        <div className={styles.content}>
-          <p className={styles.articleOwner}>{ownerName || ownerId}</p>
-          <h3 className={styles.articleTitle}>{title}</h3>
-          <p className={styles.desc}>{desc}</p>
+      <div className={s.wrapper}>
+        <div className={s.content}>
+          <p className={s.articleOwner}>{authorName}</p>
+          <h3 className={s.articleTitle}>{title}</h3>
+          <p className={s.articleDescription}>{desc}</p>
         </div>
-        <div className={styles.actions}>
-          <Link className={styles.articleButton} to={`/articles/${_id}`}>
-            Learn more
-          </Link>
-          <ButtonAddToBookmarks
-            articleId={_id}
-            isAuth={isAuth}
-            openAuthModal={openAuthModal}
-          />
+        <div className={s.actions}>
+          <Link to={`/articles/${_id}`}>Learn more</Link>
+          <ButtonAddToBookmarks articleId={_id.$oid} />
         </div>
       </div>
-    </li>
+    </div>
   );
 };
-
 export default ArticlesItem;
