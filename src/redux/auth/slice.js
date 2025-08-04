@@ -40,6 +40,9 @@ const slice = createSlice({
         state.token = action.payload.data.accessToken;
         state.isLoggedIn = true;
       })
+      .addCase(refreshThunk.pending, (state, action) => {
+        state.isRefreshing = true;
+      })
       .addCase(refreshThunk.fulfilled, (state, action) => {
         state.isLoggedIn = true;
         state.isRefreshing = false;
@@ -49,9 +52,6 @@ const slice = createSlice({
           avatarUrl: action.payload.data.avatarUrl,
         };
         state.token = action.payload.data.accessToken;
-      })
-      .addCase(refreshThunk.pending, (state, action) => {
-        state.isRefreshing = true;
       })
       .addCase(refreshThunk.rejected, (state, action) => {
         state.isRefreshing = false;

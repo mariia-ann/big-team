@@ -34,31 +34,37 @@ function App() {
   }, [dispatch]);
 
   return isRefreshing ? null : (
-      <Suspense fallback={<Loader />}>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/photo" element={<UploadPhoto />} />
-            <Route path="/articles" element={<ArticlesPage />} />
-            <Route path="/articles/:articlesId" element={<ArticlePage />} />
-            <Route path="/authors" element={<AuthorsPage />} />
-            <Route path="/authors/:authorsId" element={<AuthorProfilePage />} />
-            <Route path="/create" element={
-            <PrivateRoute>
-              <CreateArticlePage />
-            </PrivateRoute>
-          } />
-            <Route path="/profile" element={
-            <PrivateRoute>
-              <MyProfilePage />
-            </PrivateRoute>
-          } />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Layout>
-      </Suspense>
+    <Suspense fallback={<Loader />}>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/photo" element={<UploadPhoto />} />
+          <Route path="/articles" element={<ArticlesPage />} />
+          <Route path="/articles/:articlesId" element={<ArticlePage />} />
+          <Route path="/authors" element={<AuthorsPage />} />
+          <Route path="/authors/:authorsId" element={<AuthorProfilePage />} />
+          <Route
+            path="/create"
+            element={
+              <PrivateRoute>
+                <CreateArticlePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <MyProfilePage />
+              </PrivateRoute>
+            }
+          />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Layout>
+    </Suspense>
   );
 }
 
