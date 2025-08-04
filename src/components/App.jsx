@@ -21,9 +21,6 @@ const CreateArticlePage = lazy(() =>
   import("../pages/CreateArticlePage/CreateArticlePage")
 );
 const NotFoundPage = lazy(() => import("../pages/NotFoundPage/NotFoundPage"));
-const MyProfilePage = lazy(() =>
-  import("../pages/MyProfilePage/MyProfilePage")
-);
 
 function App() {
   const dispatch = useDispatch();
@@ -47,20 +44,12 @@ function App() {
           <Route path="/articles" element={<ArticlesPage />} />
           <Route path="/articles/:articlesId" element={<ArticlePage />} />
           <Route path="/authors" element={<AuthorsPage />} />
-          <Route path="/authors/:authorsId" element={<AuthorProfilePage />} />
+          <Route path="/authors/:authorId" element={<AuthorProfilePage />} />
           <Route
             path="/create"
             element={
               <PrivateRoute>
                 <CreateArticlePage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute>
-                <MyProfilePage />
               </PrivateRoute>
             }
           />
