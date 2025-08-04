@@ -32,6 +32,15 @@ export const addArticle = createAsyncThunk(
   "articles/addArticle",
   async (item, thunkAPI) => {
     try {
+      const state = thunkAPI.getState();
+      const token = state.auth.token;
+
+      if (!token) {
+        return thunkAPI.rejectWithValue("No token available");
+      }
+
+      publicAPI.defaults.headers.common.Authorization = `Bearer ${token}`;
+
       const response = await publicAPI.post("/api/articles", item);
       return response.data;
     } catch (e) {
