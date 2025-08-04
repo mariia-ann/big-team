@@ -20,7 +20,10 @@ export const registerThunk = createAsyncThunk(
     try {
       const response = await axiosAPI.post("/api/auth/register", body);
       const token = response.data?.data?.accessToken;
-      if (token) setAuthHeader(token);
+      if (token) {
+        setAuthHeader(token);
+        localStorage.setItem("hasSession", "true");
+      }
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -36,7 +39,10 @@ export const loginThunk = createAsyncThunk(
     try {
       const response = await axiosAPI.post("/api/auth/login", body);
       const token = response.data?.data?.accessToken;
-      if (token) setAuthHeader(token);
+      if (token) {
+        setAuthHeader(token);
+        localStorage.setItem("hasSession", "true");
+      }
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -62,6 +68,7 @@ export const logoutThunk = createAsyncThunk(
         },
       });
       removeAuthHeader();
+      localStorage.removeItem("hasSession");
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || error.message
