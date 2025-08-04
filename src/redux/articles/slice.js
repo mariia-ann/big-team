@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addArticle, fetchArticle, fetchArticles } from "./operations.js";
+import {
+  addArticle,
+  fetchArticle,
+  fetchArticles,
+  fetchArticlesByOwner,
+} from "./operations.js";
 
 const handlePending = (state) => {
   state.isLoading = true;
@@ -14,6 +19,7 @@ const slice = createSlice({
   name: "articles",
   initialState: {
     items: [],
+    byOwner: {},
     currentArticle: null,
     isLoading: false,
     error: null,
@@ -35,7 +41,7 @@ const slice = createSlice({
         state.currentArticle = action.payload;
       })
       .addCase(fetchArticle.rejected, handleRejected)
-      
+
       .addCase(addArticle.pending, handlePending)
       .addCase(addArticle.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -43,6 +49,14 @@ const slice = createSlice({
         state.items.push(action.payload);
       })
       .addCase(addArticle.rejected, handleRejected)
+      .addCase(fetchArticlesByOwner.pending, handlePending)
+      .addCase(fetchArticlesByOwner.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        const { ownerId, articles } = action.payload;
+        state.byOwner[ownerId] = articles;
+      })
+      .addCase(fetchArticlesByOwner.rejected, handleRejected);
   },
 });
 
