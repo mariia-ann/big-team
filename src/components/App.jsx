@@ -30,7 +30,10 @@ function App() {
   const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    dispatch(refreshThunk());
+    const hasSession = localStorage.getItem("hasSession");
+    if (hasSession) {
+      dispatch(refreshThunk());
+    }
   }, [dispatch]);
 
   return isRefreshing ? null : (
