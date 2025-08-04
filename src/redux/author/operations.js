@@ -39,11 +39,11 @@ export const fetchAuthor = createAsyncThunk(
 );
 
 export const fetchAuthorSavedArticles = createAsyncThunk(
-  "authors/fetchAuthorSavedArticles",
-  async (id, thunkAPI) => {
+  "author/fetchSavedArticles",
+  async (userId, thunkAPI) => {
     try {
-      const response = await publicAPI.get(`/${id}/saved-articles`);
-      return response.data;
+      const res = await publicAPI.get(`/users/${userId}/saved-articles`);
+      return res.data.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }

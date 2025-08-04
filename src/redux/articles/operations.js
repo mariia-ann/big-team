@@ -39,3 +39,25 @@ export const addArticle = createAsyncThunk(
     }
   }
 );
+
+export const fetchArticlesByOwner = createAsyncThunk(
+  "articles/fetchArticlesByOwner",
+  async (ownerId, thunkAPI) => {
+    try {
+      const response = await publicAPI.get("/api/articles", {
+        params: { ownerId },
+      });
+console.log("fetchArticlesByOwner response:", response.data);
+
+      const articles = Array.isArray(response.data?.data?.data)
+        ? response.data.data.data
+        : Array.isArray(response.data?.data)
+        ? response.data.data
+        : [];
+
+      return { ownerId, articles };
+    } catch (e) {
+      return thunkAPI.rejectWithValue({ ownerId, message: e.message });
+    }
+  }
+);
