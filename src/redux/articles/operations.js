@@ -6,7 +6,10 @@ export const fetchArticles = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await publicAPI.get("/api/articles");
-      return response.data;
+      const articles = Array.isArray(response.data?.data?.data)
+        ? response.data.data.data
+        : [];
+      return articles;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }

@@ -26,4 +26,6 @@
   stroke-width: 1px;
   fill: none;
   transition: all 0.3s ease;
+  width: 24px;
+  height: 24px;
 }
