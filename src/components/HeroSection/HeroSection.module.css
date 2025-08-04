@@ -19,7 +19,6 @@
   justify-content: flex-start;
   gap: 30px;
   max-width: 100%;
-  height: 280px;
   order: 2;
 }
 
@@ -40,7 +39,12 @@
   flex-direction: column;
   gap: 24px;
   width: 361px;
-  height: 138px;
+}
+
+.alignBottom {
+  display: flex;
+  justify-content: flex-end;
+  height: 100%;
 }
 
 .button {
@@ -92,7 +96,7 @@
   background-color: var(--color-general);
   color: var(--color-white);
   outline: none;
-  box-shadow: none; /* без тіні при hover */
+  box-shadow: none;
 }
 
 .registerBtn:focus {
@@ -127,8 +131,8 @@
   width: 361px;
   height: 321px;
   background-image: -webkit-image-set(
-    url("../../assets/images/HeroSection/mobalx1.webp") 1x,
-    url("../../assets/images/HeroSection/mobalx2.webp") 2x
+    url("../../assets/images/HeroSection/mob@1x.webp") 1x,
+    url("../../assets/images/HeroSection/mob@1x.webp") 2x
   );
   order: 1;
   background-size: cover;
@@ -136,10 +140,15 @@
   background-repeat: no-repeat;
 }
 
+.hidden {
+  display: none;
+}
+
 @media (min-width: 768px) {
   .section {
     padding: 22px 0 36px;
   }
+
   .wrapper {
     flex-direction: row;
     align-items: flex-start;
@@ -163,6 +172,11 @@
     width: 249px;
     height: 138px;
     gap: 24px;
+    align-items: flex-start;
+  }
+
+  .alignBottom {
+    padding-bottom: 80px;
   }
 
   .image {
@@ -173,6 +187,10 @@
     order: 2;
     margin-left: -80px;
     aspect-ratio: 430 / 383;
+    background-image: -webkit-image-set(
+      url("../../assets/images/HeroSection/mob@1x.webp") 1x,
+      url("../../assets/images/HeroSection/mob@2x.webp") 2x
+    );
   }
 }
 
@@ -180,6 +198,7 @@
   .section {
     padding-top: 48px;
   }
+
   .wrapper {
     display: flex;
     justify-content: space-between;
@@ -215,8 +234,14 @@
     width: 806px;
     height: 562px;
     background-image: -webkit-image-set(
-      url("../../assets/images/HeroSection/desk1x.webp") 1x,
-      url("../../assets/images/HeroSection/desk2x.webp") 2x
+      url("../../assets/images/HeroSection/desk@1x.webp") 1x,
+      url("../../assets/images/HeroSection/desk@2x.webp") 2x
     );
+  }
+
+  .alignBottom {
+    height: 100%;
+    display: flex;
+    justify-content: start;
   }
 }

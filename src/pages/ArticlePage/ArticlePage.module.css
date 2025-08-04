@@ -62,8 +62,11 @@
   font-weight: 700;
   font-size: 16px;
   font-weight: 400;
-  text-decoration: underline;
   text-decoration-skip-ink: none;
+}
+
+.authorName {
+  text-decoration: underline;
 }
 
 .date {
@@ -94,7 +97,7 @@
 .titleWithIcon {
   display: flex;
   flex-direction: row;
-  gap: 56px;
+  gap: 28px;
   justify-content: space-between;
   align-items: center;
 }
@@ -133,6 +136,11 @@
   font-weight: 700;
   font-size: 16px;
   width: 100%;
+  /*display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;*/
 }
 
 .similarArticlesAuthor {

@@ -1,10 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// axios.defaults.baseURL = "https://harmoniq-server-big-team.onrender.com";
-
 export const axiosAPI = axios.create({
   baseURL: "https://harmoniq-server-big-team.onrender.com",
+  withCredentials: true,
 });
 
 const setAuthHeader = (token) => {
@@ -51,6 +50,12 @@ export const logoutThunk = createAsyncThunk(
   "auth/logout",
   async (_, thunkAPI) => {
     try {
+      const state = thunkAPI.getState();
+      const accessToken = state.auth.token;
+      if (!accessToken) {
+        return thunkAPI.rejectWithValue("No access token in state");
+      }
+
       await axiosAPI.post("/api/auth/logout");
       removeAuthHeader();
     } catch (error) {
@@ -64,17 +69,17 @@ export const logoutThunk = createAsyncThunk(
 export const refreshThunk = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
+    if (!token) {
+      return thunkAPI.rejectWithValue("No access token, skipping refresh");
+    }
     try {
-      const savedToken = thunkAPI.getState().auth.token;
-      console.log(savedToken);
-
-      if (!savedToken) {
-        return thunkAPI.rejectWithValue("Token is not exist");
-      }
-
-      setAuthHeader(savedToken);
       const response = await axiosAPI.post("/api/auth/refresh");
-      console.log(response.data);
+
+      const { accessToken } = response.data?.data || {};
+      if (accessToken) setAuthHeader(accessToken);
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
