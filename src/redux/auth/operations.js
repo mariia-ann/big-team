@@ -56,7 +56,11 @@ export const logoutThunk = createAsyncThunk(
         return thunkAPI.rejectWithValue("No access token in state");
       }
 
-      await axiosAPI.post("/api/auth/logout");
+      await axiosAPI.post("/api/auth/logout", null, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       removeAuthHeader();
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -69,19 +73,15 @@ export const logoutThunk = createAsyncThunk(
 export const refreshThunk = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const token = state.auth.token;
-    if (!token) {
-      return thunkAPI.rejectWithValue("No access token, skipping refresh");
-    }
     try {
       const response = await axiosAPI.post("/api/auth/refresh");
-
       const { accessToken } = response.data?.data || {};
       if (accessToken) setAuthHeader(accessToken);
-
       return response.data;
     } catch (error) {
+      if (error.response?.status === 401) {
+        return thunkAPI.rejectWithValue("Unauthorized");
+      }
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || error.message
       );
