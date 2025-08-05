@@ -1,0 +1,148 @@
+.myProfile {
+  padding-top: 46px;
+  padding-bottom: 46px;
+}
+
+.pageTitle {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  color: #000;
+  margin-bottom: 24px;
+}
+
+.profileHeader {
+  margin-bottom: 24px;
+}
+
+.authorInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  width: 137px;
+  height: 137px;
+  border-radius: 256px;
+  object-fit: cover;
+}
+
+.textInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 137px;
+}
+
+.authorName {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: #070721;
+  text-align: left;
+  margin: 0;
+}
+
+.articlesCount {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #000;
+  margin-top: 4px;
+}
+
+.tabsContainer {
+  display: flex;
+  gap: 38px;
+  margin-bottom: 24px;
+}
+
+.tab {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #374f42;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 26px;
+}
+
+.tabActive {
+  border-bottom: 1px solid #374f42;
+  padding: 0 0 4px 0;
+}
+
+.articlesSection {
+  margin-top: 24px;
+}
+
+.articlesList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.loading,
+.error,
+.noArticles {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+  margin-top: 50px;
+}
+
+.error {
+  color: #d9534f;
+  font-weight: bold;
+}
+
+.loadMoreButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  border-radius: 64px;
+  padding: 16px;
+  width: 361px;
+  height: 57px;
+  background: #649179;
+  border: none;
+  cursor: pointer;
+  margin-top: 24px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.loadMoreButtonText {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #f7fffb;
+}
+
+@media screen and (min-width: 768px) {
+  .articlesList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .loadMoreButton {
+    width: 289px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .articlesList {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

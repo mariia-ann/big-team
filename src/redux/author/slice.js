@@ -22,7 +22,7 @@ const slice = createSlice({
     items: [],
     topItems: [],
     savedArticles: [],
-    currentCreator: null,
+    currentCreator: {},
     isLoading: false,
     error: null,
   },

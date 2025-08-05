@@ -32,7 +32,7 @@ export const fetchAuthor = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await publicAPI.get(`/api/users/${id}`);
-      return response.data;
+      return response.data.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
