@@ -11,7 +11,7 @@ import { selectUser } from "../../redux/auth/selectors";
 import { fetchAuthor } from "../../redux/author/operations";
 import { fetchSavedArticles } from "../../redux/author/operations";
 import Container from "../Container/Container";
-import ArticlesList from "../ArticlesPage/ArticlesList/ArticlesList.jsx";
+import ArticlesList from "../ArticlesList/ArticlesList.jsx";
 import Loader from "../Loader/Loader";
 import MyArticlesContent from "../NothingFound/MyArticlesContent/MyArticlesContent.jsx";
 import SavedArticlesContent from "../NothingFound/SavedArticlesContent/SavedArticlesContent.jsx";
