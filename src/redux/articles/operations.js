@@ -3,9 +3,14 @@ import { publicAPI } from "../api/publicAPI.js";
 
 export const fetchArticles = createAsyncThunk(
   "articles/fetchAll",
-  async (_, thunkAPI) => {
+  /*async (_, thunkAPI) => {*/
+  async ({ page, limit, type }, thunkAPI) => {
     try {
-      const response = await publicAPI.get("/api/articles");
+      /* const response = await publicAPI.get("/api/articles");*/
+      const response = await publicAPI.get("/api/articles", {
+        params: { page, limit, type },
+      });
+
       const articles = Array.isArray(response.data?.data?.data)
         ? response.data.data.data
         : [];
@@ -48,6 +53,9 @@ export const addArticle = createAsyncThunk(
     }
   }
 );
+
+export const incrementPage = (currentPage) => currentPage + 1;
+export const selectFilter = (state) => state.articles.filter;
 
 export const fetchArticlesByOwner = createAsyncThunk(
   "articles/fetchArticlesByOwner",

@@ -23,14 +23,38 @@ const slice = createSlice({
     currentArticle: null,
     isLoading: false,
     error: null,
+    page: 1,
+    limit: 12,
+    filter: "All",
   },
+  /*---------------------------------------*/
+  reducers: {
+    incrementPage(state) {
+      state.page += 1;
+    },
+    setFilter(state, action) {
+      state.filter = action.payload;
+    },
+    setPage(state, action) {
+      state.page = action.payload;
+    },
+    clearArticles(state) {
+      state.items = [];
+    },
+  },
+  /*---------------------------------------*/
   extraReducers: (builder) => {
     builder
       .addCase(fetchArticles.pending, handlePending)
       .addCase(fetchArticles.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.items = action.payload;
+        /* state.items = action.payload;*/
+        if (state.page === 1) {
+          state.items = action.payload;
+        } else {
+          state.items = [...state.items, ...action.payload];
+        }
       })
       .addCase(fetchArticles.rejected, handleRejected)
 
@@ -49,6 +73,7 @@ const slice = createSlice({
         state.items.push(action.payload);
       })
       .addCase(addArticle.rejected, handleRejected)
+
       .addCase(fetchArticlesByOwner.pending, handlePending)
       .addCase(fetchArticlesByOwner.fulfilled, (state, action) => {
         const { ownerId, articles } = action.payload;
@@ -62,3 +87,5 @@ const slice = createSlice({
 });
 
 export const articlesReducer = slice.reducer;
+export const { setFilter, incrementPage, setPage, clearArticles } =
+  slice.actions;
