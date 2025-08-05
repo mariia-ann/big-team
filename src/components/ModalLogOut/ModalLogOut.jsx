@@ -12,7 +12,7 @@ const ModalLogOut = ({ onClose }) => {
       .unwrap()
       .then(() => {
         toast.success("You’ve been logged out.");
-        close();
+        onClose();
       })
       .catch(() => {
         toast.error("Failed to log out. Please try again.");
@@ -32,10 +32,7 @@ const ModalLogOut = ({ onClose }) => {
         <h2 className={style.title}>Are you shure?</h2>
         <p className={style.text}>We will miss you!</p>
         <div className={style.buttons}>
-          <button
-            className={style.loginBtn}
-            onClick={handleLogOut}
-          >
+          <button className={style.loginBtn} onClick={handleLogOut}>
             Log out
           </button>
           <button className={style.registerBtn} onClick={onClose}>
