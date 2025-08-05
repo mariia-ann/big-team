@@ -8,7 +8,6 @@ import { fetchAuthors } from "../../redux/author/operations.js";
 import { selectArticles } from "../../redux/articles/selectors.js";
 
 const ArticlesList = () => {
-  
   const dispatch = useDispatch();
   const articles = useSelector(selectArticles);
   const authors = useSelector(selectCreators);
@@ -23,21 +22,22 @@ const ArticlesList = () => {
     return author?.name || "Unknown";
   };
 
-    if (articles.length === 0) {
+  if (articles.length === 0) {
     return <p>No articles available</p>;
-  };
+  }
+  console.log("Articles received:", articles);
 
   return (
     <ul className={s.articlesList}>
-          {articles.map((article) => (
-            <li key={article._id}>
-              <ArticlesItem
-                article={article}
-                authorName={getAuthorName(article.ownerId)}
-              />
-            </li>
-          ))}
-        </ul>
+      {articles.map((article) => (
+        <li key={article._id}>
+          <ArticlesItem
+            article={article}
+            authorName={getAuthorName(article.ownerId)}
+          />
+        </li>
+      ))}
+    </ul>
   );
 };
 export default ArticlesList;
