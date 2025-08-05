@@ -1,19 +1,22 @@
-.myProfile {
+.authorProfile {
   padding-top: 46px;
   padding-bottom: 46px;
 }
 
-.pageTitle {
-  font-family: "Manrope", sans-serif;
-  font-weight: 700;
-  font-size: 40px;
-  color: #000;
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   margin-bottom: 24px;
 }
 
-.profileHeader {
-  margin-bottom: 24px;
+.profileImage {
+  width: 137px;
+  height: 137px;
+  border-radius: 256px;
 }
+
+
 
 .authorInfo {
   display: flex;
@@ -22,8 +25,8 @@
 }
 
 .avatar {
-  width: 137px;
-  height: 137px;
+  width: 124px;
+  height: 124px;
   border-radius: 256px;
   object-fit: cover;
 }
@@ -32,7 +35,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 137px;
+  height: 124px;
 }
 
 .authorName {
@@ -42,6 +45,7 @@
   color: #070721;
   text-align: left;
   margin: 0;
+  margin-bottom: 4px;
 }
 
 .articlesCount {
@@ -50,6 +54,34 @@
   font-size: 18px;
   color: #000;
   margin-top: 4px;
+}
+
+.articlesSection {
+  margin-top: 24px;
+}
+
+.articlesList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.loading,
+.error,
+.noAuthor,
+.noArticles {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+  margin-top: 50px;
+}
+
+.error {
+  color: #d9534f;
+  font-weight: bold;
 }
 
 .tabsContainer {
@@ -79,33 +111,6 @@
   padding: 0 0 4px 0;
 }
 
-.articlesSection {
-  margin-top: 24px;
-}
-
-.articlesList {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.loading,
-.error,
-.noArticles {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #555;
-  margin-top: 50px;
-}
-
-.error {
-  color: #d9534f;
-  font-weight: bold;
-}
-
 .loadMoreButton {
   display: flex;
   align-items: center;
@@ -130,11 +135,19 @@
   color: #f7fffb;
 }
 
+
 @media screen and (min-width: 768px) {
   .articlesList {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
+  }
+  .avatar {
+    width: 137px;
+    height: 137px;
+  }
+  .textInfo {
+    height: 137px;
   }
   .loadMoreButton {
     width: 289px;

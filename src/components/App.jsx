@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectIsRefreshing } from "../redux/auth/selectors.js";
 import { refreshThunk } from "../redux/auth/operations.js";
 import PrivateRoute from "./PrivateRoute.jsx";
+import MyProfilePage from "../pages/MyProfilePage/MyProfilePage.jsx";
 
 const HomePage = lazy(() => import("../pages/HomePage/HomePage.jsx"));
 const RegisterPage = lazy(() => import("../pages/RegisterPage/RegisterPage"));
@@ -45,6 +46,14 @@ function App() {
           <Route path="/articles/:articlesId" element={<ArticlePage />} />
           <Route path="/authors" element={<AuthorsPage />} />
           <Route path="/authors/:authorId" element={<AuthorProfilePage />} />
+           <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <MyProfilePage />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/create"
             element={

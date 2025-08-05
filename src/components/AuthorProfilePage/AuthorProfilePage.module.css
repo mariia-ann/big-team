@@ -135,6 +135,7 @@
   color: #f7fffb;
 }
 
+
 @media screen and (min-width: 768px) {
   .articlesList {
     display: grid;

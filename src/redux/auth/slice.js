@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   user: {
+    id: null,
     email: null,
     name: null,
     avatarUrl: null,
@@ -24,6 +25,7 @@ const slice = createSlice({
     builder
       .addCase(registerThunk.fulfilled, (state, action) => {
         state.user = {
+          id: action.payload.data._id,
           name: action.payload.data.name,
           email: action.payload.data.email,
           avatarUrl: action.payload.data.avatarUrl,
@@ -33,6 +35,7 @@ const slice = createSlice({
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
         state.user = {
+          id: action.payload.data._id,
           name: action.payload.data.name,
           email: action.payload.data.email,
           avatarUrl: action.payload.data.avatarUrl,
@@ -47,6 +50,7 @@ const slice = createSlice({
         state.isLoggedIn = true;
         state.isRefreshing = false;
         state.user = {
+          id: action.payload.data._id,
           name: action.payload.data.name,
           email: action.payload.data.email,
           avatarUrl: action.payload.data.avatarUrl,
