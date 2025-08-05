@@ -36,11 +36,9 @@ const MyProfilePage = () => {
 
   useEffect(() => {
     if (activeTab === TABS.SAVED_ARTICLES) {
-      dispatch(fetchAuthorSavedArticles());
+      dispatch(fetchAuthorSavedArticles(profile.id));
     }
   }, [dispatch, activeTab]);
-
-  console.log(myArticles);
 
   const renderContent = () => {
     if (activeTab === TABS.MY_ARTICLES) {
