@@ -51,10 +51,11 @@ const slice = createSlice({
       .addCase(addArticle.rejected, handleRejected)
       .addCase(fetchArticlesByOwner.pending, handlePending)
       .addCase(fetchArticlesByOwner.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = null;
         const { ownerId, articles } = action.payload;
-        state.byOwner[ownerId] = articles;
+        state.byOwner[ownerId] = {
+          items: articles,
+          status: "succeeded",
+        };
       })
       .addCase(fetchArticlesByOwner.rejected, handleRejected);
   },

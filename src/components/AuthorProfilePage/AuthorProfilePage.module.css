@@ -4,8 +4,19 @@
 }
 
 .profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   margin-bottom: 24px;
 }
+
+.profileImage {
+  width: 137px;
+  height: 137px;
+  border-radius: 256px;
+}
+
+
 
 .authorInfo {
   display: flex;
@@ -34,6 +45,7 @@
   color: #070721;
   text-align: left;
   margin: 0;
+  margin-bottom: 4px;
 }
 
 .articlesCount {
