@@ -43,7 +43,7 @@ export const fetchAuthorSavedArticles = createAsyncThunk(
   "authors/fetchAuthorSavedArticles",
   async (id, thunkAPI) => {
     try {
-      const response = await axiosAPI.get(`/${id}/saved-articles`);
+      const response = await axiosAPI.get(`/api/users/${id}/saved-articles`);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
