@@ -48,25 +48,37 @@ const AuthorsPage = () => {
   }, [displayedAuthors, page]);
 
   return (
-    <section className={css.authors}>
-      <Container>
-        <div className={css.contentBlock}>
-          <h2 className={css.title}>Authors</h2>
-          {isLoading && <Loader />}
-          {error && <p className={css.errorText}>An error occurred: {error}</p>}
-          {!isLoading && !error && allAuthors.length === 0 ? (
-            <p className={css.noAuthors}>No authors found.</p>
-          ) : (
-            <AuthorsList authors={displayedAuthors} listRef={listRef} />
-          )}
-        </div>
-        {hasMore && !isLoading && (
-          <button className={css.loadMore} onClick={handleLoadMore}>
-            Load More
-          </button>
-        )}
-      </Container>
-    </section>
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <section className={css.authors}>
+          <Container>
+            <div className={css.contentBlock}>
+              <h2 className={css.title}>Authors</h2>
+
+              {!isLoading && error && (
+                <p className={css.errorText}>An error occurred: {error}</p>
+              )}
+
+              {!isLoading &&
+                !error &&
+                (allAuthors.length === 0 ? (
+                  <p className={css.noAuthors}>No authors found.</p>
+                ) : (
+                  <AuthorsList authors={displayedAuthors} listRef={listRef} />
+                ))}
+            </div>
+
+            {hasMore && !isLoading && (
+              <button className={css.loadMore} onClick={handleLoadMore}>
+                Load More
+              </button>
+            )}
+          </Container>
+        </section>
+      )}
+    </>
   );
 };
 
