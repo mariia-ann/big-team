@@ -57,12 +57,11 @@ const AuthorsPage = () => {
             <div className={css.contentBlock}>
               <h2 className={css.title}>Authors</h2>
 
-              {!isLoading && error && (
+              {error && (
                 <p className={css.errorText}>An error occurred: {error}</p>
               )}
 
-              {!isLoading &&
-                !error &&
+              {!error &&
                 (allAuthors.length === 0 ? (
                   <p className={css.noAuthors}>No authors found.</p>
                 ) : (
@@ -70,7 +69,7 @@ const AuthorsPage = () => {
                 ))}
             </div>
 
-            {hasMore && !isLoading && (
+            {hasMore && (
               <button className={css.loadMore} onClick={handleLoadMore}>
                 Load More
               </button>
