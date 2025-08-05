@@ -20,6 +20,7 @@ const slice = createSlice({
     page: 1,
     limit: 12,
     filter: "All",
+    hasMore: true,
   },
   /*---------------------------------------*/
   reducers: {
@@ -35,6 +36,9 @@ const slice = createSlice({
     clearArticles(state) {
       state.items = [];
     },
+    setHasMore(state, action) {
+      state.hasMore = action.payload;
+    },
   },
   /*---------------------------------------*/
   extraReducers: (builder) => {
@@ -48,6 +52,11 @@ const slice = createSlice({
           state.items = action.payload;
         } else {
           state.items = [...state.items, ...action.payload];
+        }
+        if (action.payload.length < state.limit) {
+          state.hasMore = false;
+        } else {
+          state.hasMore = true;
         }
       })
       .addCase(fetchArticles.rejected, handleRejected)
@@ -71,5 +80,5 @@ const slice = createSlice({
 });
 
 export const articlesReducer = slice.reducer;
-export const { setFilter, incrementPage, setPage, clearArticles } =
+export const { setFilter, incrementPage, setPage, clearArticles, setHasMore } =
   slice.actions;

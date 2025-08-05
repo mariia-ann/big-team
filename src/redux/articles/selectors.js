@@ -4,3 +4,4 @@ export const selectLoading = (state) => state.articles.isLoading;
 export const selectError = (state) => state.articles.error;
 export const selectPage = (state) => state.articles.page;
 export const selectFilter = (state) => state.articles.filter;
+export const selectHasMore = (state) => state.articles.hasMore;

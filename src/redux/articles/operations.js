@@ -45,5 +45,18 @@ export const addArticle = createAsyncThunk(
   }
 );
 
+export const loadArticles = createAsyncThunk(
+  "articles/loadArticles",
+  async ({ page, limit, type }, thunkAPI) => {
+    // 🧼 Спочатку очищаємо список, якщо це "All" і перша сторінка
+    if (type === "All" && page === 1) {
+      thunkAPI.dispatch({ type: "articles/clearArticles" });
+    }
+
+    // 🎯 Потім викликаємо fetchArticles — він вже обробляється у slice
+    return await thunkAPI.dispatch(fetchArticles({ page, limit, type }));
+  }
+);
+
 export const incrementPage = (currentPage) => currentPage + 1;
 export const selectFilter = (state) => state.articles.filter;

@@ -6,21 +6,20 @@ import ArticlesList from "../../components/ArticlesList/ArticlesList";
 import Container from "../../components/Container/Container";
 import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn.jsx";
 
-import { fetchArticles } from "../../redux/articles/operations.js";
+import { loadArticles } from "../../redux/articles/operations.js";
 import {
-  incrementPage,
   setPage,
   setFilter,
   clearArticles,
 } from "../../redux/articles/slice.js";
+
 import {
   selectArticles,
   selectLoading,
   selectPage,
   selectFilter,
+  selectHasMore,
 } from "../../redux/articles/selectors.js";
-
-/*****/
 
 import s from "./ArticlesPage.module.css";
 import chevronIcon from "../../assets/images/icons/chevron-down.svg";
@@ -34,18 +33,21 @@ const ArticlesPage = () => {
   const limit = 12;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [showLoadMore, setShowLoadMore] = useState(true);
+  const hasMore = useSelector(selectHasMore);
   const [users, setUsers] = useState([]);
   const filterOptions = ["All", "Popular"];
 
   const handleLoadMore = () => {
-    dispatch(incrementPage());
+    const nextPage = page + 1;
+    dispatch(setPage(nextPage));
+    dispatch(loadArticles({ page: nextPage, limit, type: filter }));
   };
 
   useEffect(() => {
     dispatch(clearArticles());
-    dispatch(fetchArticles({ page, limit, type: filter }));
-  }, [page, filter]);
+    dispatch(setPage(1));
+    dispatch(loadArticles({ page: 1, limit, type: filter }));
+  }, []);
 
   return (
     <section>
@@ -58,10 +60,9 @@ const ArticlesPage = () => {
               value={filter}
               onChange={(e) => {
                 const selected = e.target.value;
-                dispatch(clearArticles()); // Очищення перед новим запитом
-                dispatch(setFilter(selected)); // Встановлення нового фільтру
-                dispatch(setPage(1)); // Повернення на першу сторінку
-                dispatch(fetchArticles({ page: 1, limit, type: selected }));
+                dispatch(setFilter(selected));
+                dispatch(setPage(1));
+                dispatch(loadArticles({ page: 1, limit, type: selected }));
               }}
               className={s.dropdown}
             >
@@ -82,7 +83,7 @@ const ArticlesPage = () => {
           </div>
         </div>
         <ArticlesList articles={articles} users={users} />
-        {articles.length > 0 && !loading && showLoadMore && (
+        {articles.length > 0 && !loading && hasMore && (
           <LoadMoreBtn onClick={handleLoadMore} />
         )}
       </Container>
