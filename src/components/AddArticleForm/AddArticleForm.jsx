@@ -57,104 +57,106 @@ export const CreateArticleForm = () => {
 
   return (
     <>
-      {isLoading && <Loader />}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ setFieldValue, values }) => {
+            const handleImageChange = (event) => {
+              const file = event.currentTarget.files[0];
+              setFieldValue("image", file);
+              setPreviewUrl(file ? URL.createObjectURL(file) : null);
+            };
 
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ setFieldValue, values }) => {
-          const handleImageChange = (event) => {
-            const file = event.currentTarget.files[0];
-            setFieldValue("image", file);
-            setPreviewUrl(file ? URL.createObjectURL(file) : null);
-          };
+            const handleInput = (event) => {
+              const textarea = event.target;
+              textarea.style.height = "auto";
+              textarea.style.height = textarea.scrollHeight + "px";
+              setFieldValue("text", textarea.value);
+            };
 
-          const handleInput = (event) => {
-            const textarea = event.target;
-            textarea.style.height = "auto";
-            textarea.style.height = textarea.scrollHeight + "px";
-            setFieldValue("text", textarea.value);
-          };
+            return (
+              <Form className={css.form}>
+                <h2 className={css.heading}>Create an article</h2>
 
-          return (
-            <Form className={css.form}>
-              <h2 className={css.heading}>Create an article</h2>
-
-              <div className={css.wrapper}>
-                <div className={css.imageWrapper}>
-                  <label className={css.imageLabel}>
-                    <input
-                      type="file"
+                <div className={css.wrapper}>
+                  <div className={css.imageWrapper}>
+                    <label className={css.imageLabel}>
+                      <input
+                        type="file"
+                        name="image"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className={css.imageInput}
+                      />
+                      <div className={css.imagePreview}>
+                        {previewUrl ? (
+                          <img
+                            src={previewUrl}
+                            alt="Preview"
+                            className={css.previewImage}
+                          />
+                        ) : (
+                          <IconUploadFoto className={css.cameraIcon} />
+                        )}
+                      </div>
+                    </label>
+                    <ErrorMessage
                       name="image"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                      className={css.imageInput}
+                      component="div"
+                      className={css.error}
                     />
-                    <div className={css.imagePreview}>
-                      {previewUrl ? (
-                        <img
-                          src={previewUrl}
-                          alt="Preview"
-                          className={css.previewImage}
-                        />
-                      ) : (
-                        <IconUploadFoto className={css.cameraIcon} />
-                      )}
-                    </div>
-                  </label>
-                  <ErrorMessage
-                    name="image"
-                    component="div"
-                    className={css.error}
-                  />
-                </div>
+                  </div>
 
-                <div className={css.inputsWrapper}>
+                  <div className={css.inputsWrapper}>
+                    <label className={css.label}>
+                      Title
+                      <Field
+                        name="title"
+                        placeholder="Enter the title"
+                        className={css.input}
+                      />
+                      <ErrorMessage
+                        name="title"
+                        component="div"
+                        className={css.error}
+                      />
+                    </label>
+                  </div>
+
                   <label className={css.label}>
-                    Title
-                    <Field
-                      name="title"
-                      placeholder="Enter the title"
-                      className={css.input}
+                    <textarea
+                      name="text"
+                      placeholder="Enter a text"
+                      className={css.textarea}
+                      ref={textRef}
+                      value={values.text}
+                      onInput={handleInput}
                     />
                     <ErrorMessage
-                      name="title"
+                      name="text"
                       component="div"
                       className={css.error}
                     />
                   </label>
                 </div>
 
-                <label className={css.label}>
-                  <textarea
-                    name="text"
-                    placeholder="Enter a text"
-                    className={css.textarea}
-                    ref={textRef}
-                    value={values.text}
-                    onInput={handleInput}
-                  />
-                  <ErrorMessage
-                    name="text"
-                    component="div"
-                    className={css.error}
-                  />
-                </label>
-              </div>
-
-              <button
-                type="submit"
-                className={css.submitButton}
-                disabled={isLoading}
-              >
-                Publish Article
-              </button>
-            </Form>
-          );
-        }}
-      </Formik>
+                <button
+                  type="submit"
+                  className={css.submitButton}
+                  disabled={isLoading}
+                >
+                  Publish Article
+                </button>
+              </Form>
+            );
+          }}
+        </Formik>
+      )}
     </>
   );
 };
