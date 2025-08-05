@@ -20,7 +20,7 @@ const ArticlesItem = ({ article, authorName }) => {
         </div>
         <div className={s.actions}>
           <Link to={`/articles/${_id}`}>Learn more</Link>
-          <ButtonAddToBookmarks articleId={_id.$oid} />
+          <ButtonAddToBookmarks articleId={_id?.$oid ?? _id} />
         </div>
       </div>
     </div>
