@@ -3,17 +3,15 @@ import ArticlesItem from "../ArticlesItem/ArticlesItem.jsx";
 import s from "./ArticlesList.module.css";
 import { selectCreators } from "../../redux/author/selectors.js";
 import { useEffect } from "react";
-import { fetchArticles } from "../../redux/articles/operations.js";
 import { fetchAuthors } from "../../redux/author/operations.js";
-import { selectArticles } from "../../redux/articles/selectors.js";
 
-const ArticlesList = () => {
+const ArticlesList = ({ articles }) => {
   const dispatch = useDispatch();
-  const articles = useSelector(selectArticles);
+  // const articles = useSelector(selectArticles);
   const authors = useSelector(selectCreators);
 
   useEffect(() => {
-    dispatch(fetchArticles());
+    // dispatch(fetchArticles());
     dispatch(fetchAuthors());
   }, [dispatch]);
 
@@ -25,7 +23,6 @@ const ArticlesList = () => {
   if (articles.length === 0) {
     return <p>No articles available</p>;
   }
-  console.log("Articles received:", articles);
 
   return (
     <ul className={s.articlesList}>

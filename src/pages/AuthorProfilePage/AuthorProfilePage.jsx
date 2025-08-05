@@ -1,7 +1,7 @@
-const AuthorProfilePage = () => {
-  return (
-    <div>AuthorProfilePage</div>
-  )
-}
+import AuthorProfilePage from "../../components/AuthorProfilePage/AuthorProfilePage";
 
-export default AuthorProfilePage
+const AuthorProfilePageWrapper = () => {
+  return <AuthorProfilePage />;
+};
+
+export default AuthorProfilePageWrapper;

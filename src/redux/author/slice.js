@@ -22,7 +22,7 @@ const slice = createSlice({
     items: [],
     topItems: [],
     savedArticles: [],
-    currentCreator: null,
+    currentCreator: {},
     isLoading: false,
     error: null,
   },
@@ -56,7 +56,7 @@ const slice = createSlice({
       .addCase(fetchAuthorSavedArticles.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.savedArticles = action.payload;
+        state.savedArticles = action.payload.data || [];
       })
       .addCase(fetchAuthorSavedArticles.rejected, handleRejected)
 

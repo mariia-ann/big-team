@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   user: {
+    id: null,
     email: null,
     name: null,
     avatarUrl: null,
@@ -24,6 +25,7 @@ const slice = createSlice({
     builder
       .addCase(registerThunk.fulfilled, (state, action) => {
         state.user = {
+          id: action.payload.data._id,
           name: action.payload.data.name,
           email: action.payload.data.email,
           avatarUrl: action.payload.data.avatarUrl,
@@ -33,25 +35,27 @@ const slice = createSlice({
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
         state.user = {
+          id: action.payload.data._id,
           name: action.payload.data.name,
           email: action.payload.data.email,
           avatarUrl: action.payload.data.avatarUrl,
         };
         state.token = action.payload.data.accessToken;
         state.isLoggedIn = true;
+      })
+      .addCase(refreshThunk.pending, (state, action) => {
+        state.isRefreshing = true;
       })
       .addCase(refreshThunk.fulfilled, (state, action) => {
         state.isLoggedIn = true;
         state.isRefreshing = false;
         state.user = {
+          id: action.payload.data._id,
           name: action.payload.data.name,
           email: action.payload.data.email,
           avatarUrl: action.payload.data.avatarUrl,
         };
         state.token = action.payload.data.accessToken;
-      })
-      .addCase(refreshThunk.pending, (state, action) => {
-        state.isRefreshing = true;
       })
       .addCase(refreshThunk.rejected, (state, action) => {
         state.isRefreshing = false;

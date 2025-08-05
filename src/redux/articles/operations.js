@@ -37,6 +37,15 @@ export const addArticle = createAsyncThunk(
   "articles/addArticle",
   async (item, thunkAPI) => {
     try {
+      const state = thunkAPI.getState();
+      const token = state.auth.token;
+
+      if (!token) {
+        return thunkAPI.rejectWithValue("No token available");
+      }
+
+      publicAPI.defaults.headers.common.Authorization = `Bearer ${token}`;
+
       const response = await publicAPI.post("/api/articles", item);
       return response.data;
     } catch (e) {
@@ -60,3 +69,22 @@ export const loadArticles = createAsyncThunk(
 
 export const incrementPage = (currentPage) => currentPage + 1;
 export const selectFilter = (state) => state.articles.filter;
+
+export const fetchArticlesByOwner = createAsyncThunk(
+  "articles/fetchArticlesByOwner",
+  async (ownerId, thunkAPI) => {
+    try {
+      const response = await publicAPI.get("/api/articles", {
+        params: { ownerId },
+      });
+      // console.log("fetchArticlesByOwner response:", response.data);
+
+      const innerData = response?.data?.data;
+      const articles = Array.isArray(innerData?.data) ? innerData.data : [];
+
+      return { ownerId, articles };
+    } catch (e) {
+      return thunkAPI.rejectWithValue({ ownerId, message: e.message });
+    }
+  }
+);
