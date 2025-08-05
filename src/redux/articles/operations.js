@@ -32,10 +32,42 @@ export const addArticle = createAsyncThunk(
   "articles/addArticle",
   async (item, thunkAPI) => {
     try {
+      const state = thunkAPI.getState();
+      const token = state.auth.token;
+
+      if (!token) {
+        return thunkAPI.rejectWithValue("No token available");
+      }
+
+      publicAPI.defaults.headers.common.Authorization = `Bearer ${token}`;
+
       const response = await publicAPI.post("/api/articles", item);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+
+export const fetchArticlesByOwner = createAsyncThunk(
+  "articles/fetchArticlesByOwner",
+  async (ownerId, thunkAPI) => {
+    try {
+      const response = await publicAPI.get("/api/articles", {
+        params: { ownerId },
+      });
+console.log("fetchArticlesByOwner response:", response.data);
+
+      const articles = Array.isArray(response.data?.data?.data)
+        ? response.data.data.data
+        : Array.isArray(response.data?.data)
+        ? response.data.data
+        : [];
+
+      return { ownerId, articles };
+    } catch (e) {
+      return thunkAPI.rejectWithValue({ ownerId, message: e.message });
     }
   }
 );
