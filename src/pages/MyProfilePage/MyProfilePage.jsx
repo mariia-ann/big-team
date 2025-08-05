@@ -9,6 +9,7 @@ import { fetchArticlesByOwner } from "../../redux/articles/operations.js";
 import { fetchAuthorSavedArticles } from "../../redux/author/operations.js";
 import SavedArticlesContent from "../../components/NothingFound/SavedArticlesContent/SavedArticlesContent.jsx";
 import MyArticlesContent from "../../components/NothingFound/MyArticlesContent/MyArticlesContent.jsx";
+import ArticlesList from "../../components/ArticlesList/ArticlesList.jsx";
 
 const TABS = {
   MY_ARTICLES: "MY_ARTICLES",
@@ -19,14 +20,16 @@ const MyProfilePage = () => {
   const dispatch = useDispatch();
   const profile = useSelector(selectUser);
   const [activeTab, setActiveTab] = useState(TABS.MY_ARTICLES);
+   const savedArticles = useSelector(selectSavedArticles);
 
   const myArticles = useSelector((state) =>
     selectArticlesByOwner(state, profile.id)
   );
-  const savedArticles = useSelector(selectSavedArticles);
 
+    const articlesCount = myArticles.length;
+ 
   useEffect(() => {
-    if (profile._id) {
+    if (profile.id) {
       dispatch(fetchArticlesByOwner(profile.id));
     }
   }, [dispatch, profile]);
@@ -37,7 +40,7 @@ const MyProfilePage = () => {
     }
   }, [dispatch, activeTab]);
 
-  console.log(profile.id);
+  console.log(myArticles);
 
   const renderContent = () => {
     if (activeTab === TABS.MY_ARTICLES) {
@@ -66,7 +69,7 @@ const MyProfilePage = () => {
           />
           <div>
             <h1 className={css.authorName}>{profile.name}</h1>
-            <p className={css.authorBio}>0 Articles</p>
+            <p className={css.authorBio}>{articlesCount} Articles</p>
           </div>
         </div>
 
