@@ -55,7 +55,7 @@ export const addAuthorSavedArticles = createAsyncThunk(
   "authors/addAuthorSavedArticles",
   async ({ userId, articleId }, thunkAPI) => {
     try {
-      const response = await axiosAPI.post(`/${userId}/saved-articles/${articleId}`);
+      const response = await axiosAPI.post(`api/users/${userId}/saved-articles/${articleId}`);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
