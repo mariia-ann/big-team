@@ -18,10 +18,11 @@ const PopularArticlesSection = () => {
   const authors = useSelector(selectCreators);
 
   const [visibleCount, setVisibleCount] = useState(4);
+ 
   const visibleArticles = articles.slice(0, visibleCount);
 
   useEffect(() => {
-    dispatch(fetchArticles());
+    dispatch(fetchArticles({ page: 1, limit: 4 }));
     dispatch(fetchAuthors());
   }, [dispatch]);
 
