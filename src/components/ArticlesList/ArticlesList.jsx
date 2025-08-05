@@ -5,13 +5,11 @@ import { selectCreators } from "../../redux/author/selectors.js";
 import { useEffect } from "react";
 import { fetchAuthors } from "../../redux/author/operations.js";
 
-const ArticlesList = ({ articles }) => {
+const ArticlesList = ({ articles, listRef }) => {
   const dispatch = useDispatch();
-  // const articles = useSelector(selectArticles);
   const authors = useSelector(selectCreators);
 
   useEffect(() => {
-    // dispatch(fetchArticles());
     dispatch(fetchAuthors());
   }, [dispatch]);
 
@@ -25,7 +23,7 @@ const ArticlesList = ({ articles }) => {
   }
 
   return (
-    <ul className={s.articlesList}>
+    <ul className={s.articlesList} ref={listRef}>
       {articles.map((article) => (
         <li key={article._id}>
           <ArticlesItem
@@ -37,4 +35,5 @@ const ArticlesList = ({ articles }) => {
     </ul>
   );
 };
+
 export default ArticlesList;

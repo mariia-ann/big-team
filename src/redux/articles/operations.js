@@ -1,26 +1,36 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { publicAPI } from "../api/publicAPI.js";
 
+// 🔹 Отримати всі статті з фільтрацією по "Popular"
 export const fetchArticles = createAsyncThunk(
   "articles/fetchAll",
-  /*async (_, thunkAPI) => {*/
   async ({ page, limit, type }, thunkAPI) => {
     try {
-      /* const response = await publicAPI.get("/api/articles");*/
       const response = await publicAPI.get("/api/articles", {
-        params: { page, limit, type },
+        params: { page, limit },
       });
 
+      // Дістаємо масив статей з вкладеної структури
       const articles = Array.isArray(response.data?.data?.data)
         ? response.data.data.data
         : [];
-      return articles;
+
+      // Фільтруємо, якщо вибрано "Popular"
+      const filteredArticles =
+        type === "Popular"
+          ? articles
+              .filter((article) => article.rate > 38)
+              .sort(() => Math.random() - 0.5) // рандомізує порядок
+          : articles;
+
+      return filteredArticles;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
   }
 );
 
+// 🔹 Отримати одну статтю за ID
 export const fetchArticle = createAsyncThunk(
   "articles/fetchArticle",
   async (id, thunkAPI) => {
@@ -33,6 +43,7 @@ export const fetchArticle = createAsyncThunk(
   }
 );
 
+// 🔹 Додати нову статтю (авторизація обов'язкова)
 export const addArticle = createAsyncThunk(
   "articles/addArticle",
   async (item, thunkAPI) => {
@@ -44,6 +55,7 @@ export const addArticle = createAsyncThunk(
         return thunkAPI.rejectWithValue("No token available");
       }
 
+      // Додаємо токен до заголовків
       publicAPI.defaults.headers.common.Authorization = `Bearer ${token}`;
 
       const response = await publicAPI.post("/api/articles", item);
@@ -54,22 +66,30 @@ export const addArticle = createAsyncThunk(
   }
 );
 
+// 🔹 Завантажити статті з очищенням (wrapper над fetchArticles)
 export const loadArticles = createAsyncThunk(
   "articles/loadArticles",
   async ({ page, limit, type }, thunkAPI) => {
-    // 🧼 Спочатку очищаємо список, якщо це "All" і перша сторінка
+    // Якщо це фільтр "All" і перша сторінка — очищаємо старі статті
     if (type === "All" && page === 1) {
       thunkAPI.dispatch({ type: "articles/clearArticles" });
     }
 
-    // 🎯 Потім викликаємо fetchArticles — він вже обробляється у slice
-    return await thunkAPI.dispatch(fetchArticles({ page, limit, type }));
+    // Запускаємо завантаження
+    const resultAction = await thunkAPI.dispatch(
+      fetchArticles({ page, limit, type })
+    );
+
+    // Якщо виконано успішно — повертаємо payload
+    if (fetchArticles.fulfilled.match(resultAction)) {
+      return resultAction.payload;
+    } else {
+      return thunkAPI.rejectWithValue(resultAction.payload);
+    }
   }
 );
 
-export const incrementPage = (currentPage) => currentPage + 1;
-export const selectFilter = (state) => state.articles.filter;
-
+// 🔹 Отримати всі статті певного автора
 export const fetchArticlesByOwner = createAsyncThunk(
   "articles/fetchArticlesByOwner",
   async (ownerId, thunkAPI) => {
@@ -77,10 +97,10 @@ export const fetchArticlesByOwner = createAsyncThunk(
       const response = await publicAPI.get("/api/articles", {
         params: { ownerId },
       });
-      // console.log("fetchArticlesByOwner response:", response.data);
 
-      const innerData = response?.data?.data;
-      const articles = Array.isArray(innerData?.data) ? innerData.data : [];
+      const articles = Array.isArray(response.data?.data?.data)
+        ? response.data.data.data
+        : [];
 
       return { ownerId, articles };
     } catch (e) {
@@ -88,3 +108,7 @@ export const fetchArticlesByOwner = createAsyncThunk(
     }
   }
 );
+
+// 🔹 Допоміжні селектори та функції
+export const incrementPage = (currentPage) => currentPage + 1;
+export const selectFilter = (state) => state.articles.filter;
