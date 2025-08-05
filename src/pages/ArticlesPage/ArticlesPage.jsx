@@ -81,7 +81,7 @@ const ArticlesPage = () => {
             />
           </div>
         </div>
-        <ArticlesList articles={articles} users={users} />
+        <ArticlesList articles={articles} authors={users} />
         {articles.length > 0 && !loading && showLoadMore && (
           <LoadMoreBtn onClick={handleLoadMore} />
         )}

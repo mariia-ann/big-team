@@ -7,6 +7,7 @@ import Container from "../Container/Container.jsx";
 import css from "./AuthorProfilePage.module.css";
 import { fetchArticlesByOwner } from "../../redux/articles/operations.js";
 import { selectArticlesByOwner } from "../../redux/articles/selectors.js";
+import ArticlesList from "../ArticlesList/ArticlesList.jsx";
 
 const AuthorProfilePage = () => {
   const { authorId } = useParams();
@@ -16,8 +17,6 @@ const AuthorProfilePage = () => {
     selectArticlesByOwner(state, authorId)
   );
 
-  console.log(ownerArticle);
-
   useEffect(() => {
     if (authorId) {
       dispatch(fetchAuthor(authorId));
@@ -26,8 +25,8 @@ const AuthorProfilePage = () => {
   }, [dispatch, authorId]);
 
   return (
-    <Container>
-      <div className={css.authorProfile}>
+    <section className={css.authorProfile}>
+      <Container>
         <div className={css.profileHeader}>
           <img
             src={author.avatarUrl}
@@ -39,9 +38,11 @@ const AuthorProfilePage = () => {
             <p className={css.authorBio}>{author.articlesAmount} Articles</p>
           </div>
         </div>
-      </div>
-      <div></div>
-    </Container>
+        <div>
+          <ArticlesList articles={ownerArticle} />
+        </div>
+      </Container>
+    </section>
   );
 };
 
