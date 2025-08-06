@@ -61,15 +61,19 @@ const MyProfilePage = () => {
   return (
     <section className={css.authorProfile}>
       <Container>
-        <div className={css.profileHeader}>
-          <img
-            src={profile.avatarUrl || defaultAvatar}
-            alt={profile.name}
-            className={css.profileImage}
-          />
-          <div>
-            <h1 className={css.authorName}>{profile.name}</h1>
-            <p className={css.authorBio}>{articlesCount} Articles</p>
+        <div className={css.contentBlock}>
+          <h2 className={css.title}>My Profile</h2>
+
+          <div className={css.profileHeader}>
+            <img
+              src={profile.avatarUrl || defaultAvatar}
+              alt={profile.name}
+              className={css.profileImage}
+            />
+            <div>
+              <h1 className={css.authorName}>{profile.name}</h1>
+              <p className={css.authorBio}>{articlesCount} Articles</p>
+            </div>
           </div>
 
           <div className={css.tabsContainer}>

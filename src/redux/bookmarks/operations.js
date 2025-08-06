@@ -10,7 +10,6 @@ export const fetchBookmarks = createAsyncThunk(
         `/api/users/${userId}/saved-articles`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log("Saved articles response:", data);
       const articles = Array.isArray(data.data)
         ? data.data.map(a => a._id)
         : [];
