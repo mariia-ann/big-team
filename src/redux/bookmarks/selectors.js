@@ -1,18 +1,15 @@
-// src/redux/bookmarks/selectors.js
+import { createSelector } from "@reduxjs/toolkit";
 
-export const selectBookmarks = (state) => {
-  const items = state.bookmarks.items;
-  if (typeof items === "string") {
-    try {
-      return JSON.parse(items);
-    } catch {
-      return [];
-    }
-  }
-  return Array.isArray(items) ? items : [];
-};
+const selectBookmarksState = (state) => state.bookmarks;
 
-export const selectBookmarksLoading = (state) => state.bookmarks.isLoading;
+export const selectBookmarks = createSelector(
+  [selectBookmarksState],
+  (bookmarks) => Array.isArray(bookmarks.items) ? bookmarks.items : []
+);
 
-export const selectBookmarksError = (state) => state.bookmarks.error;
+export const selectBookmarksLoading = (state) => state.bookmarks?.isLoading;
+export const selectBookmarksError = (state) => state.bookmarks?.error;
+
+
+
 

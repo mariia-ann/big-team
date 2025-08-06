@@ -6,12 +6,15 @@ export const fetchBookmarks = createAsyncThunk(
   async (userId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
-      console.log("fetchBookmarks thunk called, userId:", userId);
       const { data } = await publicAPI.get(
-        `/authors/${userId}/saved-articles`,
+        `/api/users/${userId}/saved-articles`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      return data.data;
+      
+      const articles = Array.isArray(data.data.savedArticles)
+        ? data.data.savedArticles.map(a => (typeof a === "object" ? a._id : a))
+        : [];
+      return articles;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
@@ -22,11 +25,10 @@ export const addBookmark = createAsyncThunk(
   "bookmarks/add",
   async ({ userId, articleId }, thunkAPI) => {
     try {
-      console.log("addBookmark thunk called:", userId, articleId);
       const token = thunkAPI.getState().auth.token;
-      await publicAPI.patch(
-        `/authors/${userId}/saved-articles/${articleId}`,
-        {},
+      await publicAPI.post(
+        `/api/users/${userId}/saved-articles/${articleId}`,
+        null, 
         { headers: { Authorization: `Bearer ${token}` } }
       );
       return articleId;
@@ -40,10 +42,9 @@ export const removeBookmark = createAsyncThunk(
   "bookmarks/remove",
   async ({ userId, articleId }, thunkAPI) => {
     try {
-      console.log("removeBookmark thunk called:", userId, articleId);
       const token = thunkAPI.getState().auth.token;
       await publicAPI.delete(
-        `/authors/${userId}/saved-articles/${articleId}`,
+        `/api/users/${userId}/saved-articles/${articleId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       return articleId;
@@ -52,5 +53,9 @@ export const removeBookmark = createAsyncThunk(
     }
   }
 );
+
+export const selectBookmarks = (state) => Array.isArray(state.bookmarks?.items) ? state.bookmarks.items : [];
+export const selectBookmarksLoading = (state) => state.bookmarks?.isLoading;
+export const selectBookmarksError = (state) => state.bookmarks?.error;
 
 

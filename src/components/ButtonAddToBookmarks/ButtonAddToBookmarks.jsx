@@ -1,30 +1,39 @@
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { useToggle } from "../../hooks/useToggle.js";
 import s from "./ButtonAddToBookmarks.module.css";
 import { selectIsLoggedIn, selectUserId } from "../../redux/auth/selectors.js";
-import { selectBookmarks } from "../../redux/bookmarks/selectors.js";
-import { addBookmark, removeBookmark, fetchBookmarks } from "../../redux/bookmarks/operations.js";
+import {
+  selectBookmarks,
+  selectBookmarksLoading,
+} from "../../redux/bookmarks/selectors.js";
+import { addBookmark, removeBookmark } from "../../redux/bookmarks/operations.js";
 import AuthModal from "../ModalErrorSave/ModalErrorSave.jsx";
 import BookmarkIcon from "../../assets/images/icons/bookmark.svg?react";
-import { useEffect } from "react";
+import { ClipLoader } from "react-spinners";
 
 const ButtonAddToBookmarks = ({ articleId }) => {
   const { isOpen, close, open } = useToggle();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const userId = useSelector(selectUserId);
-  const bookmarks = useSelector(selectBookmarks);
+  const bookmarks = useSelector(selectBookmarks).map(String);
+  const bookmarksLoading = useSelector(selectBookmarksLoading);
+  const [isLoading, setIsLoading] = useState(false);
 
-  
-  useEffect(() => {
-    if (isLoggedIn && userId) {
-      dispatch(fetchBookmarks(userId));
-    }
-  }, [dispatch, isLoggedIn, userId]);
+  const normalizedArticleId = String(articleId);
+  const isBookmarked = bookmarks.includes(normalizedArticleId);
 
-  const isBookmarked = bookmarks.includes(articleId);
+  if (bookmarksLoading) {
+    return (
+      <button className={s.button} disabled>
+        <ClipLoader color="#aaa" size={16} />
+      </button>
+    );
+  }
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.stopPropagation();
     if (!isLoggedIn) {
       open();
@@ -32,10 +41,31 @@ const ButtonAddToBookmarks = ({ articleId }) => {
     }
     if (!userId) return;
 
-    if (isBookmarked) {
-      dispatch(removeBookmark({ userId, articleId }));
-    } else {
-      dispatch(addBookmark({ userId, articleId }));
+    setIsLoading(true);
+    try {
+      if (isBookmarked) {
+        await dispatch(
+          removeBookmark({ userId, articleId: normalizedArticleId })
+        ).unwrap();
+        toast.success("Article removed from favorites!", { className: "custom-toast custom-toast-success" });
+      } else {
+        await dispatch(
+          addBookmark({ userId, articleId: normalizedArticleId })
+        ).unwrap();
+        toast.success("Article added to favorites!", { className: "custom-toast custom-toast-success" });
+      }
+    } catch (err) {
+      if (
+        err?.status === 400 ||
+        err?.code === 400 ||
+        (typeof err === "string" && err.includes("400"))
+      ) {
+        toast.error("This article is already in your favorites.", { className: "custom-toast custom-toast-error" });
+      } else {
+        toast.error("Something went wrong. Please try again.", { className: "custom-toast custom-toast-error" });
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -46,8 +76,14 @@ const ButtonAddToBookmarks = ({ articleId }) => {
         className={`${s.button} ${isBookmarked ? s.active : ""}`}
         aria-label={isBookmarked ? "Remove from bookmarks" : "Add to bookmarks"}
         title={isBookmarked ? "Remove from bookmarks" : "Add to bookmarks"}
+        type="button"
+        disabled={isLoading}
       >
-        <BookmarkIcon className={s.buttonIcon} size={24} />
+        {isLoading ? (
+          <ClipLoader color="#ffffff" size={16} />
+        ) : (
+          <BookmarkIcon className={s.buttonIcon} size={24} />
+        )}
       </button>
       {!isLoggedIn && isOpen && <AuthModal onClose={close} />}
     </>
@@ -55,3 +91,12 @@ const ButtonAddToBookmarks = ({ articleId }) => {
 };
 
 export default ButtonAddToBookmarks;
+
+
+
+
+
+
+
+
+
