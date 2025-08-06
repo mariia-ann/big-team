@@ -25,7 +25,7 @@ const UserMenu = ({ onClick }) => {
   return (
     <div className={style.userMenu}>
       <NavLink
-        to={`/authors/${user._id}`}
+        to={`/profile`}
         onClick={onClick}
         className={setActiveClassProfile}
       >

@@ -15,6 +15,7 @@ import { refreshThunk } from "../redux/auth/operations.js";
 // import { fetchBookmarks } from "../redux/bookmarks/operations.js";
 
 import PrivateRoute from "./PrivateRoute.jsx";
+import MyProfilePage from "../pages/MyProfilePage/MyProfilePage.jsx";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -68,6 +69,14 @@ function App() {
             <Route path="/authors" element={<AuthorsPage />} />
             <Route path="/authors/:authorId" element={<AuthorProfilePage />} />
             <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <MyProfilePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
               path="/create"
               element={
                 <PrivateRoute>
@@ -84,6 +93,3 @@ function App() {
 }
 
 export default App;
-
-
-

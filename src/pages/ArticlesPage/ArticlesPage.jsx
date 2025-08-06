@@ -1,117 +1,128 @@
-// import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import SectionTitle from "../../components/SectionTitle/SectionTitle";
 import ArticlesList from "../../components/ArticlesList/ArticlesList";
 import Container from "../../components/Container/Container";
-// import { publicAPI } from "../../redux/api/publicAPI.js";
+import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn.jsx";
+import Loader from "../../components/Loader/Loader";
+
+import { loadArticles } from "../../redux/articles/operations.js";
+import { setFilter, clearArticles } from "../../redux/articles/slice.js";
+
+import {
+  selectArticles,
+  selectLoading,
+  selectPage,
+  selectFilter,
+  selectHasMore,
+} from "../../redux/articles/selectors.js";
+
 import s from "./ArticlesPage.module.css";
-// import chevronIcon from "../../assets/images/icons/chevron-down.svg";
-// import Loader from "../../components/Loader/Loader.jsx";
+import chevronIcon from "../../assets/images/icons/chevron-down.svg";
+
+const limit = 12;
+const filterOptions = ["All", "Popular"];
 
 const ArticlesPage = () => {
-  // const [filter, setFilter] = useState("All");
-  // const [isOpen, setIsOpen] = useState(false);
-  // const [articles, setArticles] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
-  // const [page, setPage] = useState(1);
-  // const [count, setCount] = useState(0);
-  // const [hasMore, setHasMore] = useState(true);
-  // const limit = 5;
-  // const [users, setUsers] = useState([]);
-  // const filterOptions = ["All", "Popular"];
-  // const useFilter = false;
+  const dispatch = useDispatch();
+  const articles = useSelector(selectArticles);
+  const loading = useSelector(selectLoading);
+  const page = useSelector(selectPage);
+  const filter = useSelector(selectFilter);
+  const hasMore = useSelector(selectHasMore);
 
-  // const fetchArticles = async (reset = false) => {
-  //   try {
-  //     const [articlesRes, usersRes] = await Promise.all([
-  //       publicAPI.get("/api/articles", {
-  //         params: {
-  //           page: reset ? 1 : page,
-  //           limit,
-  //           type: useFilter ? filter : undefined,
-  //         },
-  //       }),
-  //       publicAPI.get("/api/creators/all"),
-  //     ]);
+  const [isOpen, setIsOpen] = useState(false);
+  const listRef = useRef(null);
 
-  //     const { data: newArticles, total, hasMore: more } = articlesRes.data.data;
+  // 🔁 При зміні фільтру — очищуємо і завантажуємо 1 сторінку
+  const handleFilterChange = (e) => {
+    const selected = e.target.value;
+    dispatch(setFilter(selected));
+    dispatch(clearArticles());
+    dispatch(loadArticles({ page: 1, limit, type: selected }));
+  };
 
-  //     const userList = usersRes.data.data;
+  // ➕ Load more
+  const handleLoadMore = () => {
+    const nextPage = page + 1;
+    dispatch(loadArticles({ page: nextPage, limit, type: filter }));
+  };
 
-  //     const formatted = newArticles.map((article) => ({
-  //       ...article,
-  //       _id: article._id?.$oid || article._id,
-  //       ownerId: article.ownerId?.$oid || article.ownerId,
-  //     }));
+  // ⏳ Первинне завантаження при відкритті сторінки
+  useEffect(() => {
+    dispatch(clearArticles());
+    dispatch(loadArticles({ page: 1, limit, type: filter }));
+  }, [dispatch, filter]);
 
-  //     const filtered = useFilter ? filterArticles(formatted) : formatted;
+  // 🧭 Автоматичний скрол при load more
+  useEffect(() => {
+    if (page > 1 && listRef.current) {
+      const firstNewIndex = (page - 1) * limit;
+      const el = listRef.current.children[firstNewIndex];
+      if (el) {
+        window.scrollTo({
+          top: el.offsetTop,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [page]);
 
-  //     if (reset) {
-  //       setArticles(filtered);
-  //       setPage(2);
-  //     } else {
-  //       setArticles((prev) => [...prev, ...filtered]);
-  //       setPage((prev) => prev + 1);
-  //     }
-
-  //     setUsers(userList);
-  //     setCount(total);
-  //     setHasMore(more);
-  //     setError(null);
-  //   } catch (err) {
-  //     setError("Error fetching articles");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (!useFilter) {
-  //     setLoading(true);
-  //     fetchArticles(true);
-  //   }
-  // }, []);
+  // 🌀 Loader на старті
+  if (loading && articles.length === 0) {
+    return (
+      <section>
+        <Container>
+          <SectionTitle title="Articles" />
+          <Loader />
+        </Container>
+      </section>
+    );
+  }
 
   return (
     <section>
       <Container>
         <SectionTitle title="Articles" />
         <div className={s.articlesHeader}>
-          {/* {!loading && (
-            <span className={s.articleCount}>{articles.length} articles</span>
-          )} */}
-
-          {/* {useFilter && (
-            <div className={s.dropdownWrapper}>
-              <select
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-                onClick={() => setIsOpen((prev) => !prev)}
-                className={s.dropdown}
-              >
-                {filterOptions.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-              <img
-                src={chevronIcon}
-                alt=""
-                width="16"
-                height="16"
-                className={`${s.dropdownIcon} ${isOpen ? s.open : ""}`}
-                aria-hidden="true"
-              />
-            </div>
-          )} */}
+          <span className={s.articleCount}>{articles.length} articles</span>
+          <div
+            className={s.dropdownWrapper}
+            onFocus={() => setIsOpen(true)}
+            onBlur={() => setIsOpen(false)}
+          >
+            <select
+              value={filter}
+              onChange={handleFilterChange}
+              className={s.dropdown}
+            >
+              {filterOptions.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+            <img
+              src={chevronIcon}
+              alt=""
+              width="16"
+              height="16"
+              className={`${s.dropdownIcon} ${isOpen ? s.open : ""}`}
+              aria-hidden="true"
+            />
+          </div>
         </div>
-        {/* {loading && <Loader />}
-        {error && <p className={s.error}>{error}</p>}
-        {!loading && articles.length === 0 && (
-          <p className={s.emptyMessage}>No articles available</p>
-        )} */}
-        <ArticlesList />
+
+        <ArticlesList articles={articles} listRef={listRef} />
+
+        {loading && articles.length > 0 && (
+          <div style={{ textAlign: "center", margin: "20px 0" }}>
+            <Loader />
+          </div>
+        )}
+
+        {!loading && hasMore && <LoadMoreBtn onClick={handleLoadMore} />}
       </Container>
     </section>
   );

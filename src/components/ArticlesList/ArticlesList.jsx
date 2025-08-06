@@ -11,14 +11,15 @@ import { selectIsLoggedIn, selectUserId } from "../../redux/auth/selectors.js";
 
 const ArticlesList = () => {
   const dispatch = useDispatch();
-  const articles = useSelector(selectArticles);
   const authors = useSelector(selectCreators);
+  const articles = useSelector(selectArticles);
+
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const userId = useSelector(selectUserId);
 
   useEffect(() => {
-    dispatch(fetchArticles());
     dispatch(fetchAuthors());
+    dispatch(fetchArticles());
 
     if (isLoggedIn && userId) {
       dispatch(fetchBookmarks(userId));
