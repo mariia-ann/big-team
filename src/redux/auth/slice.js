@@ -8,7 +8,7 @@ import {
 
 const initialState = {
   user: {
-    id: null,
+    id: null,        // Добавлено поле _id
     email: null,
     name: null,
     avatarUrl: null,
@@ -25,7 +25,7 @@ const slice = createSlice({
     builder
       .addCase(registerThunk.fulfilled, (state, action) => {
         state.user = {
-          id: action.payload.data._id,
+          id: action.payload.data._id,      // Добавлено
           name: action.payload.data.name,
           email: action.payload.data.email,
           avatarUrl: action.payload.data.avatarUrl,
@@ -35,7 +35,7 @@ const slice = createSlice({
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
         state.user = {
-          id: action.payload.data._id,
+          id: action.payload.data._id,      // Добавлено
           name: action.payload.data.name,
           email: action.payload.data.email,
           avatarUrl: action.payload.data.avatarUrl,
@@ -48,7 +48,7 @@ const slice = createSlice({
       })
       .addCase(refreshThunk.fulfilled, (state, action) => {
         state.user = {
-          id: action.payload.data._id,
+          id: action.payload.data._id,      // Добавлено
           name: action.payload.data.name,
           email: action.payload.data.email,
           avatarUrl: action.payload.data.avatarUrl,
