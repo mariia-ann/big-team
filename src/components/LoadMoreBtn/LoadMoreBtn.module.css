@@ -12,4 +12,14 @@
   font-weight: 700;
   font-size: 18px;
   color: var(--color-white);
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background: var(--color-darker);
+}
+
+.button:focus {
+  box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
+  background: var(--color-general);
 }

@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import SectionTitle from "../../components/SectionTitle/SectionTitle";
 import ArticlesList from "../../components/ArticlesList/ArticlesList";
 import Container from "../../components/Container/Container";
 import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn.jsx";
+import Loader from "../../components/Loader/Loader";
 
 import { loadArticles } from "../../redux/articles/operations.js";
-import {
-  setPage,
-  setFilter,
-  clearArticles,
-} from "../../redux/articles/slice.js";
+import { setFilter, clearArticles } from "../../redux/articles/slice.js";
 
 import {
   selectArticles,
@@ -24,30 +21,65 @@ import {
 import s from "./ArticlesPage.module.css";
 import chevronIcon from "../../assets/images/icons/chevron-down.svg";
 
+const limit = 12;
+const filterOptions = ["All", "Popular"];
+
 const ArticlesPage = () => {
   const dispatch = useDispatch();
   const articles = useSelector(selectArticles);
   const loading = useSelector(selectLoading);
   const page = useSelector(selectPage);
   const filter = useSelector(selectFilter);
-  const limit = 12;
+  const hasMore = useSelector(selectHasMore);
 
   const [isOpen, setIsOpen] = useState(false);
-  const hasMore = useSelector(selectHasMore);
-  const [users, setUsers] = useState([]);
-  const filterOptions = ["All", "Popular"];
+  const listRef = useRef(null);
 
+  // 🔁 При зміні фільтру — очищуємо і завантажуємо 1 сторінку
+  const handleFilterChange = (e) => {
+    const selected = e.target.value;
+    dispatch(setFilter(selected));
+    dispatch(clearArticles());
+    dispatch(loadArticles({ page: 1, limit, type: selected }));
+  };
+
+  // ➕ Load more
   const handleLoadMore = () => {
     const nextPage = page + 1;
-    dispatch(setPage(nextPage));
     dispatch(loadArticles({ page: nextPage, limit, type: filter }));
   };
 
+  // ⏳ Первинне завантаження при відкритті сторінки
   useEffect(() => {
     dispatch(clearArticles());
-    dispatch(setPage(1));
     dispatch(loadArticles({ page: 1, limit, type: filter }));
-  }, []);
+  }, [dispatch, filter]);
+
+  // 🧭 Автоматичний скрол при load more
+  useEffect(() => {
+    if (page > 1 && listRef.current) {
+      const firstNewIndex = (page - 1) * limit;
+      const el = listRef.current.children[firstNewIndex];
+      if (el) {
+        window.scrollTo({
+          top: el.offsetTop,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [page]);
+
+  // 🌀 Loader на старті
+  if (loading && articles.length === 0) {
+    return (
+      <section>
+        <Container>
+          <SectionTitle title="Articles" />
+          <Loader />
+        </Container>
+      </section>
+    );
+  }
 
   return (
     <section>
@@ -55,15 +87,14 @@ const ArticlesPage = () => {
         <SectionTitle title="Articles" />
         <div className={s.articlesHeader}>
           <span className={s.articleCount}>{articles.length} articles</span>
-          <div className={s.dropdownWrapper}>
+          <div
+            className={s.dropdownWrapper}
+            onFocus={() => setIsOpen(true)}
+            onBlur={() => setIsOpen(false)}
+          >
             <select
               value={filter}
-              onChange={(e) => {
-                const selected = e.target.value;
-                dispatch(setFilter(selected));
-                dispatch(setPage(1));
-                dispatch(loadArticles({ page: 1, limit, type: selected }));
-              }}
+              onChange={handleFilterChange}
               className={s.dropdown}
             >
               {filterOptions.map((type) => (
@@ -82,10 +113,16 @@ const ArticlesPage = () => {
             />
           </div>
         </div>
-        <ArticlesList articles={articles} users={users} />
-        {articles.length > 0 && !loading && hasMore && (
-          <LoadMoreBtn onClick={handleLoadMore} />
+
+        <ArticlesList articles={articles} listRef={listRef} />
+
+        {loading && articles.length > 0 && (
+          <div style={{ textAlign: "center", margin: "20px 0" }}>
+            <Loader />
+          </div>
         )}
+
+        {!loading && hasMore && <LoadMoreBtn onClick={handleLoadMore} />}
       </Container>
     </section>
   );

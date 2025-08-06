@@ -6,10 +6,13 @@ import {
   fetchArticlesByOwner,
 } from "./operations.js";
 
+// Загальний обробник pending
 const handlePending = (state) => {
   state.isLoading = true;
+  state.error = null;
 };
 
+// Загальний обробник rejected
 const handleRejected = (state, action) => {
   state.isLoading = false;
   state.error = action.payload;
@@ -18,17 +21,17 @@ const handleRejected = (state, action) => {
 const slice = createSlice({
   name: "articles",
   initialState: {
-    items: [],
-    byOwner: {},
-    currentArticle: null,
+    items: [], // всі отримані статті
+    byOwner: {}, // кешовані статті по автору
+    currentArticle: null, // поточна обрана стаття
     isLoading: false,
     error: null,
     page: 1,
     limit: 12,
-    filter: "All",
-    hasMore: true,
+    filter: "All", // "All" або "Popular"
+    hasMore: true, // чи є ще статті для пагінації
   },
-  /*---------------------------------------*/
+
   reducers: {
     incrementPage(state) {
       state.page += 1;
@@ -41,32 +44,37 @@ const slice = createSlice({
     },
     clearArticles(state) {
       state.items = [];
+      state.hasMore = true; // важливо обнулити також пагінацію
     },
     setHasMore(state, action) {
       state.hasMore = action.payload;
     },
   },
-  /*---------------------------------------*/
+
   extraReducers: (builder) => {
     builder
+      // ==== FETCH ARTICLES ====
       .addCase(fetchArticles.pending, handlePending)
       .addCase(fetchArticles.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        /* state.items = action.payload;*/
+
+        // Оновлюємо сторінку на ту, що була передана при запиті
+        state.page = action.meta.arg.page;
+
+        // Перезапис або додавання до масиву статей
         if (state.page === 1) {
           state.items = action.payload;
         } else {
           state.items = [...state.items, ...action.payload];
         }
-        if (action.payload.length < state.limit) {
-          state.hasMore = false;
-        } else {
-          state.hasMore = true;
-        }
+
+        // Оновлюємо hasMore
+        state.hasMore = action.payload.length >= state.limit;
       })
       .addCase(fetchArticles.rejected, handleRejected)
 
+      // ==== FETCH ONE ARTICLE ====
       .addCase(fetchArticle.pending, handlePending)
       .addCase(fetchArticle.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -75,14 +83,23 @@ const slice = createSlice({
       })
       .addCase(fetchArticle.rejected, handleRejected)
 
+      // ==== ADD ARTICLE ====
       .addCase(addArticle.pending, handlePending)
       .addCase(addArticle.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.items.push(action.payload);
+        // додаємо нову статтю тільки якщо вона проходить поточний фільтр
+        const newArticle = action.payload;
+        if (
+          state.filter === "All" ||
+          (state.filter === "Popular" && newArticle.rate > 35)
+        ) {
+          state.items.unshift(newArticle); // додаємо на початок
+        }
       })
       .addCase(addArticle.rejected, handleRejected)
 
+      // ==== FETCH BY OWNER ====
       .addCase(fetchArticlesByOwner.pending, handlePending)
       .addCase(fetchArticlesByOwner.fulfilled, (state, action) => {
         const { ownerId, articles } = action.payload;
@@ -95,6 +112,7 @@ const slice = createSlice({
   },
 });
 
+// Експортуємо редюсер і дії
 export const articlesReducer = slice.reducer;
 export const { setFilter, incrementPage, setPage, clearArticles, setHasMore } =
   slice.actions;
