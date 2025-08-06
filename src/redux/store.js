@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./auth/slice";
 import { articlesReducer } from "./articles/slice";
 import { authorReducer } from "./author/slice";
+import { bookmarksReducer } from "./bookmarks/slice";
 import {
   persistStore,
   persistReducer,
@@ -14,20 +15,28 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-const persistConfig = {
+const authPersistConfig = {
   key: "root-auth",
   version: 1,
   storage,
   whitelist: ["token"],
 };
 
-const persistedReducer = persistReducer(persistConfig, authReducer);
+const bookmarksPersistConfig = {
+  key: "bookmarks",
+  version: 1,
+  storage,
+};
+
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+const persistedBookmarksReducer = persistReducer(bookmarksPersistConfig, bookmarksReducer);
 
 export const store = configureStore({
   reducer: {
     articles: articlesReducer,
     authors: authorReducer,
-    auth: persistedReducer,
+    auth: persistedAuthReducer,
+    bookmarks: persistedBookmarksReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -38,3 +47,5 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+

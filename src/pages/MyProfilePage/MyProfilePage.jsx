@@ -13,6 +13,7 @@ import { fetchAuthorSavedArticles } from "../../redux/author/operations.js";
 import SavedArticlesContent from "../../components/NothingFound/SavedArticlesContent/SavedArticlesContent.jsx";
 import MyArticlesContent from "../../components/NothingFound/MyArticlesContent/MyArticlesContent.jsx";
 import ArticlesList from "../../components/ArticlesList/ArticlesList.jsx";
+import defaultAvatar from "../../assets/images/defaultAvatar/default-avatar.png"
 
 const TABS = {
   MY_ARTICLES: "MY_ARTICLES",
@@ -62,7 +63,7 @@ const MyProfilePage = () => {
       <Container>
         <div className={css.profileHeader}>
           <img
-            src={profile.avatarUrl}
+            src={profile.avatarUrl || defaultAvatar}
             alt={profile.name}
             className={css.profileImage}
           />

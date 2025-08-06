@@ -8,7 +8,7 @@ import {
 
 const initialState = {
   user: {
-    id: null,
+    id: null,        // Добавлено поле _id
     email: null,
     name: null,
     avatarUrl: null,
@@ -25,7 +25,7 @@ const slice = createSlice({
     builder
       .addCase(registerThunk.fulfilled, (state, action) => {
         state.user = {
-          id: action.payload.data._id,
+          id: action.payload.data._id,      // Добавлено
           name: action.payload.data.name,
           email: action.payload.data.email,
           avatarUrl: action.payload.data.avatarUrl,
@@ -35,7 +35,7 @@ const slice = createSlice({
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
         state.user = {
-          id: action.payload.data._id,
+          id: action.payload.data._id,      // Добавлено
           name: action.payload.data.name,
           email: action.payload.data.email,
           avatarUrl: action.payload.data.avatarUrl,
@@ -43,21 +43,21 @@ const slice = createSlice({
         state.token = action.payload.data.accessToken;
         state.isLoggedIn = true;
       })
-      .addCase(refreshThunk.pending, (state, action) => {
+      .addCase(refreshThunk.pending, (state) => {
         state.isRefreshing = true;
       })
       .addCase(refreshThunk.fulfilled, (state, action) => {
-        state.isLoggedIn = true;
-        state.isRefreshing = false;
         state.user = {
-          id: action.payload.data._id,
+          id: action.payload.data._id,      // Добавлено
           name: action.payload.data.name,
           email: action.payload.data.email,
           avatarUrl: action.payload.data.avatarUrl,
         };
         state.token = action.payload.data.accessToken;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
       })
-      .addCase(refreshThunk.rejected, (state, action) => {
+      .addCase(refreshThunk.rejected, (state) => {
         state.isRefreshing = false;
       })
       .addCase(logoutThunk.fulfilled, () => initialState);
@@ -65,3 +65,4 @@ const slice = createSlice({
 });
 
 export const authReducer = slice.reducer;
+

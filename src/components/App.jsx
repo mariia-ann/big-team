@@ -26,6 +26,8 @@ const NotFoundPage = lazy(() => import("../pages/NotFoundPage/NotFoundPage"));
 function App() {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
+  // const isLoggedIn = useSelector(selectIsLoggedIn);
+  // const userId = useSelector(selectUserId);
 
   useEffect(() => {
     const hasSession = localStorage.getItem("hasSession");
@@ -33,6 +35,13 @@ function App() {
       dispatch(refreshThunk());
     }
   }, [dispatch]);
+
+  // ЦЕЙ useEffect ЗАКОМЕНТОВАНО ↓↓↓
+  // useEffect(() => {
+  //   if (!isRefreshing && isLoggedIn && userId) {
+  //     dispatch(fetchBookmarks(userId));
+  //   }
+  // }, [isRefreshing, isLoggedIn, userId, dispatch]);
 
   return isRefreshing ? null : (
     <Suspense fallback={<Loader />}>
@@ -46,7 +55,7 @@ function App() {
           <Route path="/articles/:articlesId" element={<ArticlePage />} />
           <Route path="/authors" element={<AuthorsPage />} />
           <Route path="/authors/:authorId" element={<AuthorProfilePage />} />
-           <Route
+          <Route
             path="/profile"
             element={
               <PrivateRoute>
