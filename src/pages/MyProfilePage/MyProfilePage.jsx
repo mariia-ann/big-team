@@ -13,6 +13,7 @@ import { fetchAuthorSavedArticles } from "../../redux/author/operations.js";
 import SavedArticlesContent from "../../components/NothingFound/SavedArticlesContent/SavedArticlesContent.jsx";
 import MyArticlesContent from "../../components/NothingFound/MyArticlesContent/MyArticlesContent.jsx";
 import ArticlesList from "../../components/ArticlesList/ArticlesList.jsx";
+import defaultAvatar from "../../assets/images/defaultAvatar/default-avatar.png"
 
 const TABS = {
   MY_ARTICLES: "MY_ARTICLES",
@@ -60,19 +61,15 @@ const MyProfilePage = () => {
   return (
     <section className={css.authorProfile}>
       <Container>
-        <div className={css.contentBlock}>
-          <h2 className={css.title}>My Profile</h2>
-
-          <div className={css.profileHeader}>
-            <img
-              src={profile.avatarUrl}
-              alt={profile.name}
-              className={css.profileImage}
-            />
-            <div>
-              <h1 className={css.authorName}>{profile.name}</h1>
-              <p className={css.authorBio}>{articlesCount} Articles</p>
-            </div>
+        <div className={css.profileHeader}>
+          <img
+            src={profile.avatarUrl || defaultAvatar}
+            alt={profile.name}
+            className={css.profileImage}
+          />
+          <div>
+            <h1 className={css.authorName}>{profile.name}</h1>
+            <p className={css.authorBio}>{articlesCount} Articles</p>
           </div>
 
           <div className={css.tabsContainer}>

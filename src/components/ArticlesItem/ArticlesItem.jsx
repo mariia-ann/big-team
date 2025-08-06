@@ -5,6 +5,9 @@ import ButtonAddToBookmarks from "../ButtonAddToBookmarks/ButtonAddToBookmarks.j
 const ArticlesItem = ({ article, authorName }) => {
   const { _id, title, desc, img } = article;
 
+ 
+  const articleId = typeof _id === "object" && _id.$oid ? String(_id.$oid) : String(_id);
+
   return (
     <div className={s.articleItem}>
       {img && (
@@ -19,11 +22,13 @@ const ArticlesItem = ({ article, authorName }) => {
           <p className={s.articleDescription}>{desc}</p>
         </div>
         <div className={s.actions}>
-          <Link to={`/articles/${_id}`}>Learn more</Link>
-          <ButtonAddToBookmarks articleId={_id.$oid} />
+          <Link to={`/articles/${articleId}`}>Learn more</Link>
+          <ButtonAddToBookmarks articleId={articleId} />
         </div>
       </div>
     </div>
   );
 };
+
 export default ArticlesItem;
+

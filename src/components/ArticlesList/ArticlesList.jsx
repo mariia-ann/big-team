@@ -1,17 +1,28 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ArticlesItem from "../ArticlesItem/ArticlesItem.jsx";
 import s from "./ArticlesList.module.css";
-import { selectCreators } from "../../redux/author/selectors.js";
-import { useEffect } from "react";
 import { fetchAuthors } from "../../redux/author/operations.js";
+import { fetchBookmarks } from "../../redux/bookmarks/operations.js";
+import { selectCreators } from "../../redux/author/selectors.js";
+import { selectIsLoggedIn, selectUserId } from "../../redux/auth/selectors.js";
 
-const ArticlesList = ({ articles, listRef }) => {
+const ArticlesList = ( {articles}) => {
   const dispatch = useDispatch();
   const authors = useSelector(selectCreators);
+  // const articles = useSelector(selectArticles);
+
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const userId = useSelector(selectUserId);
 
   useEffect(() => {
     dispatch(fetchAuthors());
-  }, [dispatch]);
+    // dispatch(fetchArticles());
+
+    if (isLoggedIn && userId) {
+      dispatch(fetchBookmarks(userId));
+    }
+  }, [dispatch, isLoggedIn, userId]);
 
   const getAuthorName = (ownerId) => {
     const author = authors.find((a) => a._id === ownerId);
@@ -23,7 +34,7 @@ const ArticlesList = ({ articles, listRef }) => {
   }
 
   return (
-    <ul className={s.articlesList} ref={listRef}>
+    <ul className={s.articlesList}>
       {articles.map((article) => (
         <li key={article._id}>
           <ArticlesItem
@@ -37,3 +48,4 @@ const ArticlesList = ({ articles, listRef }) => {
 };
 
 export default ArticlesList;
+
