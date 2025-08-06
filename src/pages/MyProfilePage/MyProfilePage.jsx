@@ -60,38 +60,42 @@ const MyProfilePage = () => {
   return (
     <section className={css.authorProfile}>
       <Container>
-        <div className={css.profileHeader}>
-          <img
-            src={profile.avatarUrl}
-            alt={profile.name}
-            className={css.profileImage}
-          />
-          <div>
-            <h1 className={css.authorName}>{profile.name}</h1>
-            <p className={css.authorBio}>{articlesCount} Articles</p>
+        <div className={css.contentBlock}>
+          <h2 className={css.title}>My Profile</h2>
+
+          <div className={css.profileHeader}>
+            <img
+              src={profile.avatarUrl}
+              alt={profile.name}
+              className={css.profileImage}
+            />
+            <div>
+              <h1 className={css.authorName}>{profile.name}</h1>
+              <p className={css.authorBio}>{articlesCount} Articles</p>
+            </div>
           </div>
-        </div>
 
-        <div className={css.tabsContainer}>
-          <button
-            className={`${css.tab} ${
-              activeTab === TABS.MY_ARTICLES ? css.tabActive : ""
-            }`}
-            onClick={() => setActiveTab(TABS.MY_ARTICLES)}
-          >
-            Мої статті
-          </button>
-          <button
-            className={`${css.tab} ${
-              activeTab === TABS.SAVED_ARTICLES ? css.tabActive : ""
-            }`}
-            onClick={() => setActiveTab(TABS.SAVED_ARTICLES)}
-          >
-            Збережені
-          </button>
-        </div>
+          <div className={css.tabsContainer}>
+            <button
+              className={`${css.tab} ${
+                activeTab === TABS.MY_ARTICLES ? css.tabActive : ""
+              }`}
+              onClick={() => setActiveTab(TABS.MY_ARTICLES)}
+            >
+              My Articles
+            </button>
+            <button
+              className={`${css.tab} ${
+                activeTab === TABS.SAVED_ARTICLES ? css.tabActive : ""
+              }`}
+              onClick={() => setActiveTab(TABS.SAVED_ARTICLES)}
+            >
+              Saved Articles
+            </button>
+          </div>
 
-        <div className={css.articlesSection}>{renderContent()}</div>
+          <div className={css.articlesSection}>{renderContent()}</div>
+        </div>
       </Container>
     </section>
   );
