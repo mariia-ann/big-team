@@ -11,6 +11,7 @@
   color: #000;
   margin-top: 0;
   margin-bottom: 16px;
+  height: 55px;
 }
 
 .loadMore {
@@ -59,6 +60,9 @@
 }
 
 @media (min-width: 1440px) {
+  .contentBlock {
+    width: 1225px;
+  }
   .loadMore {
     width: 390px;
   }

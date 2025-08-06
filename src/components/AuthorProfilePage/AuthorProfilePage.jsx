@@ -29,19 +29,21 @@ const AuthorProfilePage = () => {
   return (
     <section className={css.authorProfile}>
       <Container>
-        <div className={css.profileHeader}>
-          <img
-            src={author.avatarUrl}
-            alt={author.name}
-            className={css.profileImage}
-          />
-          <div>
-            <h1 className={css.authorName}>{author.name}</h1>
-            <p className={css.authorBio}>{articlesCount} Articles</p>
+        <div className={css.contentBlock}>
+          <div className={css.profileHeader}>
+            <img
+              src={author.avatarUrl}
+              alt={author.name}
+              className={css.profileImage}
+            />
+            <div>
+              <h1 className={css.authorName}>{author.name}</h1>
+              <p className={css.authorBio}>{articlesCount} Articles</p>
+            </div>
           </div>
-        </div>
-        <div>
-          <ArticlesList articles={ownerArticle} />
+          <div>
+            <ArticlesList articles={ownerArticle} />
+          </div>
         </div>
       </Container>
     </section>
