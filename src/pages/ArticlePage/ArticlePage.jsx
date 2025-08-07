@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Container from "../../components/Container/Container";
 import SectionTitle from "../../components/SectionTitle/SectionTitle";
 import { publicAPI } from "../../redux/api/publicAPI.js";
@@ -7,9 +8,25 @@ import ArrowIcon from "../../assets/images/icons/arrow.svg?react";
 import BookmarkIcon from "../../assets/images/icons/bookmark.svg?react";
 import s from "./ArticlePage.module.css";
 import Loader from "../../components/Loader/Loader.jsx";
+import { selectIsLoggedIn, selectUserId } from "../../redux/auth/selectors.js";
+import { useToggle } from "../../hooks/useToggle.js";
+import AuthModal from "../../components/ModalErrorSave/ModalErrorSave.jsx";
+import {
+  addBookmark,
+  fetchBookmarks,
+  removeBookmark,
+} from "../../redux/bookmarks/operations.js";
+import { selectBookmarks } from "../../redux/bookmarks/selectors.js";
 
 const ArticlePage = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const bookmarks = useSelector(selectBookmarks).map(String);
   const { articlesId } = useParams();
+  const normalizedArticleId = String(articlesId);
+  const isBookmarked = bookmarks.includes(normalizedArticleId);
+  const dispatch = useDispatch();
+  const userId = useSelector(selectUserId);
+  const { isOpen, close, open } = useToggle();
   const [savedArticles, setSavedArticles] = useState([]);
   const [article, setArticle] = useState(null);
   const [relatedArticles, setRelatedArticles] = useState([]);
@@ -62,9 +79,57 @@ const ArticlePage = () => {
     fetchData();
   }, [articlesId]);
 
-  const handleSave = () => {
+  /*const handleSave = () => {
     if (!savedArticles.includes(articlesId)) {
       setSavedArticles((prev) => [...prev, articlesId]);
+    }
+  };*/
+
+  const handleToggleBookmark = async () => {
+    if (!isLoggedIn) {
+      open();
+      return;
+    }
+
+    if (!userId) return;
+
+    try {
+      if (isBookmarked) {
+        await dispatch(
+          removeBookmark({ userId, articleId: normalizedArticleId })
+        ).unwrap();
+      } else {
+        await dispatch(
+          addBookmark({ userId, articleId: normalizedArticleId })
+        ).unwrap();
+      }
+
+      await dispatch(fetchBookmarks(userId));
+    } catch (error) {
+      console.error("Помилка при оновленні закладки:", error);
+    }
+  };
+
+  const handleSave = async () => {
+    if (!isLoggedIn) {
+      open();
+      return;
+    }
+
+    if (!userId || isBookmarked) return;
+
+    try {
+      await dispatch(
+        addBookmark({ userId, articleId: normalizedArticleId })
+      ).unwrap();
+
+      // Оновлюємо список закладок у Redux
+      await dispatch(fetchBookmarks(userId));
+
+      // Оновлення локального стану (не обов’язково, якщо використовуєте Redux)
+      setSavedArticles((prev) => [...prev, normalizedArticleId]);
+    } catch (error) {
+      console.error("Помилка при збереженні статті:", error);
     }
   };
 
@@ -75,8 +140,10 @@ const ArticlePage = () => {
   }
   const formattedText = article.article.replace(/\/n/g, "<br><br>");
 
-  const userId = article.ownerId?.$oid ?? article.ownerId;
-  const user = users.find(({ _id }) => _id === userId);
+  //const userId = article.ownerId?.$oid ?? article.ownerId;
+  //const user = users.find(({ _id }) => _id === userId);
+  const articleOwnerId = article.ownerId?.$oid ?? article.ownerId;
+  const user = users.find(({ _id }) => _id === articleOwnerId);
   const authorName = user?.name ?? "Невідомо";
 
   return (
@@ -133,10 +200,11 @@ const ArticlePage = () => {
                 })}
               </ul>
             </div>
-            <button onClick={handleSave} className={s.button}>
-              Save
+            <button onClick={handleToggleBookmark} className={s.button}>
+              {isBookmarked ? "Unsave" : "Save"}
               <BookmarkIcon className={s.buttonIcon} size={24} />
             </button>
+            {!isLoggedIn && isOpen && <AuthModal onClose={close} />}
           </div>
         </div>
       </div>
