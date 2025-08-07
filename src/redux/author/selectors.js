@@ -21,3 +21,10 @@ export const selectFullSavedArticles = createSelector(
       .filter(Boolean);
   }
 );
+
+export const selectArticleById = createSelector(
+  [selectArticles, (_, articleId) => articleId],
+  (articles, articleId) => {
+    return articles.find(article => article._id === articleId) || null;
+  }
+);

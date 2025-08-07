@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectCreator } from "../../redux/author/selectors.js";
+import { selectCreator} from "../../redux/author/selectors.js";
 import { fetchAuthor } from "../../redux/author/operations.js";
 import Container from "../Container/Container.jsx";
 import css from "./AuthorProfilePage.module.css";
@@ -11,18 +11,19 @@ import ArticlesList from "../ArticlesList/ArticlesList.jsx";
 import { selectSavedArticles } from "../../redux/author/selectors";
 import { fetchAuthorSavedArticles } from "../../redux/author/operations";
 import { selectUserId } from "../../redux/auth/selectors";
+import Loader from "../Loader/Loader.jsx";
+
 
 const AuthorProfilePage = () => {
   const { authorId } = useParams();
   const dispatch = useDispatch();
+
   const author = useSelector(selectCreator);
   const userId = useSelector(selectUserId);
 const savedArticles = useSelector(selectSavedArticles);
   const ownerArticle = useSelector((state) =>
     selectArticlesByOwner(state, authorId)
   );
-
-  const articlesCount = ownerArticle.length;
 
   useEffect(() => {
   if (userId) {
@@ -36,6 +37,8 @@ const savedArticles = useSelector(selectSavedArticles);
       dispatch(fetchArticlesByOwner(authorId));
     }
   }, [dispatch, authorId]);
+
+  const articlesCount = ownerArticle.length;
 
   return (
     <section className={css.authorProfile}>
@@ -64,7 +67,7 @@ const savedArticles = useSelector(selectSavedArticles);
         </div>
       </Container>
     </section>
-  );
+  )
 };
 
 export default AuthorProfilePage;
