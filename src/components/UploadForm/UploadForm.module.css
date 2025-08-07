@@ -1,0 +1,99 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.disabledButton {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 20px;
+
+  background-color: #d5e3da;
+  border-radius: 32px;
+  padding: 32px;
+  max-width: 360px;
+  width: 100%;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 32px;
+  text-align: center;
+  color: var(--color-black);
+}
+
+.uploadBox {
+  width: 136px;
+  height: 136px;
+  background-color: var(--color-general);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.uploadBox:hover {
+  background-color: var(--color-darker);
+}
+
+.icon {
+  width: 116px;
+  height: 97px;
+  stroke-width: 2px;
+  fill: transparent;
+  transition: stroke 0.3s ease;
+}
+
+.uploadBox:hover .icon {
+  stroke: white;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.saveButton {
+  width: 100%;
+  border: none;
+  border-radius: 64px;
+  padding: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-white);
+  box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
+  background-color: var(--color-general);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.saveButton:hover {
+  background-color: var(--color-darker);
+  box-shadow: none;
+}
+
+/* Tablet */
+@media only screen and (min-width: 768px) {
+  .form {
+    max-width: 522px;
+    padding: 48px 32px;
+  }
+}
+
+/* Desktop */
+@media only screen and (min-width: 1440px) {
+  .form {
+    max-width: 392px;
+  }
+}

@@ -1,64 +1,34 @@
-import styles from "./ArticlesItem.module.css";
-import IconBookmark from "../../assets/images/icons/bookmark.svg?react";
+import { Link } from "react-router-dom";
+import s from "./ArticlesItem.module.css";
+import ButtonAddToBookmarks from "../ButtonAddToBookmarks/ButtonAddToBookmarks.jsx";
 
-function ArticleButtonWithBookmark() {
+const ArticlesItem = ({ article, authorName }) => {
+  const { _id, title, desc, img } = article;
+
+ 
+  const articleId = typeof _id === "object" && _id.$oid ? String(_id.$oid) : String(_id);
+
   return (
-    <div className={styles.buttonWithBookmark}>
-      <button
-        type="button"
-        className={styles.articleButton}
-        onClick={e => e.stopPropagation()}
-      >
-        Learn more
-      </button>
-      <div
-        className={styles.bookmarkCircle}
-        tabIndex={0}
-        onClick={e => e.stopPropagation()}
-      >
-        <IconBookmark />
+    <div className={s.articleItem}>
+      {img && (
+        <div className={s.imageWrapper}>
+          <img className={s.articleImage} src={img} alt={title} />
+        </div>
+      )}
+      <div className={s.wrapper}>
+        <div className={s.content}>
+          <p className={s.articleOwner}>{authorName}</p>
+          <h3 className={s.articleTitle}>{title}</h3>
+          <p className={s.articleDescription}>{desc}</p>
+        </div>
+        <div className={s.actions}>
+          <Link to={`/articles/${articleId}`}>Learn more</Link>
+          <ButtonAddToBookmarks articleId={articleId} />
+        </div>
       </div>
     </div>
-  );
-}
-
-const ArticlesItem = ({ article, isMiddle }) => {
-  const {
-    author,
-    title,
-    excerpt,
-    img,   
-    alt,
-  } = article;
-
-  return (
-    <li className={styles.articleItem}>
-      <img
-        className={`${styles.articleImage} ${isMiddle ? styles.articleImageMiddle : ""}`}
-        src={img}
-        alt={alt || title}
-        loading="lazy"
-      />
-      <div className={styles.author}>{author}</div>
-      <div className={styles.articleTitle}>{title}</div>
-      <div className={`${styles.excerpt} ${isMiddle ? styles.excerptMiddle : ""}`}>
-        {excerpt || "\u00A0"}
-      </div>
-      <div className={styles.buttonWrap}>
-        <ArticleButtonWithBookmark />
-      </div>
-    </li>
   );
 };
 
 export default ArticlesItem;
-
-
-
-
-
-
-
-
-
 

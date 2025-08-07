@@ -6,6 +6,7 @@ import { useState } from "react";
 import IconEye from "../../assets/images/icons/eye.svg?react";
 import IconEyeClosed from "../../assets/images/icons/eye-clossed.svg?react";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-hot-toast';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -52,24 +53,34 @@ const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
+  
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+  setSubmitting(true);
   try {
     
-    sessionStorage.setItem("registerData", JSON.stringify({
-      name: values.name,
-      email: values.email,
+    const payload = {
+      name: values.name.trim(),
+      email: values.email.trim(),
       password: values.password,
-    }));
+    };
 
-    resetForm();           
-    navigate("/photo");    
+    sessionStorage.setItem('registerData', JSON.stringify(payload));
+
+    toast.success('Continue uploading your photo', {
+      id: 'register-saved',
+    });
+
+    resetForm();
+    navigate('/photo');
   } catch (error) {
-    alert("Error saving data. Please try again.");
+    const message =
+      error?.message || "Error saving data. Please try again.";
+    toast.error(message, { id: 'register-save-error' });
+    console.error(error);
   } finally {
     setSubmitting(false);
   }
 };
-  
   
   return (
     

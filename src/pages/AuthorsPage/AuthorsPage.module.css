@@ -1,0 +1,69 @@
+.authors {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  background: var(--color-white);
+}
+
+.title {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  color: #000;
+  margin-top: 0;
+  margin-bottom: 16px;
+  height: 55px;
+}
+
+.loadMore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 16px;
+  border-radius: 64px;
+  padding: 16px;
+  width: 340px;
+  height: 57px;
+  background: var(--color-general);
+  color: var(--color-white);
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  outline: none;
+  margin: 24px auto 0;
+}
+
+.loadMore:hover {
+  background: var(--color-darker);
+}
+
+.loadMore:focus {
+  box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
+  background: var(--color-general);
+}
+
+.loadMore:disabled {
+  box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
+  background: var(--color-general);
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+@media (min-width: 768px) {
+  .loadMore {
+    margin-top: 24px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .contentBlock {
+    width: 1225px;
+  }
+  .loadMore {
+    width: 390px;
+  }
+}

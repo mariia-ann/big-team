@@ -1,0 +1,74 @@
+.articlesList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.alertContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 32px;
+  padding: 12px;
+  width: 100%;
+  max-width: 497px;
+  height: 299px;
+  background-color: var(--color-background);
+  margin-bottom: 10px; /*löschen*/
+}
+
+.alertContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.alertIconWrapper {
+  padding: 12px;
+}
+
+.alertIcon {
+  stroke-width: 2px;
+  stroke: var(--color-black);
+  fill: none;
+  width: 40px;
+  height: 40px;
+}
+
+.alertTitle {
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--color-black);
+}
+
+.alertText {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 155%;
+  color: var(--color-black);
+}
+
+.alertButtonLink {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-darker);
+  border: 1px solid var(--color-darker);
+  border-radius: 64px;
+  padding: 8px;
+  max-width: 473px;
+  width: 100%;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.alertButtonLink:hover,
+.alertButtonLink:focus,
+.alertButtonLink:active {
+  background-color: var(--color-general);
+  border: 1px solid var(--color-general);
+  color: var(--color-white);
+}
