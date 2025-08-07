@@ -8,16 +8,27 @@ import css from "./AuthorProfilePage.module.css";
 import { fetchArticlesByOwner } from "../../redux/articles/operations.js";
 import { selectArticlesByOwner } from "../../redux/articles/selectors.js";
 import ArticlesList from "../ArticlesList/ArticlesList.jsx";
+import { selectSavedArticles } from "../../redux/author/selectors";
+import { fetchAuthorSavedArticles } from "../../redux/author/operations";
+import { selectUserId } from "../../redux/auth/selectors";
 
 const AuthorProfilePage = () => {
   const { authorId } = useParams();
   const dispatch = useDispatch();
   const author = useSelector(selectCreator);
+  const userId = useSelector(selectUserId);
+const savedArticles = useSelector(selectSavedArticles);
   const ownerArticle = useSelector((state) =>
     selectArticlesByOwner(state, authorId)
   );
 
   const articlesCount = ownerArticle.length;
+
+  useEffect(() => {
+  if (userId) {
+    dispatch(fetchAuthorSavedArticles(userId));
+  }
+}, [dispatch, userId]);
 
   useEffect(() => {
     if (authorId) {
@@ -44,6 +55,12 @@ const AuthorProfilePage = () => {
           <div>
             <ArticlesList articles={ownerArticle} />
           </div>
+          {savedArticles.length > 0 && (
+  <div>
+    <h2 className={css.savedTitle}>Saved Articles</h2>
+    <ArticlesList articles={savedArticles} />
+  </div>
+)}
         </div>
       </Container>
     </section>

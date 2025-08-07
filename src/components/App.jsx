@@ -73,13 +73,7 @@ function App() {
           />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          pauseOnHover
-          closeOnClick
-          draggable
-        />
+        
       </Layout>
     </Suspense>
   );
