@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import css from "../Authors.module.css";
+import defaultAvatar from "../../../assets/images/defaultAvatar/default-avatar.png"
 
 export const AuthorsItem = ({ _id, name, avatarUrl }) => {
   const authorId = _id;
@@ -10,7 +11,7 @@ export const AuthorsItem = ({ _id, name, avatarUrl }) => {
       <Link to={`/authors/${authorId}`} className={css.authorLink}>
         <picture className={css.avatarWrap}>
           <img
-            src={avatarUrl}
+            src={avatarUrl || defaultAvatar}
             alt={name || "Author"}
             className={css.avatar}
             loading="lazy"
