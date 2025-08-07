@@ -39,7 +39,7 @@ const Navigation = () => {
     <div className={style.wrap}>
       <div className={style.wrapper}>
         <nav className={style.nav}>
-          <NavLink to="/">
+          <NavLink to="/" onClick={close}>
             <IconLogo className={style.logo} />
           </NavLink>
           <div className={style.desktopLinks}>

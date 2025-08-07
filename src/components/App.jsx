@@ -8,6 +8,7 @@ import { selectIsRefreshing } from "../redux/auth/selectors.js";
 import { refreshThunk } from "../redux/auth/operations.js";
 import PrivateRoute from "./PrivateRoute.jsx";
 import MyProfilePage from "../pages/MyProfilePage/MyProfilePage.jsx";
+import EditArticlePage from "../pages/EditArticlePage/EditArticlePage.jsx";
 
 const HomePage = lazy(() => import("../pages/HomePage/HomePage.jsx"));
 const RegisterPage = lazy(() => import("../pages/RegisterPage/RegisterPage"));
@@ -68,6 +69,14 @@ function App() {
             element={
               <PrivateRoute>
                 <CreateArticlePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/edit/:articleId"
+            element={
+              <PrivateRoute>
+                <EditArticlePage />
               </PrivateRoute>
             }
           />

@@ -13,11 +13,16 @@ import {
 } from "../../redux/bookmarks/operations.js";
 import AuthModal from "../ModalErrorSave/ModalErrorSave.jsx";
 import BookmarkIcon from "../../assets/images/icons/bookmark.svg?react";
+import EditIcon from "../../assets/images/icons/edit.svg?react";
+
 import { ClipLoader } from "react-spinners";
 import toast from "react-hot-toast";
 import { fetchAuthorSavedArticles } from "../../redux/author/operations.js";
+// import { selectArticleById } from "../../redux/author/selectors.js";
+// import { useNavigate } from "react-router-dom";
 
 const ButtonAddToBookmarks = ({ articleId }) => {
+  // const navigate = useNavigate();
   const { isOpen, close, open } = useToggle();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -28,6 +33,12 @@ const ButtonAddToBookmarks = ({ articleId }) => {
 
   const normalizedArticleId = String(articleId);
   const isBookmarked = bookmarks.includes(normalizedArticleId);
+
+  // const article = useSelector((state) =>
+  //   selectArticleById(state, normalizedArticleId)
+  // );
+  // const authorId = article?.ownerId;
+  // const isOwnArticle = isLoggedIn && userId === String(authorId);
 
   if (bookmarksLoading) {
     return (
@@ -86,6 +97,28 @@ const ButtonAddToBookmarks = ({ articleId }) => {
       setIsLoading(false);
     }
   };
+
+  // const handleEditClick = (e) => {
+  //   e.stopPropagation();
+  //   navigate(`/edit/${articleId}`)
+  //   console.log("Edit article", articleId);
+  // };
+
+  //  if (isOwnArticle) {
+  //   return (
+  //     <button
+  //       className={s.button}
+  //       type="button"
+  //       aria-label="Edit article"
+  //       title="Edit article"
+  //       onClick={handleEditClick}
+  //     >
+  //       <EditIcon className={s.buttonIcon} size={24} />
+  //     </button>
+  //   );
+  // }
+
+  // if (!article) return null;
 
   return (
     <>

@@ -75,6 +75,15 @@ label {
   height: 20px;
 }
 
+.error{
+color: var(--color-border);
+font-size: 8px;
+}
+.errorInput {
+    border: 1px solid var(--color-border)
+    
+}
+
 .text {
   font-weight: 400;
   font-size: 16px;
