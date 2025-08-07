@@ -33,9 +33,14 @@ const ArticlePage = () => {
     const shuffled = [...filtered].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   };
+useEffect(() => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}, [articlesId]);
+
 
   useEffect(() => {
     const fetchData = async () => {
+       setLoading({ article: true, related: true, users: true });
       try {
         const [articleRes, usersRes, allArticlesRes] = await Promise.all([
           publicAPI.get(`/api/articles/${articlesId}`),
