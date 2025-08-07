@@ -122,7 +122,9 @@ const ArticlesPage = () => {
           </div>
         )}
 
-        {!loading && hasMore && <LoadMoreBtn onClick={handleLoadMore} />}
+        {!loading && hasMore && articles.length > 0 && (
+          <LoadMoreBtn onClick={handleLoadMore} />
+        )}
       </Container>
     </section>
   );

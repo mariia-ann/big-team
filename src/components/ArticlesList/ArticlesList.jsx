@@ -6,8 +6,10 @@ import { fetchAuthors } from "../../redux/author/operations.js";
 import { fetchBookmarks } from "../../redux/bookmarks/operations.js";
 import { selectCreators } from "../../redux/author/selectors.js";
 import { selectIsLoggedIn, selectUserId } from "../../redux/auth/selectors.js";
+import AlertIcon from "../../assets/images/icons/alert.svg?react";
+import { Link } from "react-router-dom";
 
-const ArticlesList = ( {articles}) => {
+const ArticlesList = ({ articles }) => {
   const dispatch = useDispatch();
   const authors = useSelector(selectCreators);
   // const articles = useSelector(selectArticles);
@@ -30,7 +32,20 @@ const ArticlesList = ( {articles}) => {
   };
 
   if (articles.length === 0) {
-    return <p>No articles available</p>;
+    return (
+      <div className={s.alertContainer}>
+        <div className={s.alertContent}>
+          <div className={s.alertIconWrapper}>
+            <AlertIcon className={s.alertIcon} size={40} />
+          </div>
+          <h3 className={s.alertTitle}>Nothing found.</h3>
+          <p className={s.alertText}>Be the first, who create an article</p>
+        </div>
+        <Link className={s.alertButtonLink} to={`/create`}>
+          Create an artilce
+        </Link>
+      </div>
+    );
   }
 
   return (
@@ -48,4 +63,3 @@ const ArticlesList = ( {articles}) => {
 };
 
 export default ArticlesList;
-
