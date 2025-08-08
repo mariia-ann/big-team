@@ -61,7 +61,8 @@
   border: 1px solid var(--color-darker);
   border-radius: 64px;
   padding: 8px;
-  width: 320px;
+  max-width: 320px;
+  width: 100%;
   min-height: 40px;
   display: flex;
   justify-content: center;
